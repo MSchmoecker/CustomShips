@@ -1,7 +1,9 @@
 ﻿using BepInEx;
+using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
+using UnityEngine;
 
 namespace CustomShips {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
@@ -12,16 +14,32 @@ namespace CustomShips {
         public const string PluginName = "CustomShips";
         public const string PluginVersion = "0.0.1";
 
-        // Use this class to add your own localization to the game
-        // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
-        public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
+        private static AssetBundle assetBundle;
+
+        // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake() {
-            // Jotunn comes with its own Logger class to provide a consistent Log style for all mods using it
-            Jotunn.Logger.LogInfo("ModStub has landed");
+            assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
 
-            // To learn more about Jotunn's features, go to
-            // https://valheim-modding.github.io/Jotunn/tutorials/overview.html
+            AddPiece("MS_Keel_4m");
+            AddPiece("MS_Rib_2.0m");
+            AddPiece("MS_Rib_2.2m");
+            AddPiece("MS_Rib_2.4m");
+            AddPiece("MS_Rib_2.6m");
+            AddPiece("MS_Hull_2m");
+            AddPiece("MS_HullEnd_2m");
+        }
+
+        private void AddPiece(string pieceName) {
+            PieceManager.Instance.AddPiece(new CustomPiece(assetBundle, pieceName, true, ShipPartConfig()));
+        }
+
+        private PieceConfig ShipPartConfig() {
+            PieceConfig stackConfig = new PieceConfig();
+            stackConfig.PieceTable = PieceTables.Hammer;
+            stackConfig.Category = "Ship";
+            stackConfig.AddRequirement(new RequirementConfig("Wood", 3, 0, true));
+            return stackConfig;
         }
     }
 }
