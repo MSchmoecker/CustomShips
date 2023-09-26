@@ -7,9 +7,6 @@ namespace CustomShips {
         private Transform extension;
 
         [SerializeField]
-        private Vector3 extensionStart;
-
-        [SerializeField]
         private Vector3 extensionRotationAxis = Vector3.up;
 
         [SerializeField]
@@ -29,7 +26,7 @@ namespace CustomShips {
                 extension.gameObject.SetActive(true);
 
                 Vector3 center = (leftRib.outerPoint.position + rightRib.outerPoint.position) / 2f;
-                extension.position = extensionStart + center;
+                extension.position = center;
 
                 float angle = Mathf.Atan((leftRib.size - rightRib.size) / 2f) * Mathf.Rad2Deg;
                 extension.localRotation = Quaternion.Euler(extensionRotationAxis * angle);
