@@ -4,11 +4,14 @@ using UnityEngine;
 namespace CustomShips {
     public class Rib : MonoBehaviour {
         public float size = 2f;
+        public Transform outerPoint;
 
         private static List<Rib> ribs = new List<Rib>();
+        [SerializeField] private List<Transform> snapPoints = new List<Transform>();
 
         private void Awake() {
             ribs.Add(this);
+            GetComponent<Piece>().GetSnapPoints(snapPoints);
         }
 
         private void OnDestroy() {
@@ -17,10 +20,12 @@ namespace CustomShips {
 
         public static Rib FindRib(Vector3 position) {
             foreach (Rib rib in ribs) {
-                Vector3 diff = rib.transform.position - position;
+                foreach (Transform snapPoint in rib.snapPoints) {
+                    Vector3 diff = snapPoint.position - position;
 
-                if (diff.magnitude < 0.1f) {
-                    return rib;
+                    if (diff.magnitude <= 1f) {
+                        return rib;
+                    }
                 }
             }
 

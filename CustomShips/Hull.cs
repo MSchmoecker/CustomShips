@@ -10,9 +10,6 @@ namespace CustomShips {
         private Vector3 extensionStart;
 
         [SerializeField]
-        private Vector3 extensionPositionAxis = Vector3.left;
-
-        [SerializeField]
         private Vector3 extensionRotationAxis = Vector3.up;
 
         [SerializeField]
@@ -31,10 +28,10 @@ namespace CustomShips {
             if (leftRib && rightRib) {
                 extension.gameObject.SetActive(true);
 
-                float center = (leftRib.size + rightRib.size) / 2f;
-                extension.localPosition = extensionStart + extensionPositionAxis * center;
+                Vector3 center = (leftRib.outerPoint.position + rightRib.outerPoint.position) / 2f;
+                extension.position = extensionStart + center;
 
-                float angle = -Mathf.Atan((rightRib.size - leftRib.size) / 2f) * Mathf.Rad2Deg;
+                float angle = Mathf.Atan((leftRib.size - rightRib.size) / 2f) * Mathf.Rad2Deg;
                 extension.localRotation = Quaternion.Euler(extensionRotationAxis * angle);
             }
         }

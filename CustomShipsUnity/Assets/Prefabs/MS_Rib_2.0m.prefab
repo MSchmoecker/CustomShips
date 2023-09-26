@@ -317,6 +317,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 2
+  outerPoint: {fileID: 8633915649489529995}
+  snapPoints: []
 --- !u!114 &-6003147475042178531
 MonoBehaviour:
   m_ObjectHideFlags: 0
