@@ -11,7 +11,7 @@ namespace CustomShips {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
-    internal class CustomShips : BaseUnityPlugin {
+    internal class Main : BaseUnityPlugin {
         public const string PluginGUID = "com.jotunn.jotunnmodstub";
         public const string PluginName = "CustomShips";
         public const string PluginVersion = "0.0.1";

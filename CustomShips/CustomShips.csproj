@@ -83,7 +83,7 @@
   <ItemGroup>
     <Compile Include="Hull.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
-    <Compile Include="CustomShips.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rib.cs" />
   </ItemGroup>
