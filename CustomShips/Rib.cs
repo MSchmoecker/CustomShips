@@ -2,14 +2,15 @@
 using UnityEngine;
 
 namespace CustomShips {
-    public class Rib : MonoBehaviour {
+    public class Rib : ShipPart {
         public float size = 2f;
         public Transform outerPoint;
 
         private static List<Rib> ribs = new List<Rib>();
         [SerializeField] private List<Transform> snapPoints = new List<Transform>();
 
-        private void Awake() {
+        protected override void Awake() {
+            base.Awake();
             ribs.Add(this);
             GetComponent<Piece>().GetSnapPoints(snapPoints);
         }

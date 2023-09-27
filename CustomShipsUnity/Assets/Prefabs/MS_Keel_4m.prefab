@@ -165,6 +165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3485925077755215180}
   - component: {fileID: 3084495197568154024}
+  - component: {fileID: 7049624226700042918}
   - component: {fileID: -4335232181287358564}
   - component: {fileID: 6498556008552938467}
   m_Layer: 10
@@ -208,6 +209,18 @@ MonoBehaviour:
   m_distant: 0
   m_type: 0
   m_syncInitialScale: 0
+--- !u!114 &7049624226700042918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6991234017162266572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -321510326, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-4335232181287358564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,8 +295,8 @@ MonoBehaviour:
   m_worn: {fileID: 4591577438563871860}
   m_broken: {fileID: 4591577438563871860}
   m_wet: {fileID: 0}
-  m_noRoofWear: 1
-  m_noSupportWear: 1
+  m_noRoofWear: 0
+  m_noSupportWear: 0
   m_materialType: 0
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}

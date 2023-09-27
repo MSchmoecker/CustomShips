@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace CustomShips {
-    public class Hull : MonoBehaviour {
+    public class Hull : ShipPart {
         [SerializeField]
         private Transform extension;
 
@@ -15,7 +15,9 @@ namespace CustomShips {
         [SerializeField]
         private Rib rightRib;
 
-        private void Start() {
+        protected override void Start() {
+            base.Start();
+
             Vector3 position = transform.position;
             Vector3 right = transform.forward;
 

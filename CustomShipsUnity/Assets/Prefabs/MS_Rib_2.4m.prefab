@@ -393,8 +393,8 @@ MonoBehaviour:
   m_worn: {fileID: 5826522608628411008}
   m_broken: {fileID: 5826522608628411008}
   m_wet: {fileID: 0}
-  m_noRoofWear: 1
-  m_noSupportWear: 1
+  m_noRoofWear: 0
+  m_noSupportWear: 0
   m_materialType: 0
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
