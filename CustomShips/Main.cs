@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BepInEx;
+using HarmonyLib;
 using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
@@ -17,22 +18,26 @@ namespace CustomShips {
         public const string PluginVersion = "0.0.1";
 
         private static AssetBundle assetBundle;
-        private List<CustomPiece> pieces = new List<CustomPiece>();
+        private static List<CustomPiece> pieces = new List<CustomPiece>();
+        private static HashSet<string> shipPieceNames = new HashSet<string>();
 
         // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake() {
             assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
 
-            AddPiece("MS_Keel_4m");
-            AddPiece("MS_Rib_2.0m");
-            AddPiece("MS_Rib_2.2m");
-            AddPiece("MS_Rib_2.4m");
-            AddPiece("MS_Rib_2.6m");
-            AddPiece("MS_Hull_2m");
-            AddPiece("MS_HullEnd_2m");
+            AddShipPiece("MS_Keel_4m");
+            AddShipPiece("MS_Rib_2.0m");
+            AddShipPiece("MS_Rib_2.2m");
+            AddShipPiece("MS_Rib_2.4m");
+            AddShipPiece("MS_Rib_2.6m");
+            AddShipPiece("MS_Hull_2m");
+            AddShipPiece("MS_HullEnd_2m");
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
+
+            Harmony harmony = new Harmony(PluginGUID);
+            harmony.PatchAll();
         }
 
         private void OnPiecesRegistered() {
@@ -53,10 +58,16 @@ namespace CustomShips {
             });
         }
 
-        private void AddPiece(string pieceName) {
+        private void AddShipPiece(string pieceName) {
             CustomPiece piece = new CustomPiece(assetBundle, pieceName, true, ShipPartConfig());
-            pieces.Add(piece);
             PieceManager.Instance.AddPiece(piece);
+
+            pieces.Add(piece);
+            shipPieceNames.Add(pieceName);
+        }
+
+        public static bool IsShipPiece(GameObject piece) {
+            return shipPieceNames.Contains(Utils.GetPrefabName(piece));
         }
 
         private PieceConfig ShipPartConfig() {
