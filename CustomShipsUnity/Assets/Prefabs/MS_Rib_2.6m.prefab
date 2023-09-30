@@ -221,9 +221,9 @@ MonoBehaviour:
   m_Script: {fileID: -714429095, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCollider: {fileID: 2697295911021955089}
   size: 2.6
   outerPoint: {fileID: 7722073176861347365}
-  snapPoints: []
 --- !u!114 &2738493387134112610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,5 +419,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9999996, y: 0.39999995, z: 0.39999995}
+  m_Size: {x: 1.9999996, y: 0.32, z: 0.32}
   m_Center: {x: -0.9999998, y: 0, z: 0}

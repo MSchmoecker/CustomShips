@@ -248,7 +248,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9999996, y: 0.39999995, z: 0.39999995}
+  m_Size: {x: 1.9999996, y: 0.32, z: 0.32}
   m_Center: {x: -0.9999998, y: 0, z: 0}
 --- !u!1 &5907954054076602766
 GameObject:
@@ -316,9 +316,9 @@ MonoBehaviour:
   m_Script: {fileID: -714429095, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCollider: {fileID: 7169659355901742447}
   size: 2.4
   outerPoint: {fileID: 6127474344741834822}
-  snapPoints: []
 --- !u!114 &9140146761412609890
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,12 +7,10 @@ namespace CustomShips {
         public Transform outerPoint;
 
         private static List<Rib> ribs = new List<Rib>();
-        [SerializeField] private List<Transform> snapPoints = new List<Transform>();
 
         protected override void Awake() {
             base.Awake();
             ribs.Add(this);
-            GetComponent<Piece>().GetSnapPoints(snapPoints);
         }
 
         private void OnDestroy() {

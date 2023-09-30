@@ -4,11 +4,15 @@ using UnityEngine;
 
 namespace CustomShips {
     public abstract class ShipPart : MonoBehaviour {
-        private CustomShip customShip;
+        public Collider mainCollider;
 
+        protected List<Transform> snapPoints = new List<Transform>();
+
+        private CustomShip customShip;
         private static Collider[] tmpColliders = new Collider[1000];
 
         protected virtual void Awake() {
+            GetComponent<Piece>().GetSnapPoints(snapPoints);
         }
 
         protected virtual void Start() {
@@ -19,7 +23,7 @@ namespace CustomShips {
 
                 if (shipPart && shipPart.customShip) {
                     customShip = shipPart.customShip;
-                    transform.SetParent(shipPart.customShip.transform);
+                    customShip.AddPart(this);
                 }
             }
 
@@ -31,7 +35,7 @@ namespace CustomShips {
         private void CreateCustomShip() {
             GameObject parent = new GameObject("CustomShip");
             customShip = parent.AddComponent<CustomShip>();
-            transform.SetParent(parent.transform);
+            customShip.AddPart(this);
         }
 
         public static ShipPart FindNearest(Vector3 position) {

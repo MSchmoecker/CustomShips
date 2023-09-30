@@ -88,7 +88,7 @@ Material:
     - _TriplanarScale: 1
     - _TwoSidedNormals: 0
     - _UVSec: 0
-    - _ValueNoise: 0.5
+    - _ValueNoise: 0
     - _ValueNoiseVertex: 0
     - _ZWrite: 1
     m_Colors:
