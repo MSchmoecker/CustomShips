@@ -6,6 +6,7 @@ using UnityEngine;
 namespace CustomShips {
     public class CustomShip : MonoBehaviour {
         private float floatForce = 500f;
+        const float waterLevelOffset = 0.2f;
 
         private List<ShipPart> shipParts = new List<ShipPart>();
         private Rigidbody rigidbody;
@@ -36,7 +37,7 @@ namespace CustomShips {
                 float waterLevel = Floating.GetWaterLevel(position, ref waterVolume);
                 previousWaterVolumes[shipPart] = waterVolume;
 
-                if (position.y - 0.5f > waterLevel) {
+                if (position.y - waterLevelOffset > waterLevel) {
                     continue;
                 }
 
@@ -44,9 +45,9 @@ namespace CustomShips {
                 float force;
 
                 if (position.y < waterLevel) {
-                    force = (0.5f + distance) * floatForce;
+                    force = (waterLevelOffset + distance) * floatForce;
                 } else {
-                    force = (0.5f - distance) * floatForce;
+                    force = (waterLevelOffset - distance) * floatForce;
                 }
 
                 rigidbody.AddForceAtPosition(Vector3.up * force, position);
