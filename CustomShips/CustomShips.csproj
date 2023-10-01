@@ -85,6 +85,8 @@
     <Compile Include="Hull.cs" />
     <Compile Include="Keel.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
+    <Compile Include="PlacementBlock.cs" />
+    <Compile Include="PlacementRule.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
