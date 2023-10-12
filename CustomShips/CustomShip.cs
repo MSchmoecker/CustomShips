@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CustomShips {
     public class CustomShip : MonoBehaviour {
         private float floatForce = 500f;
-        const float waterLevelOffset = 0.2f;
+        private const float waterLevelOffset = 0.2f;
 
         private List<ShipPart> shipParts = new List<ShipPart>();
         private Rigidbody rigidbody;
@@ -14,9 +14,7 @@ namespace CustomShips {
         private Dictionary<ShipPart, WaterVolume> previousWaterVolumes = new Dictionary<ShipPart, WaterVolume>();
 
         private void Awake() {
-            rigidbody = gameObject.AddComponent<Rigidbody>();
-            rigidbody.drag = 1f;
-            rigidbody.angularDrag = 1f;
+            rigidbody = gameObject.GetComponent<Rigidbody>();
         }
 
         public void AddPart(ShipPart shipPart) {

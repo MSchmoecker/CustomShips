@@ -21,10 +21,14 @@ namespace CustomShips {
         private static List<CustomPiece> pieces = new List<CustomPiece>();
         private static HashSet<string> shipPieceNames = new HashSet<string>();
 
+        public static GameObject shipPrefab;
+
         // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake() {
             assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
+
+            shipPrefab = assetBundle.LoadAsset<GameObject>("CustomShip");
 
             AddShipPiece("MS_Keel_4m");
             AddShipPiece("MS_Rib_2.0m");

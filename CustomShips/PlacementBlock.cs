@@ -2,7 +2,7 @@
 
 namespace CustomShips {
     public class PlacementBlock : MonoBehaviour {
-        public static Player.PlacementStatus invalidRipPlacement = (Player.PlacementStatus)"MS_InvalidRipPlacment".GetStableHashCode();
+        public static Player.PlacementStatus invalidRipPlacement = (Player.PlacementStatus)"MS_InvalidRipPlacement".GetStableHashCode();
 
         public PlacementRule placementRule;
 

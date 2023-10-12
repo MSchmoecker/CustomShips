@@ -28,13 +28,18 @@ namespace CustomShips {
             }
 
             if (!customShip) {
+                customShip = GetComponentInParent<CustomShip>();
+                customShip.AddPart(this);
+            }
+
+            if (!customShip) {
                 CreateCustomShip();
             }
         }
 
         private void CreateCustomShip() {
-            GameObject parent = new GameObject("CustomShip");
-            customShip = parent.AddComponent<CustomShip>();
+            GameObject parent = Instantiate(Main.shipPrefab);
+            customShip = parent.GetComponent<CustomShip>();
             customShip.AddPart(this);
         }
 
