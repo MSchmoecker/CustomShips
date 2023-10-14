@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Logger = Jotunn.Logger;
 
 namespace CustomShips {
     public class CustomShip : MonoBehaviour {
@@ -22,6 +23,7 @@ namespace CustomShips {
                 return;
             }
 
+            Logger.LogInfo($"Adding part {shipPart.name} to ship");
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(transform);
             rigidbody.mass = (shipParts.Count) * 10f;

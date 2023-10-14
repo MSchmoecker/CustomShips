@@ -81,6 +81,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeMatcherExtensions.cs" />
     <Compile Include="CustomShip.cs" />
     <Compile Include="Hull.cs" />
     <Compile Include="Keel.cs" />

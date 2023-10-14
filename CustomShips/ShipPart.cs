@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Logger = Jotunn.Logger;
 
 namespace CustomShips {
     public abstract class ShipPart : MonoBehaviour {
+        private CustomShip customShip;
+
+        public CustomShip CustomShip {
+            get => customShip;
+            set {
+                customShip = value;
+                if (customShip) {
+                    customShip.AddPart(this);
+                }
+            }
+        }
+
         public Collider mainCollider;
 
         protected List<Transform> snapPoints = new List<Transform>();
 
-        private CustomShip customShip;
         private static Collider[] tmpColliders = new Collider[1000];
 
         protected virtual void Awake() {
@@ -16,31 +28,19 @@ namespace CustomShips {
         }
 
         protected virtual void Start() {
-            int piecesOverlap = Physics.OverlapSphereNonAlloc(transform.position, 2f, tmpColliders, LayerMask.GetMask("piece"));
-
-            for (int i = 0; i < piecesOverlap; i++) {
-                ShipPart shipPart = tmpColliders[i].GetComponentInParent<ShipPart>();
-
-                if (shipPart && shipPart.customShip) {
-                    customShip = shipPart.customShip;
-                    customShip.AddPart(this);
-                }
+            if (!CustomShip) {
+                CustomShip = GetComponentInParent<CustomShip>();
             }
 
-            if (!customShip) {
-                customShip = GetComponentInParent<CustomShip>();
-                customShip.AddPart(this);
-            }
-
-            if (!customShip) {
+            if (!CustomShip) {
                 CreateCustomShip();
             }
         }
 
         private void CreateCustomShip() {
-            GameObject parent = Instantiate(Main.shipPrefab);
-            customShip = parent.GetComponent<CustomShip>();
-            customShip.AddPart(this);
+            Logger.LogInfo("Creating new ship");
+            GameObject parent = Instantiate(Main.shipPrefab, transform.position, Quaternion.identity);
+            CustomShip = parent.GetComponent<CustomShip>();
         }
 
         public static ShipPart FindNearest(Vector3 position) {

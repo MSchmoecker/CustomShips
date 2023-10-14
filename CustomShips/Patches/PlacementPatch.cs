@@ -1,9 +1,13 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using System.Reflection.Emit;
+using HarmonyLib;
 using UnityEngine;
 
 namespace CustomShips.Patches {
     [HarmonyPatch]
     public class PlacementPatch {
+        private static CustomShip snapShip;
+
         [HarmonyPatch(typeof(Player), nameof(Player.SetupPlacementGhost)), HarmonyPostfix]
         public static void SetupPlacementGhostPatch(Player __instance) {
             if (!__instance.m_placementGhost) {
@@ -22,6 +26,41 @@ namespace CustomShips.Patches {
                 __runOriginal = false;
                 __result = false;
             }
+        }
+
+        [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece)), HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> PlacePieceTranspiler(IEnumerable<CodeInstruction> instructions) {
+            return new CodeMatcher(instructions)
+                .MatchForward(true, new CodeMatch(i => i.IsCall(nameof(Object), nameof(Object.Instantiate))))
+                .InsertAndAdvance(
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlacementPatch), nameof(BeforePlacePiece)))
+                )
+                .Advance(1)
+                .InsertAndAdvance(
+                    new CodeInstruction(OpCodes.Dup),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlacementPatch), nameof(AfterPlacePiece)))
+                )
+                .Instructions();
+        }
+
+        private static void BeforePlacePiece() {
+            Player player = Player.m_localPlayer;
+
+            if (Main.IsShipPiece(player.m_placementGhost)) {
+                player.FindClosestSnapPoints(player.m_placementGhost.transform, 0.5f, out Transform selfSnapPoint, out Transform otherSnapPoint, player.m_tempPieces);
+
+                if (otherSnapPoint && otherSnapPoint.parent && otherSnapPoint.parent.TryGetComponent(out ShipPart shipPart)) {
+                    snapShip = shipPart.CustomShip;
+                }
+            }
+        }
+
+        private static void AfterPlacePiece(GameObject piece) {
+            if (piece && Main.IsShipPiece(piece) && piece.TryGetComponent(out ShipPart shipPart)) {
+                shipPart.CustomShip = snapShip;
+            }
+
+            snapShip = null;
         }
 
         [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyPostfix]
