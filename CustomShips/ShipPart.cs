@@ -6,6 +6,8 @@ using Logger = Jotunn.Logger;
 namespace CustomShips {
     public abstract class ShipPart : MonoBehaviour {
         private CustomShip customShip;
+        private ZNetView nview;
+        private ZInt connectedShip;
 
         public CustomShip CustomShip {
             get => customShip;
@@ -13,6 +15,7 @@ namespace CustomShips {
                 customShip = value;
                 if (customShip) {
                     customShip.AddPart(this);
+                    connectedShip.Set(customShip.uniqueID.Get());
                 }
             }
         }
@@ -25,15 +28,35 @@ namespace CustomShips {
 
         protected virtual void Awake() {
             GetComponent<Piece>().GetSnapPoints(snapPoints);
+            nview = GetComponent<ZNetView>();
+            connectedShip = new ZInt("MS_ConnectedShip", 0, nview);
         }
 
         protected virtual void Start() {
-            if (!CustomShip) {
-                CustomShip = GetComponentInParent<CustomShip>();
+            InvokeRepeating(nameof(SearchShip), 0, 3);
+        }
+
+        private void SearchShip() {
+            if (CustomShip) {
+                return;
             }
 
-            if (!CustomShip) {
+            if (transform.parent && transform.parent.TryGetComponent(out CustomShip ship)) {
+                CustomShip = ship;
+                return;
+            }
+
+            int connectedShipId = connectedShip.Get();
+
+            if (connectedShipId == 0) {
                 CreateCustomShip();
+                return;
+            }
+
+            CustomShip shipInstance = CustomShip.FindCustomShip(connectedShipId);
+
+            if (shipInstance) {
+                CustomShip = shipInstance;
             }
         }
 

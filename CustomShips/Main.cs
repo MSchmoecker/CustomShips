@@ -29,6 +29,7 @@ namespace CustomShips {
             assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
 
             shipPrefab = assetBundle.LoadAsset<GameObject>("CustomShip");
+            PrefabManager.Instance.AddPrefab(shipPrefab);
 
             AddShipPiece("MS_Keel_4m");
             AddShipPiece("MS_Rib_2.0m");
