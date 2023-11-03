@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8012114194280918524}
   - component: {fileID: 820046037026491931}
+  - component: {fileID: 2156621218355165936}
   - component: {fileID: 7456785984547489918}
   - component: {fileID: 4971925354257638755}
   m_Layer: 0
@@ -49,6 +50,23 @@ MonoBehaviour:
   m_distant: 0
   m_type: 0
   m_syncInitialScale: 0
+--- !u!114 &2156621218355165936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653642192051029149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1109157524, guid: 02f806226319f1d4b8ae0232b57e8b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_syncPosition: 1
+  m_syncRotation: 1
+  m_syncScale: 0
+  m_syncBodyVelocity: 1
+  m_characterParentSync: 0
 --- !u!114 &7456785984547489918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: -2101879772, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nview: {fileID: 0}
 --- !u!54 &4971925354257638755
 Rigidbody:
   m_ObjectHideFlags: 0

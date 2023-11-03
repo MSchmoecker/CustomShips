@@ -13,9 +13,21 @@ namespace CustomShips {
             get => customShip;
             set {
                 customShip = value;
+
                 if (customShip) {
                     customShip.AddPart(this);
                     connectedShip.Set(customShip.uniqueID.Get());
+
+                    if (!nview.GetZDO().GetBool("MS_HasRelativePosition")) {
+                        nview.GetZDO().Set(ZDOVars.s_relPosHash, transform.localPosition);
+                        nview.GetZDO().Set(ZDOVars.s_relRotHash, transform.localRotation);
+                        nview.GetZDO().Set("MS_HasRelativePosition", true);
+                    } else {
+                        nview.GetZDO().GetVec3(ZDOVars.s_relPosHash, out Vector3 relPos);
+                        nview.GetZDO().GetQuaternion(ZDOVars.s_relRotHash, out Quaternion relRot);
+                        transform.localPosition = relPos;
+                        transform.localRotation = relRot;
+                    }
                 }
             }
         }
@@ -34,6 +46,7 @@ namespace CustomShips {
 
         protected virtual void Start() {
             InvokeRepeating(nameof(SearchShip), 0, 3);
+            InvokeRepeating(nameof(SetPosition), 0, 5);
         }
 
         private void SearchShip() {
@@ -57,6 +70,13 @@ namespace CustomShips {
 
             if (shipInstance) {
                 CustomShip = shipInstance;
+            }
+        }
+
+        private void SetPosition() {
+            if (nview.IsOwner()) {
+                // only for updating the zone position to stay close to the ship
+                nview.GetZDO().SetPosition(transform.position);
             }
         }
 
