@@ -4,10 +4,7 @@ using UnityEngine;
 namespace CustomShips {
     public class Hull : ShipPart {
         [SerializeField]
-        private Transform extension;
-
-        [SerializeField]
-        private Vector3 extensionRotationAxis = Vector3.up;
+        private HullSegment[] segments;
 
         [SerializeField]
         private Rib leftRib;
@@ -25,13 +22,14 @@ namespace CustomShips {
             rightRib = Rib.FindRib(position + right * 1f);
 
             if (leftRib && rightRib) {
-                extension.gameObject.SetActive(true);
-
                 Vector3 center = (leftRib.outerPoint.position + rightRib.outerPoint.position) / 2f;
-                extension.position = center;
-
                 float angle = Mathf.Atan((leftRib.size - rightRib.size) / 2f) * Mathf.Rad2Deg;
-                extension.localRotation = Quaternion.Euler(extensionRotationAxis * angle);
+
+                foreach (HullSegment extension in segments) {
+                    extension.target.gameObject.SetActive(true);
+                    extension.target.position = center + transform.TransformDirection(extension.offset);
+                    extension.target.localRotation = Quaternion.Euler(extension.rotationAxis * angle);
+                }
             }
         }
     }

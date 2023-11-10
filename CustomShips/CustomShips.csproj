@@ -84,6 +84,7 @@
     <Compile Include="CodeMatcherExtensions.cs" />
     <Compile Include="CustomShip.cs" />
     <Compile Include="Hull.cs" />
+    <Compile Include="HullSegment.cs" />
     <Compile Include="Keel.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="PlacementBlock.cs" />
@@ -158,6 +159,7 @@
     <Copy SourceFiles="$(VALHEIM_MANAGED)/Fishlabs.Common.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(VALHEIM_MANAGED)/ConnectedStorage.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(VALHEIM_MANAGED)/ui_lib.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(VALHEIM_MANAGED)/com.rlabrecque.steamworks.net.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
