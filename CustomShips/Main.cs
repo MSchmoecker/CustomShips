@@ -26,6 +26,9 @@ namespace CustomShips {
         // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake() {
+            Harmony harmony = new Harmony(PluginGUID);
+            harmony.PatchAll();
+
             assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
 
             shipPrefab = assetBundle.LoadAsset<GameObject>("CustomShip");
@@ -40,27 +43,23 @@ namespace CustomShips {
             AddShipPiece("MS_HullEnd_2m");
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
-
-            Harmony harmony = new Harmony(PluginGUID);
-            harmony.PatchAll();
         }
 
         private void OnPiecesRegistered() {
             PieceManager.OnPiecesRegistered -= OnPiecesRegistered;
-
-            foreach (CustomPiece piece in pieces) {
-                StartCoroutine(RenderSprite(piece));
-            }
+            StartCoroutine(RenderSprites());
         }
 
-        private static IEnumerator RenderSprite(CustomPiece piece) {
+        private static IEnumerator RenderSprites() {
             yield return null;
 
-            piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
-                Width = 64,
-                Height = 64,
-                Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0, -90f, 0),
-            });
+            foreach (CustomPiece piece in pieces) {
+                piece.Piece.m_icon = RenderManager.Instance.Render(new RenderManager.RenderRequest(piece.PiecePrefab) {
+                    Width = 64,
+                    Height = 64,
+                    Rotation = RenderManager.IsometricRotation * Quaternion.Euler(0, -90f, 0),
+                });
+            }
         }
 
         private void AddShipPiece(string pieceName) {
