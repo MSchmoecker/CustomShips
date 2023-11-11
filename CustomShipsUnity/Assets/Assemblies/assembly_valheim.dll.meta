@@ -4,7 +4,9 @@ PluginImporter:
   externalObjects: {}
   serializedVersion: 2
   iconMap: {}
-  executionOrder: {}
+  executionOrder:
+    ZNet: -50
+    ZNetScene: -20
   defineConstraints: []
   isPreloaded: 0
   isOverridable: 0
