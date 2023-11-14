@@ -111,6 +111,7 @@
     <UNITY_FOLDER>$(SolutionDir)CustomShipsUnity</UNITY_FOLDER>
   </PropertyGroup>
   <Target Name="AfterBuild">
+    <Exec Command="$(SolutionDir)Libraries/Debug/pdb2mdb.exe $(TargetPath)" />
     <CallTarget Condition="Exists('$(DEPLOY_FOLDER)')" Targets="Deploy" />
     <CallTarget Targets="CopyToUnity" />
   </Target>
@@ -121,6 +122,7 @@
     <!--Create Thunderstore Zip-->
     <RemoveDir Directories="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).dll.mdb" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)Package/icon.png" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)README.md" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)Package/manifest.json" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
@@ -145,6 +147,7 @@
     <Copy SourceFiles="$(TargetDir)Jotunn.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
+    <Copy SourceFiles="$(TargetDir)$(TargetName).dll.mdb" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_valheim.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_utils.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
     <Copy SourceFiles="$(VALHEIM_MANAGED)/assembly_postprocessing.dll" DestinationFolder="$(UNITY_FOLDER)/Assets/Assemblies" />
