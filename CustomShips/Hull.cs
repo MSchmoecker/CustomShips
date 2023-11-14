@@ -30,7 +30,7 @@ namespace CustomShips {
             rightRib = Rib.FindRib(position + right * 1f);
 
             if (leftRib && rightRib) {
-                Vector3 center = (leftRib.outerPoint.position + rightRib.outerPoint.position) / 2f;
+                Vector3 center = (leftRib.transform.TransformPoint(-leftRib.size, 0, 0) + rightRib.transform.TransformPoint(-rightRib.size, 0, 0)) / 2f;
                 float angle = Mathf.Atan((leftRib.size - rightRib.size) / 2f) * Mathf.Rad2Deg;
 
                 for (int i = 0; i < hullTargets.Length; i++) {

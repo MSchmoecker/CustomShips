@@ -4,7 +4,6 @@ using UnityEngine;
 namespace CustomShips {
     public class Rib : ShipPart {
         public float size = 2f;
-        public Transform outerPoint;
 
         private static List<Rib> ribs = new List<Rib>();
 
