@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using UnityEngine;
@@ -89,6 +90,43 @@ namespace CustomShips.Patches {
             }
 
             __instance.SetPlacementGhostValid(__instance.m_placementStatus == Player.PlacementStatus.Valid);
+        }
+
+        private static bool DenyPieceRay(bool hasRigidbody, Collider hit) {
+            Piece piece = hit ? hit.GetComponentInParent<Piece>() : null;
+            bool isShipPiece = piece && Main.IsShipPiece(piece.gameObject);
+
+            if (isShipPiece) {
+                return false;
+            }
+
+            // vanilla behavior
+            return hasRigidbody;
+        }
+
+        [HarmonyPatch(typeof(Player), nameof(Player.PieceRayTest)), HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> AllowShipRigidbodyTranspiler(IEnumerable<CodeInstruction> instructions) {
+            MethodInfo getCollider = AccessTools.PropertyGetter(typeof(RaycastHit), nameof(RaycastHit.collider));
+            MethodInfo getAttachedRigidbody = AccessTools.PropertyGetter(typeof(Collider), nameof(Collider.attachedRigidbody));
+            MethodInfo opImplicit = AccessTools.Method(typeof(Object), "op_Implicit");
+
+            CodeMatch[] loadRigidbody = {
+                new CodeMatch(i => i.opcode == OpCodes.Ldloca_S),
+                new CodeMatch(i => i.Calls(getCollider)),
+                new CodeMatch(i => i.Calls(getAttachedRigidbody)),
+                new CodeMatch(i => i.Calls(opImplicit)),
+            };
+
+            return new CodeMatcher(instructions)
+                .MatchForward(false, loadRigidbody)
+                .GetOperand(out object loadHitInfo)
+                .Advance(loadRigidbody.Length)
+                .InsertAndAdvance(
+                    new CodeInstruction(OpCodes.Ldloca_S, loadHitInfo),
+                    new CodeInstruction(OpCodes.Call, getCollider),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlacementPatch), nameof(DenyPieceRay)))
+                )
+                .Instructions();
         }
     }
 }
