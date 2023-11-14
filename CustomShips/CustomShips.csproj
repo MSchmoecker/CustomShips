@@ -84,7 +84,6 @@
     <Compile Include="CodeMatcherExtensions.cs" />
     <Compile Include="CustomShip.cs" />
     <Compile Include="Hull.cs" />
-    <Compile Include="HullSegment.cs" />
     <Compile Include="Keel.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="PlacementBlock.cs" />

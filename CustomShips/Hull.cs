@@ -3,8 +3,16 @@ using UnityEngine;
 
 namespace CustomShips {
     public class Hull : ShipPart {
+        // Unity doesn't load serialized classes from dlls, thus we have to use individual arrays
+        // https://issuetracker.unity3d.com/issues/assetbundle-is-not-loaded-correctly-when-they-reference-a-script-in-custom-dll-which-contains-system-dot-serializable-in-the-build
         [SerializeField]
-        private HullSegment[] segments;
+        private Transform[] hullTargets;
+
+        [SerializeField]
+        private Vector3[] hullOffsets;
+
+        [SerializeField]
+        private Vector3[] hullRotationAxes;
 
         [SerializeField]
         private Rib leftRib;
@@ -25,10 +33,10 @@ namespace CustomShips {
                 Vector3 center = (leftRib.outerPoint.position + rightRib.outerPoint.position) / 2f;
                 float angle = Mathf.Atan((leftRib.size - rightRib.size) / 2f) * Mathf.Rad2Deg;
 
-                foreach (HullSegment extension in segments) {
-                    extension.target.gameObject.SetActive(true);
-                    extension.target.position = center + transform.TransformDirection(extension.offset);
-                    extension.target.localRotation = Quaternion.Euler(extension.rotationAxis * angle);
+                for (int i = 0; i < hullTargets.Length; i++) {
+                    hullTargets[i].gameObject.SetActive(true);
+                    hullTargets[i].position = center + transform.TransformDirection(hullOffsets[i]);
+                    hullTargets[i].localRotation = Quaternion.Euler(hullRotationAxes[i] * angle);
                 }
             }
         }
