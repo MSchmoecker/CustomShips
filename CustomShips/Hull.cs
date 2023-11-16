@@ -27,19 +27,13 @@ namespace CustomShips {
             leftRib = Rib.FindRib(position + right * -1f + forward * 0.5f);
             rightRib = Rib.FindRib(position + right * 1f + forward * 0.5f);
 
-            if (leftRib && rightRib) {
-                Vector3 start = (leftRib.transform.position + rightRib.transform.position) / 2f;
-                Vector3 end = (leftRib.transform.TransformPoint(-leftRib.size, 0, 0) + rightRib.transform.TransformPoint(-rightRib.size, 0, 0)) / 2f;
-                float angle = Mathf.Atan((leftRib.size - rightRib.size) / 2f) * Mathf.Rad2Deg;
-
-                for (int i = 0; i < hullTargets.Length; i++) {
-                    hullTargets[i].gameObject.SetActive(true);
-                    hullTargets[i].position = Vector3.Lerp(start, end, (i + 1) / (float)hullTargets.Length) + hullOffsets[i];
-                    hullTargets[i].localRotation = Quaternion.Euler(hullRotationAxes[i] * angle);
-                }
-
-                if (TryGetComponent(out DynamicHull dynamicHull)) {
-                    dynamicHull.RegenerateMesh(leftRib.size + 0.1f, rightRib.size + 0.1f, 0.9f);
+            if (TryGetComponent(out DynamicHull dynamicHull)) {
+                if (leftRib && rightRib) {
+                    dynamicHull.RegenerateMesh(leftRib.size + 0.1f, rightRib.size + 0.1f, 0.9f, 0, 0);
+                } else if (leftRib) {
+                    dynamicHull.RegenerateMesh(leftRib.size + 0.1f, 0.1f, 0.9f, 0, 0.4f);
+                } else if (rightRib) {
+                    dynamicHull.RegenerateMesh(0.1f, rightRib.size + 0.1f, 0.9f, 0.4f, 0);
                 }
             }
         }

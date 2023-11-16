@@ -14,7 +14,7 @@ namespace CustomShips {
             triangles[index + 2] = c;
         }
 
-        public void RegenerateMesh(float left, float right, float height) {
+        public void RegenerateMesh(float left, float right, float height, float startLeft, float startRight) {
             Vector3[] vertices = new Vector3[(segments + 1) * 4];
             int[] triangles = new int[(segments + 1) * 24 + 12];
             Vector2[] uv = new Vector2[vertices.Length];
@@ -38,10 +38,15 @@ namespace CustomShips {
                 float lengthLeft = Mathf.Lerp(0, -left, tScaled);
                 float lengthRight = Mathf.Lerp(0, -right, tScaled);
 
-                vertices[segment * 4 + 0] = new Vector3(lengthLeft - halfWidth * Mathf.Sin(angle), segmentHeight - halfWidth * Mathf.Cos(angle) + offsetY, -1f);
-                vertices[segment * 4 + 1] = new Vector3(lengthRight - halfWidth * Mathf.Sin(angle), segmentHeight - halfWidth * Mathf.Cos(angle) + offsetY, 1f);
-                vertices[segment * 4 + 2] = new Vector3(lengthLeft + halfWidth * Mathf.Sin(angle), segmentHeight + halfWidth * Mathf.Cos(angle) + offsetY, -1f);
-                vertices[segment * 4 + 3] = new Vector3(lengthRight + halfWidth * Mathf.Sin(angle), segmentHeight + halfWidth * Mathf.Cos(angle) + offsetY, 1f);
+                float sinHalf = Mathf.Sin(angle) * halfWidth;
+                float cosHalf = Mathf.Cos(angle) * halfWidth;
+                float heightLeft = Mathf.Max(0, segmentHeight - startLeft) + startLeft;
+                float heightRight = Mathf.Max(0, segmentHeight - startRight) + startRight;
+
+                vertices[segment * 4 + 0] = new Vector3(lengthLeft - sinHalf, heightLeft - cosHalf + offsetY, -1f);
+                vertices[segment * 4 + 1] = new Vector3(lengthRight - sinHalf, heightRight - cosHalf + offsetY, 1f);
+                vertices[segment * 4 + 2] = new Vector3(lengthLeft + sinHalf, heightLeft + cosHalf + offsetY, -1f);
+                vertices[segment * 4 + 3] = new Vector3(lengthRight + sinHalf, heightRight + cosHalf + offsetY, 1f);
 
                 if (segment < segments) {
                     // top

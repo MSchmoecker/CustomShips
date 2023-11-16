@@ -35,6 +35,7 @@ namespace CustomShips {
             PrefabManager.Instance.AddPrefab(shipPrefab);
 
             AddShipPiece("MS_Keel_4m");
+            AddShipPiece("MS_Keel_Bow_1");
             AddShipPiece("MS_Rib_1.0m");
             AddShipPiece("MS_Rib_1.2m");
             AddShipPiece("MS_Rib_1.4m");
@@ -74,7 +75,7 @@ namespace CustomShips {
             PieceManager.Instance.AddPiece(piece);
 
             if (piece.PiecePrefab.TryGetComponent(out DynamicHull dynamicHull)) {
-                dynamicHull.RegenerateMesh(2, 2, 0.9f);
+                dynamicHull.RegenerateMesh(2, 2, 0.9f, 0, 0);
             }
 
             pieces.Add(piece);
