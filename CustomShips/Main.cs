@@ -31,14 +31,21 @@ namespace CustomShips {
 
             assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
 
-            shipPrefab = assetBundle.LoadAsset<GameObject>("CustomShip");
+            shipPrefab = assetBundle.LoadAsset<GameObject>("MS_CustomShip");
             PrefabManager.Instance.AddPrefab(shipPrefab);
 
             AddShipPiece("MS_Keel_4m");
+            AddShipPiece("MS_Rib_1.0m");
+            AddShipPiece("MS_Rib_1.2m");
+            AddShipPiece("MS_Rib_1.4m");
+            AddShipPiece("MS_Rib_1.6m");
+            AddShipPiece("MS_Rib_1.8m");
             AddShipPiece("MS_Rib_2.0m");
             AddShipPiece("MS_Rib_2.2m");
             AddShipPiece("MS_Rib_2.4m");
             AddShipPiece("MS_Rib_2.6m");
+            AddShipPiece("MS_Hull_Dynamic");
+            AddShipPiece("MS_Hull_1m");
             AddShipPiece("MS_Hull_2m");
             AddShipPiece("MS_HullEnd_2m");
 
@@ -65,6 +72,10 @@ namespace CustomShips {
         private void AddShipPiece(string pieceName) {
             CustomPiece piece = new CustomPiece(assetBundle, pieceName, true, ShipPartConfig());
             PieceManager.Instance.AddPiece(piece);
+
+            if (piece.PiecePrefab.TryGetComponent(out DynamicHull dynamicHull)) {
+                dynamicHull.RegenerateMesh(2, 2, 0.9f);
+            }
 
             pieces.Add(piece);
             shipPieceNames.Add(pieceName);

@@ -69,7 +69,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 3493655631346831838}
   size: 2.2
-  outerPoint: {fileID: 4345235014770492672}
 --- !u!114 &-7244429239316381309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +85,7 @@ MonoBehaviour:
   m_randomTarget: 1
   m_targetNonPlayerBuilt: 1
   m_icon: {fileID: 21300000, guid: 6478dfcd07900604e86959e660e25533, type: 3}
-  m_name: 
+  m_name: $MS_CustomShips_Rib_2_2m
   m_description: 
   m_enabled: 1
   m_category: 0
@@ -380,7 +379,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8614882783816396674}
-  m_Mesh: {fileID: 6878409410627374909, guid: da43c5533f4b1d74cb4cc15d1b622e2e, type: 3}
+  m_Mesh: {fileID: -4228904744725575071, guid: da43c5533f4b1d74cb4cc15d1b622e2e, type: 3}
 --- !u!23 &955153450658530818
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7456785984547489918}
   - component: {fileID: 4971925354257638755}
   m_Layer: 0
-  m_Name: CustomShip
+  m_Name: MS_CustomShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

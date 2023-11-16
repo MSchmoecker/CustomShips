@@ -15,6 +15,10 @@ namespace CustomShips.Patches {
                 return;
             }
 
+            foreach (DynamicHull dynamicHull in __instance.m_placementGhost.GetComponentsInChildren<DynamicHull>()) {
+                Object.Destroy(dynamicHull);
+            }
+
             foreach (ShipPart shipPart in __instance.m_placementGhost.GetComponentsInChildren<ShipPart>()) {
                 Object.Destroy(shipPart);
             }

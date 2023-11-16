@@ -14,29 +14,32 @@ namespace CustomShips {
         [SerializeField]
         private Vector3[] hullRotationAxes;
 
-        [SerializeField]
-        private Rib leftRib;
-
-        [SerializeField]
-        private Rib rightRib;
+        public Rib leftRib;
+        public Rib rightRib;
 
         protected override void Start() {
             base.Start();
 
             Vector3 position = transform.position;
             Vector3 right = transform.forward;
+            Vector3 forward = -transform.right;
 
-            leftRib = Rib.FindRib(position + right * -1f);
-            rightRib = Rib.FindRib(position + right * 1f);
+            leftRib = Rib.FindRib(position + right * -1f + forward * 0.5f);
+            rightRib = Rib.FindRib(position + right * 1f + forward * 0.5f);
 
             if (leftRib && rightRib) {
-                Vector3 center = (leftRib.transform.TransformPoint(-leftRib.size, 0, 0) + rightRib.transform.TransformPoint(-rightRib.size, 0, 0)) / 2f;
+                Vector3 start = (leftRib.transform.position + rightRib.transform.position) / 2f;
+                Vector3 end = (leftRib.transform.TransformPoint(-leftRib.size, 0, 0) + rightRib.transform.TransformPoint(-rightRib.size, 0, 0)) / 2f;
                 float angle = Mathf.Atan((leftRib.size - rightRib.size) / 2f) * Mathf.Rad2Deg;
 
                 for (int i = 0; i < hullTargets.Length; i++) {
                     hullTargets[i].gameObject.SetActive(true);
-                    hullTargets[i].position = center + transform.TransformDirection(hullOffsets[i]);
+                    hullTargets[i].position = Vector3.Lerp(start, end, (i + 1) / (float)hullTargets.Length) + hullOffsets[i];
                     hullTargets[i].localRotation = Quaternion.Euler(hullRotationAxes[i] * angle);
+                }
+
+                if (TryGetComponent(out DynamicHull dynamicHull)) {
+                    dynamicHull.RegenerateMesh(leftRib.size + 0.1f, rightRib.size + 0.1f, 0.9f);
                 }
             }
         }

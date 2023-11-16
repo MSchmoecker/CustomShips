@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="CodeMatcherExtensions.cs" />
     <Compile Include="CustomShip.cs" />
+    <Compile Include="DynamicHull.cs" />
     <Compile Include="Hull.cs" />
     <Compile Include="Keel.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />

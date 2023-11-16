@@ -18,12 +18,11 @@ namespace CustomShips {
 
         public static Rib FindRib(Vector3 position) {
             foreach (Rib rib in ribs) {
-                foreach (Transform snapPoint in rib.snapPoints) {
-                    Vector3 diff = snapPoint.position - position;
+                Vector3 forward = -rib.transform.right;
+                Vector3 diff = (rib.transform.position + forward * 0.5f) - position;
 
-                    if (diff.magnitude <= 1f) {
-                        return rib;
-                    }
+                if (diff.magnitude <= 0.5f) {
+                    return rib;
                 }
             }
 
