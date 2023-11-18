@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
@@ -66,6 +67,60 @@ namespace CustomShips.Patches {
             }
 
             snapShip = null;
+        }
+
+        private static Quaternion PieceRotation(Player player, Quaternion rotation) {
+            GameObject ghost = player.m_placementGhost;
+
+            if (ghost && Main.IsShipPiece(ghost)) {
+                ShipPart nearest = ShipPart.FindNearest(ghost.transform.position);
+
+                if (nearest) {
+                    float placeRotation = player.m_placeRotationDegrees * player.m_placeRotation;
+                    float shipRotation = nearest.transform.rotation.eulerAngles.y;
+                    float relativeRotation = (shipRotation - placeRotation) % player.m_placeRotationDegrees;
+                    return Quaternion.Euler(0f, placeRotation + relativeRotation, 0f);
+                }
+
+                return rotation;
+            }
+
+            return rotation;
+        }
+
+        [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> UpdatePlacementGhostRotationTranspiler(IEnumerable<CodeInstruction> instructions) {
+            MethodInfo euler = AccessTools.Method(typeof(Quaternion), nameof(Quaternion.Euler), new[] { typeof(float), typeof(float), typeof(float) });
+
+            CodeMatch[] loadPlacementRotation = {
+                new CodeMatch(OpCodes.Ldarg_0),
+                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Player), nameof(Player.m_placeRotationDegrees))),
+                new CodeMatch(OpCodes.Ldarg_0),
+                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Player), nameof(Player.m_placeRotation))),
+            };
+
+            CodeMatch[] prepareEuler = {
+                new CodeMatch(OpCodes.Conv_R4),
+                new CodeMatch(OpCodes.Mul),
+                new CodeMatch(OpCodes.Ldc_R4),
+            };
+
+            CodeMatch[] makeAndStoreRotation = {
+                new CodeMatch(OpCodes.Call, euler),
+                new CodeMatch(OpCodes.Stloc_S),
+            };
+
+            return new CodeMatcher(instructions)
+                .MatchForward(true, loadPlacementRotation.Concat(prepareEuler).Concat(makeAndStoreRotation).ToArray())
+                .GetOperand(out object localRotation)
+                .Advance(1)
+                .InsertAndAdvance(
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Ldloc_S, localRotation),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlacementPatch), nameof(PieceRotation))),
+                    new CodeInstruction(OpCodes.Stloc_S, localRotation)
+                )
+                .Instructions();
         }
 
         [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyPostfix]
