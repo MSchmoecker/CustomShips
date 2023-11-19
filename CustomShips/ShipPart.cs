@@ -87,7 +87,7 @@ namespace CustomShips {
         }
 
         public static ShipPart FindNearest(Vector3 position) {
-            int piecesOverlap = Physics.OverlapSphereNonAlloc(position, 2f, tmpColliders, LayerMask.GetMask("piece"));
+            int piecesOverlap = Physics.OverlapSphereNonAlloc(position, 4f, tmpColliders, LayerMask.GetMask("piece"));
 
             float minDistance = float.MaxValue;
             ShipPart nearest = null;

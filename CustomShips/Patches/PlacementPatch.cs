@@ -73,13 +73,12 @@ namespace CustomShips.Patches {
             GameObject ghost = player.m_placementGhost;
 
             if (ghost && Main.IsShipPiece(ghost)) {
-                ShipPart nearest = ShipPart.FindNearest(ghost.transform.position);
+                player.PieceRayTest(out Vector3 point, out Vector3 normal, out Piece piece, out Heightmap heightmap, out Collider waterSurface, false);
+                ShipPart nearest = ShipPart.FindNearest(point);
 
                 if (nearest) {
                     float placeRotation = player.m_placeRotationDegrees * player.m_placeRotation;
-                    float shipRotation = nearest.transform.rotation.eulerAngles.y;
-                    float relativeRotation = (shipRotation - placeRotation) % player.m_placeRotationDegrees;
-                    return Quaternion.Euler(0f, placeRotation + relativeRotation, 0f);
+                    return nearest.transform.rotation * Quaternion.Euler(0f, placeRotation, 0f);
                 }
 
                 return rotation;
@@ -129,15 +128,6 @@ namespace CustomShips.Patches {
 
             if (!ghost || !Main.IsShipPiece(ghost)) {
                 return;
-            }
-
-            ShipPart nearest = ShipPart.FindNearest(ghost.transform.position);
-
-            if (nearest) {
-                float placeRotation = __instance.m_placeRotationDegrees * __instance.m_placeRotation;
-                float shipRotation = nearest.transform.rotation.eulerAngles.y;
-                float relativeRotation = (shipRotation - placeRotation) % __instance.m_placeRotationDegrees;
-                ghost.transform.rotation = Quaternion.Euler(0f, placeRotation + relativeRotation, 0f);
             }
 
             bool isValidPlacement = __instance.m_placementStatus == Player.PlacementStatus.Valid;
