@@ -23,11 +23,13 @@ namespace CustomShips {
 
         public static GameObject shipPrefab;
 
-        // public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
+        public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
         private void Awake() {
             Harmony harmony = new Harmony(PluginGUID);
             harmony.PatchAll();
+
+            Localization.AddJsonFile("English", AssetUtils.LoadTextFromResources("Localization.English.json"));
 
             assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
 
@@ -46,9 +48,6 @@ namespace CustomShips {
             AddShipPiece("MS_Rib_2.4m");
             AddShipPiece("MS_Rib_2.6m");
             AddShipPiece("MS_Hull_Dynamic");
-            AddShipPiece("MS_Hull_1m");
-            AddShipPiece("MS_Hull_2m");
-            AddShipPiece("MS_HullEnd_2m");
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
         }

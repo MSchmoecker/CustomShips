@@ -103,6 +103,9 @@
   <ItemGroup>
     <EmbeddedResource Include="customships" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\English.json" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <FULL_DEPLOY_FOLDER>$(DEPLOY_FOLDER)/BepInEx/plugins/$(TargetName)</FULL_DEPLOY_FOLDER>
