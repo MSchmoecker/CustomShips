@@ -85,6 +85,10 @@ namespace CustomShips {
             return shipPieceNames.Contains(Utils.GetPrefabName(piece));
         }
 
+        public static bool IsCustomShip(GameObject piece) {
+            return shipPrefab.name == Utils.GetPrefabName(piece);
+        }
+
         private PieceConfig ShipPartConfig() {
             PieceConfig stackConfig = new PieceConfig();
             stackConfig.PieceTable = PieceTables.Hammer;

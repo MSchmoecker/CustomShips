@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5362866073098576886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4904633076864196590}
+  m_Layer: 0
+  m_Name: StubMast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4904633076864196590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5362866073098576886}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 743693661442770443}
+  m_Father: {fileID: 8012114194280918524}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6653642192051029149
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +44,7 @@ GameObject:
   - component: {fileID: 820046037026491931}
   - component: {fileID: 2156621218355165936}
   - component: {fileID: 7456785984547489918}
+  - component: {fileID: 3634806631194408366}
   - component: {fileID: 4971925354257638755}
   m_Layer: 0
   m_Name: MS_CustomShip
@@ -27,12 +60,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6653642192051029149}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4904633076864196590}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &820046037026491931
 MonoBehaviour:
@@ -80,6 +115,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nview: {fileID: 0}
+--- !u!114 &3634806631194408366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653642192051029149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2084366091, guid: 02f806226319f1d4b8ae0232b57e8b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_sailObject: {fileID: 8220569121335955105}
+  m_mastObject: {fileID: 5362866073098576886}
+  m_rudderObject: {fileID: 0}
+  m_shipControlls: {fileID: 0}
+  m_controlGuiPos: {fileID: 0}
+  m_floatCollider: {fileID: 0}
+  m_waterLevelOffset: 0
+  m_forceDistance: 1
+  m_force: 0.5
+  m_damping: 0.05
+  m_dampingSideway: 0.05
+  m_dampingForward: 0.01
+  m_angularDamping: 0.01
+  m_disableLevel: -0.5
+  m_sailForceOffset: 0
+  m_sailForceFactor: 0.1
+  m_rudderSpeed: 0.5
+  m_stearForceOffset: -10
+  m_stearForce: 0.5
+  m_stearVelForceFactor: 0.1
+  m_backwardForce: 50
+  m_rudderRotationMax: 30
+  m_minWaterImpactForce: 2.5
+  m_minWaterImpactInterval: 2
+  m_waterImpactDamage: 10
+  m_upsideDownDmgInterval: 1
+  m_upsideDownDmg: 20
+  m_waterImpactEffect:
+    m_effectPrefabs: []
 --- !u!54 &4971925354257638755
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -87,12 +163,54 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6653642192051029149}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 1
   m_AngularDrag: 1
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &8220569121335955105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 743693661442770443}
+  m_Layer: 0
+  m_Name: StubSail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &743693661442770443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8220569121335955105}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4904633076864196590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
