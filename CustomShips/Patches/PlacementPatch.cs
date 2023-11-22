@@ -25,14 +25,14 @@ namespace CustomShips.Patches {
             }
         }
 
-        [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece)), HarmonyPrefix]
-        public static void PlacePiecePatch(Player __instance, ref bool __runOriginal, ref bool __result) {
-            if (__instance.m_placementStatus == PlacementBlock.invalidRipPlacement) {
-                __instance.Message(MessageHud.MessageType.Center, "Needs to be placed on a keel");
-                __runOriginal = false;
-                __result = false;
-            }
-        }
+        // [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece)), HarmonyPrefix]
+        // public static void PlacePiecePatch(Player __instance, ref bool __runOriginal, ref bool __result) {
+        //     if (__instance.m_placementStatus == PlacementBlock.invalidRipPlacement) {
+        //         __instance.Message(MessageHud.MessageType.Center, "Needs to be placed on a keel");
+        //         __runOriginal = false;
+        //         __result = false;
+        //     }
+        // }
 
         [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece)), HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> PlacePieceTranspiler(IEnumerable<CodeInstruction> instructions) {
