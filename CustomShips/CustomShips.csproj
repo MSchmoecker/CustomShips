@@ -81,19 +81,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeMatcherExtensions.cs" />
-    <Compile Include="CustomShip.cs" />
-    <Compile Include="DynamicHull.cs" />
-    <Compile Include="Hull.cs" />
-    <Compile Include="Keel.cs" />
+    <Compile Include="Helper\CodeMatcherExtensions.cs" />
+    <Compile Include="Pieces\CustomShip.cs" />
+    <Compile Include="Pieces\DynamicHull.cs" />
+    <Compile Include="Pieces\Hull.cs" />
+    <Compile Include="Pieces\Keel.cs" />
+    <Compile Include="Pieces\Rib.cs" />
+    <Compile Include="Pieces\ShipPart.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="Patches\ShipPatches.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rib.cs" />
-    <Compile Include="ShipPart.cs" />
-    <Compile Include="ZProperty.cs" />
+    <Compile Include="ZProperties\ZBool.cs" />
+    <Compile Include="ZProperties\ZInt.cs" />
+    <Compile Include="ZProperties\ZProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

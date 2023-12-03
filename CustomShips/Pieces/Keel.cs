@@ -1,4 +1,4 @@
-﻿namespace CustomShips {
+﻿namespace CustomShips.Pieces {
     public class Keel : ShipPart {
     }
 }

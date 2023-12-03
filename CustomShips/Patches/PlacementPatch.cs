@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using CustomShips.Helper;
+using CustomShips.Pieces;
 using HarmonyLib;
 using UnityEngine;
 

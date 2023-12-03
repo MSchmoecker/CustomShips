@@ -486,11 +486,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4993386737078649276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -569184885, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
+  m_Script: {fileID: -1197701274, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 2517713836168421627}
-  watermask: {fileID: 0}
+  watermask: {fileID: 1380973063766829875}
   leftRib: {fileID: 0}
   rightRib: {fileID: 0}
   height: 0.9

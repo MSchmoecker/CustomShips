@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using Jotunn;
 
-namespace CustomShips {
+namespace CustomShips.Helper {
     public static class CodeMatcherExtensions {
         public static CodeMatcher GetPosition(this CodeMatcher codeMatcher, out int position) {
             position = codeMatcher.Pos;

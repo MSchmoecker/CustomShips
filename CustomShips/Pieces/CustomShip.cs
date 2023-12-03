@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CustomShips.ZProperties;
 using UnityEngine;
 using Logger = Jotunn.Logger;
 
-namespace CustomShips {
+namespace CustomShips.Pieces {
     public class CustomShip : MonoBehaviour {
         private float floatForce = 700f;
         private const float waterLevelOffset = 0.2f;

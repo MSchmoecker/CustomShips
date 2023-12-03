@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CustomShips {
+namespace CustomShips.Pieces {
     public class Hull : ShipPart {
         public MeshFilter watermask;
         public Rib leftRib;

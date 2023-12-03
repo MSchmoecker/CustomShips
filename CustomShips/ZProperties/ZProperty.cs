@@ -1,4 +1,4 @@
-namespace CustomShips {
+namespace CustomShips.ZProperties {
     public abstract class ZProperty<T> {
         public string Key { get; }
 
@@ -37,32 +37,6 @@ namespace CustomShips {
 
         private void RPCSet(long sender, T value) {
             SetValue(value);
-        }
-    }
-
-    public class ZBool : ZProperty<bool> {
-        public ZBool(string key, bool defaultValue, ZNetView zNetView) : base(key, defaultValue, zNetView) {
-        }
-
-        public override bool Get() {
-            return NetView.GetZDO().GetBool(KeyHash, DefaultValue);
-        }
-
-        protected override void SetValue(bool value) {
-            NetView.GetZDO().Set(KeyHash, value);
-        }
-    }
-
-    public class ZInt : ZProperty<int> {
-        public ZInt(string key, int defaultValue, ZNetView zNetView) : base(key, defaultValue, zNetView) {
-        }
-
-        public override int Get() {
-            return NetView.GetZDO().GetInt(KeyHash, DefaultValue);
-        }
-
-        protected override void SetValue(int value) {
-            NetView.GetZDO().Set(KeyHash, value);
         }
     }
 }

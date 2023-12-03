@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace CustomShips {
+namespace CustomShips.Pieces {
     public class Rib : ShipPart {
         public float size = 2f;
 

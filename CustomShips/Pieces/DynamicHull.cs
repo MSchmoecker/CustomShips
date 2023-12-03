@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace CustomShips {
+namespace CustomShips.Pieces {
     public class DynamicHull : MonoBehaviour {
         public int segments = 2;
         public float width = 0.2f;

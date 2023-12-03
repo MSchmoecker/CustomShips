@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using CustomShips.ZProperties;
 using UnityEngine;
 using Logger = Jotunn.Logger;
 
-namespace CustomShips {
+namespace CustomShips.Pieces {
     public abstract class ShipPart : MonoBehaviour {
         private CustomShip customShip;
         private ZNetView nview;

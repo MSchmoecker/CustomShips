@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BepInEx;
+using CustomShips.Pieces;
 using HarmonyLib;
 using Jotunn.Configs;
 using Jotunn.Entities;
@@ -12,7 +13,7 @@ namespace CustomShips {
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     //[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Minor)]
-    internal class Main : BaseUnityPlugin {
+    public class Main : BaseUnityPlugin {
         public const string PluginGUID = "com.jotunn.jotunnmodstub";
         public const string PluginName = "CustomShips";
         public const string PluginVersion = "0.0.1";
