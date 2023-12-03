@@ -105,6 +105,10 @@ namespace CustomShips {
             if (hull.mainCollider is MeshCollider mainCollider) {
                 mainCollider.sharedMesh = mesh;
             }
+
+            if (hull.watermask) {
+                hull.watermask.mesh = mesh;
+            }
         }
     }
 }

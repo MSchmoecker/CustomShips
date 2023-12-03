@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CustomShips {
     public class Hull : ShipPart {
+        public MeshFilter watermask;
         public Rib leftRib;
         public Rib rightRib;
 
