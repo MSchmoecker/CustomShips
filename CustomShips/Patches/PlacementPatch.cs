@@ -25,15 +25,6 @@ namespace CustomShips.Patches {
             }
         }
 
-        // [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece)), HarmonyPrefix]
-        // public static void PlacePiecePatch(Player __instance, ref bool __runOriginal, ref bool __result) {
-        //     if (__instance.m_placementStatus == PlacementBlock.invalidRipPlacement) {
-        //         __instance.Message(MessageHud.MessageType.Center, "Needs to be placed on a keel");
-        //         __runOriginal = false;
-        //         __result = false;
-        //     }
-        // }
-
         [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece)), HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> PlacePieceTranspiler(IEnumerable<CodeInstruction> instructions) {
             return new CodeMatcher(instructions)
@@ -120,25 +111,6 @@ namespace CustomShips.Patches {
                     new CodeInstruction(OpCodes.Stloc_S, localRotation)
                 )
                 .Instructions();
-        }
-
-        [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
-        public static void UpdatePlacementGhostPatch(Player __instance) {
-            GameObject ghost = __instance.m_placementGhost;
-
-            if (!ghost || !Main.IsShipPiece(ghost)) {
-                return;
-            }
-
-            bool isValidPlacement = __instance.m_placementStatus == Player.PlacementStatus.Valid;
-
-            if (isValidPlacement && ghost.TryGetComponent(out PlacementBlock placementBlock)) {
-                if (placementBlock.placementRule == PlacementRule.Rib) {
-                    placementBlock.CheckRibPlacement(__instance);
-                }
-            }
-
-            __instance.SetPlacementGhostValid(__instance.m_placementStatus == Player.PlacementStatus.Valid);
         }
 
         private static bool DenyPieceRay(bool hasRigidbody, Collider hit) {

@@ -426,8 +426,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5236890046882706191}
   - component: {fileID: 5289314007499023006}
-  - component: {fileID: -3455038063095954963}
   - component: {fileID: 4831555195487202178}
+  - component: {fileID: -3455038063095954963}
   - component: {fileID: 8658729687634619565}
   m_Layer: 10
   m_Name: MS_Hull_1m
@@ -474,6 +474,23 @@ MonoBehaviour:
   m_distant: 0
   m_type: 0
   m_syncInitialScale: 0
+--- !u!114 &4831555195487202178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4993386737078649276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -569184885, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCollider: {fileID: 2517713836168421627}
+  watermask: {fileID: 0}
+  leftRib: {fileID: 0}
+  rightRib: {fileID: 0}
+  height: 0.9
 --- !u!114 &-3455038063095954963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,30 +549,6 @@ MonoBehaviour:
   m_craftingStation: {fileID: 0}
   m_resources: []
   m_destroyedLootPrefab: {fileID: 0}
---- !u!114 &4831555195487202178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4993386737078649276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -569184885, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCollider: {fileID: 2517713836168421627}
-  hullTargets:
-  - {fileID: 5777288833836317072}
-  - {fileID: 3327506019457888621}
-  hullOffsets:
-  - {x: 0, y: 0.1, z: 0}
-  - {x: 0, y: 0.1, z: 0}
-  hullRotationAxes:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 1, z: 0}
-  leftRib: {fileID: 0}
-  rightRib: {fileID: 0}
 --- !u!114 &8658729687634619565
 MonoBehaviour:
   m_ObjectHideFlags: 0
