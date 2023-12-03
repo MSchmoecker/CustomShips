@@ -60,24 +60,6 @@ namespace CustomShips.Patches {
             snapShip = null;
         }
 
-        private static Quaternion PieceRotation(Player player, Quaternion rotation) {
-            GameObject ghost = player.m_placementGhost;
-
-            if (ghost && Main.IsShipPiece(ghost)) {
-                player.PieceRayTest(out Vector3 point, out Vector3 normal, out Piece piece, out Heightmap heightmap, out Collider waterSurface, false);
-                ShipPart nearest = ShipPart.FindNearest(point);
-
-                if (nearest) {
-                    float placeRotation = player.m_placeRotationDegrees * player.m_placeRotation;
-                    return nearest.transform.rotation * Quaternion.Euler(0f, placeRotation, 0f);
-                }
-
-                return rotation;
-            }
-
-            return rotation;
-        }
-
         [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> UpdatePlacementGhostRotationTranspiler(IEnumerable<CodeInstruction> instructions) {
             MethodInfo euler = AccessTools.Method(typeof(Quaternion), nameof(Quaternion.Euler), new[] { typeof(float), typeof(float), typeof(float) });
@@ -113,16 +95,22 @@ namespace CustomShips.Patches {
                 .Instructions();
         }
 
-        private static bool DenyPieceRay(bool hasRigidbody, Collider hit) {
-            Piece piece = hit ? hit.GetComponentInParent<Piece>() : null;
-            bool isShipPiece = piece && Main.IsShipPiece(piece.gameObject);
+        private static Quaternion PieceRotation(Player player, Quaternion rotation) {
+            GameObject ghost = player.m_placementGhost;
 
-            if (isShipPiece) {
-                return false;
+            if (ghost && Main.IsShipPiece(ghost)) {
+                player.PieceRayTest(out Vector3 point, out Vector3 normal, out Piece piece, out Heightmap heightmap, out Collider waterSurface, false);
+                ShipPart nearest = ShipPart.FindNearest(point);
+
+                if (nearest) {
+                    float placeRotation = player.m_placeRotationDegrees * player.m_placeRotation;
+                    return nearest.transform.rotation * Quaternion.Euler(0f, placeRotation, 0f);
+                }
+
+                return rotation;
             }
 
-            // vanilla behavior
-            return hasRigidbody;
+            return rotation;
         }
 
         [HarmonyPatch(typeof(Player), nameof(Player.PieceRayTest)), HarmonyTranspiler]
@@ -148,6 +136,18 @@ namespace CustomShips.Patches {
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlacementPatch), nameof(DenyPieceRay)))
                 )
                 .Instructions();
+        }
+
+        private static bool DenyPieceRay(bool hasRigidbody, Collider hit) {
+            Piece piece = hit ? hit.GetComponentInParent<Piece>() : null;
+            bool isShipPiece = piece && Main.IsShipPiece(piece.gameObject);
+
+            if (isShipPiece) {
+                return false;
+            }
+
+            // vanilla behavior
+            return hasRigidbody;
         }
     }
 }
