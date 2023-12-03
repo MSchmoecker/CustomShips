@@ -122,7 +122,7 @@ namespace CustomShips.Patches {
                 .Instructions();
         }
 
-        [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyPostfix]
+        [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyPostfix, HarmonyPriority(Priority.Last)]
         public static void UpdatePlacementGhostPatch(Player __instance) {
             GameObject ghost = __instance.m_placementGhost;
 

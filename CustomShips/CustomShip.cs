@@ -6,7 +6,7 @@ using Logger = Jotunn.Logger;
 
 namespace CustomShips {
     public class CustomShip : MonoBehaviour {
-        private float floatForce = 500f;
+        private float floatForce = 700f;
         private const float waterLevelOffset = 0.2f;
 
         private static List<CustomShip> ships = new List<CustomShip>();

@@ -7,7 +7,23 @@ namespace CustomShips {
         public float width = 0.2f;
         public float offsetY = -0.1f;
         public Rect uvRect = new Rect(0.54f, 0.04f, 0.08f, 0.1f);
-        
+
+        private Hull hull;
+
+        private void Awake() {
+            hull = GetComponent<Hull>();
+
+            hull.OnChange += () => {
+                if (hull.leftRib && hull.rightRib) {
+                    RegenerateMesh(hull.leftRib.size + 0.1f, hull.rightRib.size + 0.1f, 0.9f, 0, 0);
+                } else if (hull.leftRib) {
+                    RegenerateMesh(hull.leftRib.size + 0.1f, 0.1f, 0.9f, 0, 0.4f);
+                } else if (hull.rightRib) {
+                    RegenerateMesh(0.1f, hull.rightRib.size + 0.1f, 0.9f, 0.4f, 0);
+                }
+            };
+        }
+
         private void MakeTriangle(int index, int[] triangles, int a, int b, int c) {
             triangles[index] = a;
             triangles[index + 1] = b;
@@ -81,6 +97,14 @@ namespace CustomShips {
             mesh.RecalculateNormals();
 
             GetComponent<MeshFilter>().mesh = mesh;
+
+            if (!hull) {
+                hull = GetComponent<Hull>();
+            }
+
+            if (hull.mainCollider is MeshCollider mainCollider) {
+                mainCollider.sharedMesh = mesh;
+            }
         }
     }
 }
