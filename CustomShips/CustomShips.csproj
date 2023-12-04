@@ -90,6 +90,7 @@
     <Compile Include="Pieces\ShipPart.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="Patches\ShipPatches.cs" />
+    <Compile Include="Pieces\Rudder.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

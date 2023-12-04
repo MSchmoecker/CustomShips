@@ -19,6 +19,11 @@ namespace CustomShips.Pieces {
                     customShip.AddPart(this);
                     connectedShip.Set(customShip.uniqueID.Get());
 
+                    if (Application.isEditor) {
+                        Debug.LogWarning("Application running in Editor, skipping setting CustomShip");
+                        return;
+                    }
+
                     if (!nview.GetZDO().GetBool("MS_HasRelativePosition")) {
                         nview.GetZDO().Set(ZDOVars.s_relPosHash, transform.localPosition);
                         nview.GetZDO().Set(ZDOVars.s_relRotHash, transform.localRotation);

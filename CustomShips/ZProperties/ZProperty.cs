@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace CustomShips.ZProperties {
     public abstract class ZProperty<T> {
         public string Key { get; }
@@ -20,6 +22,11 @@ namespace CustomShips.ZProperties {
         }
 
         public void Set(T value) {
+            if (Application.isEditor) {
+                Debug.LogWarning("Application running in Editor, skipping ZProperty.Set");
+                return;
+            }
+
             if (NetView.IsValid() && NetView.IsOwner()) {
                 SetValue(value);
             } else {

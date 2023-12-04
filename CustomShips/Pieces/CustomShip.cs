@@ -7,14 +7,19 @@ using Logger = Jotunn.Logger;
 
 namespace CustomShips.Pieces {
     public class CustomShip : MonoBehaviour {
+        public ShipControlls shipControlls;
+
+        [HideInInspector]
+        public ZNetView nview;
+        public ZInt uniqueID;
+
         private float floatForce = 700f;
         private const float waterLevelOffset = 0.2f;
 
         private static List<CustomShip> ships = new List<CustomShip>();
         private List<ShipPart> shipParts = new List<ShipPart>();
         private Rigidbody rigidbody;
-        public ZNetView nview;
-        public ZInt uniqueID;
+        private Rudder currentRudder;
 
         private Dictionary<ShipPart, WaterVolume> previousWaterVolumes = new Dictionary<ShipPart, WaterVolume>();
 
@@ -27,6 +32,8 @@ namespace CustomShips.Pieces {
             if (uniqueID.Get() == 0) {
                 uniqueID.Set(Guid.NewGuid().ToString().GetStableHashCode());
             }
+
+            InvokeRepeating(nameof(UpdateRudder), 1, 5f);
         }
 
         public void AddPart(ShipPart shipPart) {
@@ -38,6 +45,28 @@ namespace CustomShips.Pieces {
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(transform);
             rigidbody.mass = (shipParts.Count) * 10f;
+
+            if (shipPart is Rudder) {
+                UpdateRudder();
+            }
+        }
+
+        public void UpdateRudder() {
+            if (currentRudder) {
+                return;
+            }
+
+            foreach (ShipPart shipPart in shipParts) {
+                if (!shipPart) {
+                    continue;
+                }
+
+                if (shipPart is Rudder rudder) {
+                    currentRudder = rudder;
+                    rudder.SetShipControls(shipControlls);
+                    break;
+                }
+            }
         }
 
         private void FixedUpdate() {

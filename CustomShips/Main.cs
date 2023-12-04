@@ -49,6 +49,7 @@ namespace CustomShips {
             AddShipPiece("MS_Rib_2.4m");
             AddShipPiece("MS_Rib_2.6m");
             AddShipPiece("MS_Hull_Dynamic");
+            AddShipPiece("MS_Rudder_1");
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
         }
