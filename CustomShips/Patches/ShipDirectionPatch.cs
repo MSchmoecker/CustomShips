@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CustomShips.Patches {
     [HarmonyPatch]
-    public static class ShipPatches {
+    public static class ShipDirectionPatch {
         [HarmonyTargetMethods]
         public static IEnumerable<MethodBase> AllShipMethods() {
             return AccessTools.GetDeclaredMethods(typeof(Ship));
@@ -27,16 +27,16 @@ namespace CustomShips.Patches {
 
         private static CodeInstruction[] forwardInsert = new CodeInstruction[] {
             new CodeInstruction(OpCodes.Ldarg_0),
-            new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ShipPatches), nameof(ShipForward)))
+            new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ShipDirectionPatch), nameof(ShipForward)))
         };
 
         private static CodeInstruction[] rightInsert = new CodeInstruction[] {
             new CodeInstruction(OpCodes.Ldarg_0),
-            new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ShipPatches), nameof(ShipRight)))
+            new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ShipDirectionPatch), nameof(ShipRight)))
         };
 
         [HarmonyTranspiler]
-        public static IEnumerable<CodeInstruction> UpdateDirectionTranspiler(MethodBase original, IEnumerable<CodeInstruction> instructions) {
+        public static IEnumerable<CodeInstruction> UpdateDirectionTranspiler(IEnumerable<CodeInstruction> instructions) {
             // InverseTransformDirection?
 
             return new CodeMatcher(instructions)
