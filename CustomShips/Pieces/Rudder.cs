@@ -19,7 +19,7 @@ namespace CustomShips.Pieces {
             foreach (BoxCollider boxCollider in gameObject.GetComponentsInChildren<BoxCollider>()) {
                 BoxCollider newCollider = (BoxCollider)shipControls.gameObject.AddComponentCopy(boxCollider);
                 newCollider.center += boxCollider.transform.position - transform.position;
-                newCollider.size = Vector3.Scale(boxCollider.size, boxCollider.transform.lossyScale) * 1.1f;
+                newCollider.size = Vector3.Scale(boxCollider.size, boxCollider.transform.lossyScale) * 0.9f;
             }
         }
     }

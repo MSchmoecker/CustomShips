@@ -8,6 +8,8 @@ using Logger = Jotunn.Logger;
 namespace CustomShips.Pieces {
     public class CustomShip : MonoBehaviour {
         public ShipControlls shipControlls;
+        public Transform forwardIndicator;
+        public Transform rightIndicator;
 
         [HideInInspector]
         public ZNetView nview;
@@ -70,6 +72,9 @@ namespace CustomShips.Pieces {
         }
 
         private void FixedUpdate() {
+            forwardIndicator.rotation = Quaternion.LookRotation(GetForward(), Vector3.up);
+            rightIndicator.rotation = Quaternion.LookRotation(GetRight(), Vector3.up);
+
             foreach (ShipPart shipPart in shipParts) {
                 if (!shipPart) {
                     continue;
@@ -101,6 +106,22 @@ namespace CustomShips.Pieces {
         public static CustomShip FindCustomShip(int uniqueID) {
             CustomShip customShip = ships.FirstOrDefault(ship => ship && ship.uniqueID.Get() == uniqueID);
             return customShip;
+        }
+
+        public Vector3 GetForward() {
+            if (currentRudder) {
+                return currentRudder.transform.forward;
+            }
+
+            return transform.forward;
+        }
+
+        public Vector3 GetRight() {
+            if (currentRudder) {
+                return currentRudder.transform.right;
+            }
+
+            return transform.right;
         }
     }
 }
