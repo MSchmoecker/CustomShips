@@ -13,6 +13,7 @@ namespace CustomShips.Pieces {
 
         [HideInInspector]
         public ZNetView nview;
+
         public ZInt uniqueID;
 
         private float floatForce = 700f;
@@ -36,6 +37,9 @@ namespace CustomShips.Pieces {
             }
 
             InvokeRepeating(nameof(UpdateRudder), 1, 1f);
+
+            forwardIndicator.gameObject.SetActive(false);
+            rightIndicator.gameObject.SetActive(false);
         }
 
         public void AddPart(ShipPart shipPart) {
@@ -118,6 +122,14 @@ namespace CustomShips.Pieces {
             }
 
             return transform.right;
+        }
+
+        public Vector3 InverseTransformDirection(Vector3 windDir) {
+            if (currentRudder) {
+                return currentRudder.transform.InverseTransformDirection(windDir);
+            }
+
+            return transform.InverseTransformDirection(windDir);
         }
     }
 }
