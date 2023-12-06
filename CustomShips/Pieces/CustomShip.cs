@@ -35,7 +35,7 @@ namespace CustomShips.Pieces {
                 uniqueID.Set(Guid.NewGuid().ToString().GetStableHashCode());
             }
 
-            InvokeRepeating(nameof(UpdateRudder), 1, 5f);
+            InvokeRepeating(nameof(UpdateRudder), 1, 1f);
         }
 
         public void AddPart(ShipPart shipPart) {
@@ -47,10 +47,6 @@ namespace CustomShips.Pieces {
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(transform);
             rigidbody.mass = (shipParts.Count) * 10f;
-
-            if (shipPart is Rudder) {
-                UpdateRudder();
-            }
         }
 
         public void UpdateRudder() {
@@ -118,7 +114,7 @@ namespace CustomShips.Pieces {
 
         public Vector3 GetRight() {
             if (currentRudder) {
-                return currentRudder.transform.right;
+                return -currentRudder.transform.right;
             }
 
             return transform.right;

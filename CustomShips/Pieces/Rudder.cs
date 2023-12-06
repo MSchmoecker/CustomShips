@@ -2,8 +2,30 @@
 using UnityEngine;
 
 namespace CustomShips.Pieces {
-    public class Rudder : ShipPart {
+    public class Rudder : ShipPart, Interactable, Hoverable {
+        public Transform rudder;
         public Transform attachPoint;
+
+        private Rib rightRib;
+
+        protected override void Start() {
+            base.Start();
+            InvokeRepeating(nameof(UpdateRudder), 0f, 3f);
+        }
+
+        private void UpdateRudder() {
+            Rib newRightRib = Rib.FindRib(transform.position + transform.right * 1f);
+
+            if (newRightRib != rightRib) {
+                rightRib = newRightRib;
+
+                if (rudder && rightRib) {
+                    Vector3 localRudderPosition = rudder.transform.localPosition;
+                    localRudderPosition.x = rightRib.size + 0.2f;
+                    rudder.transform.localPosition = localRudderPosition;
+                }
+            }
+        }
 
         public void SetShipControls(ShipControlls shipControls) {
             shipControls.transform.position = transform.position;
@@ -11,16 +33,22 @@ namespace CustomShips.Pieces {
 
             shipControls.m_attachPoint.transform.position = attachPoint.position;
             shipControls.m_attachPoint.transform.rotation = attachPoint.rotation;
+        }
 
-            foreach (BoxCollider boxCollider in shipControls.GetComponents<BoxCollider>()) {
-                Destroy(boxCollider.gameObject);
-            }
+        public bool Interact(Humanoid user, bool hold, bool alt) {
+            return CustomShip.shipControlls.Interact(user, hold, alt);
+        }
 
-            foreach (BoxCollider boxCollider in gameObject.GetComponentsInChildren<BoxCollider>()) {
-                BoxCollider newCollider = (BoxCollider)shipControls.gameObject.AddComponentCopy(boxCollider);
-                newCollider.center += boxCollider.transform.position - transform.position;
-                newCollider.size = Vector3.Scale(boxCollider.size, boxCollider.transform.lossyScale) * 0.9f;
-            }
+        public bool UseItem(Humanoid user, ItemDrop.ItemData item) {
+            return CustomShip.shipControlls.UseItem(user, item);
+        }
+
+        public string GetHoverText() {
+            return CustomShip.shipControlls.GetHoverText();
+        }
+
+        public string GetHoverName() {
+            return CustomShip.shipControlls.GetHoverName();
         }
     }
 }
