@@ -60,8 +60,9 @@ namespace CustomShips.Pieces {
                 return;
             }
 
-            if (transform.parent && transform.parent.TryGetComponent(out CustomShip ship)) {
-                CustomShip = ship;
+            CustomShip = transform.GetComponentInParent<CustomShip>();
+
+            if (CustomShip) {
                 return;
             }
 

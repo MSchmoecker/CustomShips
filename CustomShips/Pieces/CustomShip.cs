@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CustomShips.Helper;
 using CustomShips.ZProperties;
 using UnityEngine;
 using Logger = Jotunn.Logger;
@@ -8,6 +9,8 @@ using Logger = Jotunn.Logger;
 namespace CustomShips.Pieces {
     public class CustomShip : MonoBehaviour {
         public ShipControlls shipControlls;
+        public BoxCollider floatCollider;
+        public Transform partParent;
         public Transform forwardIndicator;
         public Transform rightIndicator;
 
@@ -49,7 +52,7 @@ namespace CustomShips.Pieces {
 
             Logger.LogInfo($"Adding part {shipPart.name} to ship");
             shipParts.Add(shipPart);
-            shipPart.transform.SetParent(transform);
+            shipPart.transform.SetParent(partParent);
             rigidbody.mass = (shipParts.Count) * 10f;
         }
 
@@ -65,6 +68,13 @@ namespace CustomShips.Pieces {
 
                 if (shipPart is Rudder rudder) {
                     currentRudder = rudder;
+
+                    float partParentRotationY = partParent.rotation.eulerAngles.y;
+                    float rotationY = Quaternion.LookRotation(rudder.transform.forward, Vector3.up).eulerAngles.y;
+
+                    transform.SetRotationY(rotationY);
+                    partParent.SetRotationY(partParentRotationY - partParent.rotation.y);
+
                     rudder.SetShipControls(shipControlls);
                     break;
                 }
