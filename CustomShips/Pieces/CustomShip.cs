@@ -11,8 +11,6 @@ namespace CustomShips.Pieces {
         public ShipControlls shipControlls;
         public BoxCollider floatCollider;
         public Transform partParent;
-        public Transform forwardIndicator;
-        public Transform rightIndicator;
 
         [HideInInspector]
         public ZNetView nview;
@@ -40,9 +38,6 @@ namespace CustomShips.Pieces {
             }
 
             InvokeRepeating(nameof(UpdateRudder), 1, 1f);
-
-            forwardIndicator.gameObject.SetActive(false);
-            rightIndicator.gameObject.SetActive(false);
         }
 
         public void AddPart(ShipPart shipPart) {
@@ -82,29 +77,33 @@ namespace CustomShips.Pieces {
         }
 
         private void FixedUpdate() {
-            forwardIndicator.rotation = Quaternion.LookRotation(GetForward(), Vector3.up);
-            rightIndicator.rotation = Quaternion.LookRotation(GetRight(), Vector3.up);
+            float minZ = 1000f;
+            float maxZ = -1000f;
+
+            bool hasValidPart = false;
+
+            foreach (ShipPart shipPart in shipParts) {
+                if (!shipPart) {
+                    continue;
+                }
+
+                hasValidPart = true;
+                float z = shipPart.transform.localPosition.z;
+                minZ = Mathf.Min(minZ, z);
+                maxZ = Mathf.Max(maxZ, z);
+            }
+
+            if (hasValidPart) {
+                Vector3 floatColliderSize = floatCollider.size;
+                floatColliderSize.z = Mathf.Abs(minZ - maxZ) + 2;
+                floatCollider.size = floatColliderSize;
+                floatCollider.transform.localPosition = new Vector3(0, 0, (minZ + maxZ) / 2f);
+            }
         }
 
         public static CustomShip FindCustomShip(int uniqueID) {
             CustomShip customShip = ships.FirstOrDefault(ship => ship && ship.uniqueID.Get() == uniqueID);
             return customShip;
-        }
-
-        public Vector3 GetForward() {
-            if (currentRudder) {
-                return currentRudder.transform.forward;
-            }
-
-            return transform.forward;
-        }
-
-        public Vector3 GetRight() {
-            if (currentRudder) {
-                return -currentRudder.transform.right;
-            }
-
-            return transform.right;
         }
 
         public Vector3 InverseTransformDirection(Vector3 windDir) {
