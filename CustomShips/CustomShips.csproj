@@ -83,7 +83,6 @@
   <ItemGroup>
     <Compile Include="Helper\CodeMatcherExtensions.cs" />
     <Compile Include="Helper\TransformHelper.cs" />
-    <Compile Include="Patches\ShipPatches.cs" />
     <Compile Include="Pieces\CustomShip.cs" />
     <Compile Include="Pieces\DynamicHull.cs" />
     <Compile Include="Pieces\Hull.cs" />

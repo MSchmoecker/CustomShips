@@ -105,13 +105,5 @@ namespace CustomShips.Pieces {
             CustomShip customShip = ships.FirstOrDefault(ship => ship && ship.uniqueID.Get() == uniqueID);
             return customShip;
         }
-
-        public Vector3 InverseTransformDirection(Vector3 windDir) {
-            if (currentRudder) {
-                return currentRudder.transform.InverseTransformDirection(windDir);
-            }
-
-            return transform.InverseTransformDirection(windDir);
-        }
     }
 }
