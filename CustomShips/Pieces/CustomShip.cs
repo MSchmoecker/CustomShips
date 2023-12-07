@@ -84,33 +84,6 @@ namespace CustomShips.Pieces {
         private void FixedUpdate() {
             forwardIndicator.rotation = Quaternion.LookRotation(GetForward(), Vector3.up);
             rightIndicator.rotation = Quaternion.LookRotation(GetRight(), Vector3.up);
-
-            foreach (ShipPart shipPart in shipParts) {
-                if (!shipPart) {
-                    continue;
-                }
-
-                Vector3 position = shipPart.mainCollider.bounds.center;
-
-                WaterVolume waterVolume = previousWaterVolumes.TryGetValue(shipPart, out WaterVolume volume) ? volume : null;
-                float waterLevel = Floating.GetWaterLevel(position, ref waterVolume);
-                previousWaterVolumes[shipPart] = waterVolume;
-
-                if (position.y - waterLevelOffset > waterLevel) {
-                    continue;
-                }
-
-                float distance = Mathf.Clamp01(Mathf.Abs(waterLevel - position.y));
-                float force;
-
-                if (position.y < waterLevel) {
-                    force = (waterLevelOffset + distance) * floatForce;
-                } else {
-                    force = (waterLevelOffset - distance) * floatForce;
-                }
-
-                rigidbody.AddForceAtPosition(Vector3.up * force, position);
-            }
         }
 
         public static CustomShip FindCustomShip(int uniqueID) {
