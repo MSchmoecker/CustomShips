@@ -454,7 +454,7 @@ MonoBehaviour:
   m_shipControlls: {fileID: 1120954766477231326}
   m_controlGuiPos: {fileID: 3496212275472383496}
   m_floatCollider: {fileID: 5545225762212922702}
-  m_waterLevelOffset: 0
+  m_waterLevelOffset: 0.5
   m_forceDistance: 2
   m_force: 1
   m_damping: 0.05
