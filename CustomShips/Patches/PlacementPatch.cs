@@ -31,12 +31,12 @@ namespace CustomShips.Patches {
         public static IEnumerable<CodeInstruction> PlacePieceTranspiler(IEnumerable<CodeInstruction> instructions) {
             return new CodeMatcher(instructions)
                 .MatchForward(true, new CodeMatch(i => i.IsCall(nameof(Object), nameof(Object.Instantiate))))
+                .ThrowIfInvalid("Could not find Object.Instantiate call")
                 .InsertAndAdvance(
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlacementPatch), nameof(BeforePlacePiece)))
                 )
                 .Advance(1)
                 .InsertAndAdvance(
-                    new CodeInstruction(OpCodes.Dup),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlacementPatch), nameof(AfterPlacePiece)))
                 )
                 .Instructions();
@@ -54,12 +54,13 @@ namespace CustomShips.Patches {
             }
         }
 
-        private static void AfterPlacePiece(GameObject piece) {
+        private static GameObject AfterPlacePiece(GameObject piece) {
             if (piece && Main.IsShipPiece(piece) && piece.TryGetComponent(out ShipPart shipPart)) {
                 shipPart.CustomShip = snapShip;
             }
 
             snapShip = null;
+            return piece;
         }
 
         [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyTranspiler]
