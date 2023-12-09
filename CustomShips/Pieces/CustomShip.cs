@@ -43,7 +43,7 @@ namespace CustomShips.Pieces {
             Logger.LogInfo($"Adding part {shipPart.name} to ship");
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(partParent);
-            rigidbody.mass = (shipParts.Count) * 30f;
+            rigidbody.mass = (shipParts.Count) * 20f;
         }
 
         public void UpdateRudder() {

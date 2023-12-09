@@ -33,6 +33,8 @@ namespace CustomShips.Pieces {
 
             shipControls.m_attachPoint.transform.position = attachPoint.position;
             shipControls.m_attachPoint.transform.rotation = attachPoint.rotation;
+
+            shipControls.m_ship.m_stearForceOffset = CustomShip.transform.InverseTransformPoint(transform.position).z;
         }
 
         public bool Interact(Humanoid user, bool hold, bool alt) {
