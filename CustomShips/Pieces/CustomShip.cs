@@ -88,7 +88,7 @@ namespace CustomShips.Pieces {
                 }
 
                 hasValidPart = true;
-                float z = shipPart.transform.localPosition.z;
+                float z = transform.InverseTransformPoint(shipPart.transform.position).z;
                 minZ = Mathf.Min(minZ, z);
                 maxZ = Mathf.Max(maxZ, z);
             }
