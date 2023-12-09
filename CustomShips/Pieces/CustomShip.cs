@@ -58,11 +58,9 @@ namespace CustomShips.Pieces {
                 if (shipPart is Rudder rudder) {
                     currentRudder = rudder;
 
-                    float partParentRotationY = partParent.rotation.eulerAngles.y;
-                    float rotationY = Quaternion.LookRotation(rudder.transform.forward, Vector3.up).eulerAngles.y;
-
-                    transform.SetRotationY(rotationY);
-                    partParent.SetRotationY(partParentRotationY - partParent.rotation.y);
+                    Quaternion oldPartParentRotation = partParent.rotation;
+                    transform.rotation = Quaternion.LookRotation(rudder.transform.forward, rudder.transform.up);
+                    partParent.rotation = oldPartParentRotation;
 
                     rudder.SetShipControls(shipControls);
                     break;
@@ -88,10 +86,8 @@ namespace CustomShips.Pieces {
             }
 
             if (hasValidPart) {
-                Vector3 floatColliderSize = ship.m_floatCollider.size;
-                floatColliderSize.z = Mathf.Abs(minZ - maxZ) + 2;
-                ship.m_floatCollider.size = floatColliderSize;
-                ship.m_floatCollider.transform.localPosition = new Vector3(0, 0, (minZ + maxZ) / 2f);
+                ship.m_floatCollider.transform.localScale = new Vector3(2f, 0.2f, Mathf.Abs(minZ - maxZ) + 2);
+                ship.m_floatCollider.transform.position = rigidbody.worldCenterOfMass;
             }
         }
 
