@@ -10,6 +10,7 @@ namespace CustomShips.Pieces {
     public class CustomShip : MonoBehaviour {
         public ShipControlls shipControls;
         public Transform partParent;
+        public BoxCollider onboardTrigger;
         public ZInt uniqueID;
 
         private static List<CustomShip> ships = new List<CustomShip>();
@@ -42,7 +43,7 @@ namespace CustomShips.Pieces {
             Logger.LogInfo($"Adding part {shipPart.name} to ship");
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(partParent);
-            rigidbody.mass = (shipParts.Count) * 10f;
+            rigidbody.mass = (shipParts.Count) * 30f;
         }
 
         public void UpdateRudder() {
@@ -86,8 +87,13 @@ namespace CustomShips.Pieces {
             }
 
             if (hasValidPart) {
-                ship.m_floatCollider.transform.localScale = new Vector3(2f, 0.2f, Mathf.Abs(minZ - maxZ) + 2);
+                float sizeZ = Mathf.Abs(minZ - maxZ);
+
+                ship.m_floatCollider.size = new Vector3(2f, 0.2f, sizeZ);
                 ship.m_floatCollider.transform.position = rigidbody.worldCenterOfMass;
+
+                onboardTrigger.size = new Vector3(6f, 5f, sizeZ + 1f);
+                onboardTrigger.transform.position = rigidbody.worldCenterOfMass;
             }
         }
 
