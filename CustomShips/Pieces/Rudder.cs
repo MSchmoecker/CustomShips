@@ -36,19 +36,19 @@ namespace CustomShips.Pieces {
         }
 
         public bool Interact(Humanoid user, bool hold, bool alt) {
-            return CustomShip.shipControlls.Interact(user, hold, alt);
+            return CustomShip.shipControls.Interact(user, hold, alt);
         }
 
         public bool UseItem(Humanoid user, ItemDrop.ItemData item) {
-            return CustomShip.shipControlls.UseItem(user, item);
+            return CustomShip.shipControls.UseItem(user, item);
         }
 
         public string GetHoverText() {
-            return CustomShip.shipControlls.GetHoverText();
+            return CustomShip.shipControls.GetHoverText();
         }
 
         public string GetHoverName() {
-            return CustomShip.shipControlls.GetHoverName();
+            return CustomShip.shipControls.GetHoverName();
         }
     }
 }

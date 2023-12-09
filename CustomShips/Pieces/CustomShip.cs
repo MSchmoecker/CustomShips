@@ -8,27 +8,21 @@ using Logger = Jotunn.Logger;
 
 namespace CustomShips.Pieces {
     public class CustomShip : MonoBehaviour {
-        public ShipControlls shipControlls;
-        public BoxCollider floatCollider;
+        public ShipControlls shipControls;
         public Transform partParent;
-
-        [HideInInspector]
-        public ZNetView nview;
-
         public ZInt uniqueID;
 
-        private float floatForce = 700f;
-        private const float waterLevelOffset = 0.2f;
-
         private static List<CustomShip> ships = new List<CustomShip>();
+
         private List<ShipPart> shipParts = new List<ShipPart>();
+        private Ship ship;
+        private ZNetView nview;
         private Rigidbody rigidbody;
         private Rudder currentRudder;
 
-        private Dictionary<ShipPart, WaterVolume> previousWaterVolumes = new Dictionary<ShipPart, WaterVolume>();
-
         private void Awake() {
             ships.Add(this);
+            ship = gameObject.GetComponent<Ship>();
             rigidbody = gameObject.GetComponent<Rigidbody>();
             nview = gameObject.GetComponent<ZNetView>();
             uniqueID = new ZInt("MS_UniqueID", 0, nview);
@@ -70,7 +64,7 @@ namespace CustomShips.Pieces {
                     transform.SetRotationY(rotationY);
                     partParent.SetRotationY(partParentRotationY - partParent.rotation.y);
 
-                    rudder.SetShipControls(shipControlls);
+                    rudder.SetShipControls(shipControls);
                     break;
                 }
             }
@@ -94,10 +88,10 @@ namespace CustomShips.Pieces {
             }
 
             if (hasValidPart) {
-                Vector3 floatColliderSize = floatCollider.size;
+                Vector3 floatColliderSize = ship.m_floatCollider.size;
                 floatColliderSize.z = Mathf.Abs(minZ - maxZ) + 2;
-                floatCollider.size = floatColliderSize;
-                floatCollider.transform.localPosition = new Vector3(0, 0, (minZ + maxZ) / 2f);
+                ship.m_floatCollider.size = floatColliderSize;
+                ship.m_floatCollider.transform.localPosition = new Vector3(0, 0, (minZ + maxZ) / 2f);
             }
         }
 
