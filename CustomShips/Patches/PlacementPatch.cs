@@ -46,6 +46,10 @@ namespace CustomShips.Patches {
             Player player = Player.m_localPlayer;
 
             if (Main.IsShipPiece(player.m_placementGhost)) {
+                if (player.m_hoveringPiece) {
+                    snapShip = player.m_hoveringPiece.GetComponentInParent<CustomShip>();
+                }
+
                 player.FindClosestSnapPoints(player.m_placementGhost.transform, 0.5f, out Transform selfSnapPoint, out Transform otherSnapPoint, player.m_tempPieces);
 
                 if (otherSnapPoint && otherSnapPoint.parent && otherSnapPoint.parent.TryGetComponent(out ShipPart shipPart)) {
