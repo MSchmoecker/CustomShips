@@ -146,6 +146,11 @@ namespace CustomShips.Patches {
         }
 
         private static bool DenyPieceRay(bool hasRigidbody, Collider hit) {
+            if (!Main.IsShipPiece(Player.m_localPlayer.m_placementGhost)) {
+                // vanilla behavior
+                return hasRigidbody;
+            }
+
             Piece piece = hit ? hit.GetComponentInParent<Piece>() : null;
             bool isShipPiece = piece && Main.IsShipPiece(piece.gameObject);
 
