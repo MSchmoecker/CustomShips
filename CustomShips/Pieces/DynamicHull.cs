@@ -107,8 +107,27 @@ namespace CustomShips.Pieces {
             }
 
             if (hull.watermask) {
-                hull.watermask.mesh = mesh;
+                hull.watermask.mesh = GenerateWatermask(left, right, height);
             }
+        }
+
+        private Mesh GenerateWatermask(float left, float right, float height) {
+            Vector3[] vertices = new Vector3[4];
+            int[] triangles = new int[6];
+
+            vertices[0] = new Vector3(0, height, -1f);
+            vertices[1] = new Vector3(0, height, 1f);
+            vertices[2] = new Vector3(-left, height, -1f);
+            vertices[3] = new Vector3(-right, height, 1f);
+
+            MakeTriangle(0, triangles, 0, 2, 1);
+            MakeTriangle(3, triangles, 1, 2, 3);
+
+            Mesh mesh = new Mesh();
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+            mesh.RecalculateNormals();
+            return mesh;
         }
     }
 }
