@@ -38,10 +38,20 @@ namespace CustomShips.Pieces {
         }
 
         public bool Interact(Humanoid user, bool hold, bool alt) {
+            if (CustomShip.GetPartsOfType<Rudder>().Count > 1) {
+                Player.m_localPlayer.Message(MessageHud.MessageType.Center, "$MS_CustomShips_MultipleRudder");
+                return false;
+            }
+
             return CustomShip.shipControls.Interact(user, hold, alt);
         }
 
         public bool UseItem(Humanoid user, ItemDrop.ItemData item) {
+            if (CustomShip.GetPartsOfType<Rudder>().Count > 1) {
+                Player.m_localPlayer.Message(MessageHud.MessageType.Center, "$MS_CustomShips_MultipleRudder");
+                return false;
+            }
+
             return CustomShip.shipControls.UseItem(user, item);
         }
 

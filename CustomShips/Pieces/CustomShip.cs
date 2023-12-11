@@ -69,6 +69,10 @@ namespace CustomShips.Pieces {
             }
         }
 
+        public List<T> GetPartsOfType<T>() where T : ShipPart {
+            return shipParts.Select(part => part as T).Where(part => part).ToList();
+        }
+
         private void FixedUpdate() {
             float minZ = 1000f;
             float maxZ = -1000f;

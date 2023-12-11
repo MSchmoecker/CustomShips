@@ -11,5 +11,6 @@
   "MS_CustomShips_Rib_2_0m": "Rib 2.0m",
   "MS_CustomShips_Rib_2_2m": "Rib 2.2m",
   "MS_CustomShips_Rib_2_4m": "Rib 2.4m",
-  "MS_CustomShips_Rib_2_6m": "Rib 2.6m"
+  "MS_CustomShips_Rib_2_6m": "Rib 2.6m",
+  "MS_CustomShips_MultipleRudder": "Only one rudder can be placed on a ship"
 }
