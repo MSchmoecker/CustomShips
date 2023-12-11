@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 1386317565668120498}
-  rudder: {fileID: 0}
+  rudder: {fileID: 1657922108806420201}
   attachPoint: {fileID: 4221799613979867509}
 --- !u!114 &-6003147475042178531
 MonoBehaviour:
