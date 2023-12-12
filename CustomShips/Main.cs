@@ -37,8 +37,10 @@ namespace CustomShips {
             shipPrefab = assetBundle.LoadAsset<GameObject>("MS_CustomShip");
             PrefabManager.Instance.AddPrefab(shipPrefab);
 
+            AddShipPiece("MS_Keel_2m");
             AddShipPiece("MS_Keel_4m");
             AddShipPiece("MS_Keel_Bow_1");
+            AddShipPiece("MS_Keel_Bow_2");
             AddShipPiece("MS_Rib_1.0m");
             AddShipPiece("MS_Rib_1.2m");
             AddShipPiece("MS_Rib_1.4m");

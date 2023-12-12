@@ -1,7 +1,9 @@
 ﻿{
   "MS_CustomShips_Hull_Dynamic": "Hull",
+  "MS_CustomShips_Keel_2m": "Keel 2m",
   "MS_CustomShips_Keel_4m": "Keel 4m",
-  "MS_CustomShips_Bow_1": "Bow Curved",
+  "MS_CustomShips_Bow_1": "Bow 1",
+  "MS_CustomShips_Bow_2": "Bow 2",
   "MS_CustomShips_Rudder_1": "Rudder",
   "MS_CustomShips_Rib_1_0m": "Rib 1.0m",
   "MS_CustomShips_Rib_1_2m": "Rib 1.2m",

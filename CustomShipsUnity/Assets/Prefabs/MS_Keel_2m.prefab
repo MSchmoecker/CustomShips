@@ -72,7 +72,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4591577438563871860}
-  m_Mesh: {fileID: -6314128244723360001, guid: da43c5533f4b1d74cb4cc15d1b622e2e, type: 3}
+  m_Mesh: {fileID: -3931430649192578958, guid: da43c5533f4b1d74cb4cc15d1b622e2e, type: 3}
 --- !u!23 &7877703966600391206
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.39999995, y: 0.39999995, z: 4}
+  m_Size: {x: 0.4, y: 0.4, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5716515272290272622
 GameObject:
@@ -161,7 +161,7 @@ Transform:
   m_GameObject: {fileID: 5716515272290272622}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: -4335232181287358564}
   - component: {fileID: 6498556008552938467}
   m_Layer: 10
-  m_Name: MS_Keel_4m
+  m_Name: MS_Keel_2m
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_randomTarget: 1
   m_targetNonPlayerBuilt: 1
   m_icon: {fileID: 21300000, guid: 6478dfcd07900604e86959e660e25533, type: 3}
-  m_name: $MS_CustomShips_Keel_4m
+  m_name: $MS_CustomShips_Keel_2m
   m_description: 
   m_enabled: 1
   m_category: 0
@@ -314,7 +314,7 @@ MonoBehaviour:
   m_materialType: 0
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
-  m_health: 200
+  m_health: 100
   m_damages:
     m_blunt: 0
     m_slash: 0
@@ -362,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 7903036739487678228}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
