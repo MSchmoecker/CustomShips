@@ -13,10 +13,12 @@ namespace CustomShips.Pieces {
         public BoxCollider onboardTrigger;
         public ZInt uniqueID;
 
+        [HideInInspector]
+        public Ship ship;
+
         private static List<CustomShip> ships = new List<CustomShip>();
 
         private List<ShipPart> shipParts = new List<ShipPart>();
-        private Ship ship;
         private ZNetView nview;
         private Rigidbody rigidbody;
         private Rudder currentRudder;

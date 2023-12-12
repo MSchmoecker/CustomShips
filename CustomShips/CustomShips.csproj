@@ -89,6 +89,7 @@
     <Compile Include="Pieces\Keel.cs" />
     <Compile Include="Pieces\Rib.cs" />
     <Compile Include="Pieces\Rudder.cs" />
+    <Compile Include="Pieces\Sail.cs" />
     <Compile Include="Pieces\ShipPart.cs" />
     <Compile Include="Patches\PlacementPatch.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />

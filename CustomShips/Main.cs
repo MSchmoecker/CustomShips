@@ -54,6 +54,7 @@ namespace CustomShips {
             AddShipPiece("MS_Rudder_1");
             AddShipPiece("MS_Crate_1");
             AddShipPiece("MS_Barrel_1");
+            AddShipPiece("MS_Sail_1");
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
         }
