@@ -82,7 +82,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.2
   m_Height: 9
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -110,14 +110,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3546094655471401096}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 9, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1717478166803592411}
   m_Father: {fileID: 7286044083167824658}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &4591577438563871860
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 7286044083167824658}
   - component: {fileID: 7545645346807954072}
   - component: {fileID: 7877703966600391206}
-  - component: {fileID: 4240096684458467019}
+  - component: {fileID: 1269157940495589869}
   m_Layer: 10
   m_Name: Mast
   m_TagString: Untagged
@@ -147,7 +147,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6416565014075711990}
@@ -204,8 +204,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4240096684458467019
-BoxCollider:
+--- !u!136 &1269157940495589869
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -222,9 +222,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.20000002, y: 9.4, z: 0.19999997}
-  m_Center: {x: 0.000000018626451, y: 4.7, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 10
+  m_Direction: 1
+  m_Center: {x: -0.0000030994415, y: 5, z: 0}
 --- !u!1 &6991234017162266572
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,7 +241,7 @@ GameObject:
   - component: {fileID: -4335232181287358564}
   - component: {fileID: 6498556008552938467}
   m_Layer: 10
-  m_Name: MS_Sail_1
+  m_Name: MS_Sail_2_White
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 357796315, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCollider: {fileID: 4240096684458467019}
+  mainCollider: {fileID: 0}
   mast: {fileID: 7286044083167824658}
   sail: {fileID: 6416565014075711990}
   sailCloth: {fileID: 8035912322724137182}
@@ -310,7 +312,7 @@ MonoBehaviour:
   m_randomTarget: 1
   m_targetNonPlayerBuilt: 1
   m_icon: {fileID: 21300000, guid: 6478dfcd07900604e86959e660e25533, type: 3}
-  m_name: $MS_CustomShips_Sail_1
+  m_name: $MS_CustomShips_Sail_2_White
   m_description: 
   m_enabled: 1
   m_category: 0
@@ -450,7 +452,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bb0d1c5a5bd1746419d0c5cd67c4e711, type: 2}
+  - {fileID: 2100000, guid: cd1488fcf47430841964fc66a277b21f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
