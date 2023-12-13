@@ -90,13 +90,19 @@ namespace CustomShips.Pieces {
             return shipParts.Select(part => part as T).Where(part => part).ToList();
         }
 
+        public Vector3 ToLocalPosition(Vector3 global) {
+            return transform.InverseTransformPoint(global);
+        }
+
         public Vector3 ToLocalPosition(ShipPart part) {
-            return transform.InverseTransformPoint(part.transform.position);
+            return ToLocalPosition(part.transform.position);
         }
 
         private void FixedUpdate() {
             float minZ = 1000f;
             float maxZ = -1000f;
+            float minX = 1000f;
+            float maxX = -1000f;
 
             bool hasValidPart = false;
 
@@ -106,15 +112,24 @@ namespace CustomShips.Pieces {
                 }
 
                 hasValidPart = true;
-                float z = ToLocalPosition(shipPart).z;
-                minZ = Mathf.Min(minZ, z);
-                maxZ = Mathf.Max(maxZ, z);
+                Vector3 local = ToLocalPosition(shipPart);
+                minZ = Mathf.Min(minZ, local.z);
+                maxZ = Mathf.Max(maxZ, local.z);
+
+                if (shipPart is Rib rib) {
+                    local = ToLocalPosition(rib.EndPosition);
+                }
+
+                minX = Mathf.Min(minX, local.x);
+                maxX = Mathf.Max(maxX, local.x);
+
             }
 
             if (hasValidPart) {
-                float sizeZ = Mathf.Abs(minZ - maxZ);
+                float sizeZ = Mathf.Max(1f, Mathf.Abs(minZ - maxZ));
+                float sizeX = Mathf.Max(1f, Mathf.Abs(minX - maxX));
 
-                ship.m_floatCollider.size = new Vector3(2f, 0.2f, sizeZ);
+                ship.m_floatCollider.size = new Vector3(sizeX, 0.2f, sizeZ);
                 ship.m_floatCollider.transform.position = rigidbody.worldCenterOfMass;
 
                 onboardTrigger.size = new Vector3(6f, 5f, sizeZ + 1f);
