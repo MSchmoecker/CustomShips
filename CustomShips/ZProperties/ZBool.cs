@@ -1,9 +1,11 @@
+using UnityEngine;
+
 namespace CustomShips.ZProperties {
     public class ZBool : ZProperty<bool> {
         public ZBool(string key, bool defaultValue, ZNetView zNetView) : base(key, defaultValue, zNetView) {
         }
 
-        public override bool Get() {
+        protected override bool GetValue() {
             return NetView.GetZDO().GetBool(KeyHash, DefaultValue);
         }
 

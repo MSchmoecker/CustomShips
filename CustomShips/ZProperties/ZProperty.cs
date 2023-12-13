@@ -12,6 +12,8 @@ namespace CustomShips.ZProperties {
 
         private string RPCName { get; }
 
+        private T editorValue;
+
         protected ZProperty(string key, T defaultValue, ZNetView netView) {
             Key = key;
             RPCName = "RPC_" + key;
@@ -22,8 +24,8 @@ namespace CustomShips.ZProperties {
         }
 
         public void Set(T value) {
-            if (Application.isEditor) {
-                Debug.LogWarning("Application running in Editor, skipping ZProperty.Set");
+            if (Application.isEditor && !ZNetScene.instance) {
+                editorValue = value;
                 return;
             }
 
@@ -34,11 +36,19 @@ namespace CustomShips.ZProperties {
             }
         }
 
+        public T Get() {
+            if (Application.isEditor && !ZNetScene.instance) {
+                return editorValue;
+            }
+
+            return GetValue();
+        }
+
         public void Reset() {
             Set(DefaultValue);
         }
 
-        public abstract T Get();
+        protected abstract T GetValue();
 
         protected abstract void SetValue(T value);
 

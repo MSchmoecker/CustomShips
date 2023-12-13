@@ -22,6 +22,7 @@ namespace CustomShips.Pieces {
         private ZNetView nview;
         private Rigidbody rigidbody;
         private Rudder currentRudder;
+        private ZQuaternion localPartRotation;
 
         private void Awake() {
             ships.Add(this);
@@ -29,6 +30,7 @@ namespace CustomShips.Pieces {
             rigidbody = gameObject.GetComponent<Rigidbody>();
             nview = gameObject.GetComponent<ZNetView>();
             uniqueID = new ZInt("MS_UniqueID", 0, nview);
+            localPartRotation = new ZQuaternion("MS_LocalPartRotation", Quaternion.identity, nview);
 
             if (uniqueID.Get() == 0) {
                 uniqueID.Set(Guid.NewGuid().ToString().GetStableHashCode());
@@ -54,25 +56,26 @@ namespace CustomShips.Pieces {
         }
 
         public void UpdateRudder() {
-            if (currentRudder) {
+            if (!Application.isEditor && !nview.IsOwner()) {
                 return;
             }
 
-            foreach (ShipPart shipPart in shipParts) {
-                if (!shipPart) {
-                    continue;
-                }
+            if (currentRudder) {
+                currentRudder.SetShipControls(shipControls);
+                return;
+            }
 
-                if (shipPart is Rudder rudder) {
-                    currentRudder = rudder;
+            List<Rudder> rudders = GetPartsOfType<Rudder>();
 
-                    Quaternion oldPartParentRotation = partParent.rotation;
-                    transform.rotation = Quaternion.LookRotation(rudder.transform.forward, rudder.transform.up);
-                    partParent.rotation = oldPartParentRotation;
+            if (rudders.Count == 1) {
+                currentRudder = rudders[0];
 
-                    rudder.SetShipControls(shipControls);
-                    break;
-                }
+                Quaternion oldPartParentRotation = partParent.rotation;
+                transform.rotation = Quaternion.LookRotation(currentRudder.transform.forward, currentRudder.transform.up);
+                partParent.rotation = oldPartParentRotation;
+                localPartRotation.Set(partParent.localRotation);
+
+                currentRudder.SetShipControls(shipControls);
             }
         }
 
@@ -96,6 +99,10 @@ namespace CustomShips.Pieces {
 
         public Vector3 ToLocalPosition(ShipPart part) {
             return ToLocalPosition(part.transform.position);
+        }
+
+        private void Update() {
+            partParent.localRotation = localPartRotation.Get();
         }
 
         private void FixedUpdate() {

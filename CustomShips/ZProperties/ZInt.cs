@@ -5,12 +5,7 @@ namespace CustomShips.ZProperties {
         public ZInt(string key, int defaultValue, ZNetView zNetView) : base(key, defaultValue, zNetView) {
         }
 
-        public override int Get() {
-            if (Application.isEditor) {
-                Debug.LogWarning("Application running in Editor, returning default value for ZInt");
-                return DefaultValue;
-            }
-
+        protected override int GetValue() {
             return NetView.GetZDO().GetInt(KeyHash, DefaultValue);
         }
 
