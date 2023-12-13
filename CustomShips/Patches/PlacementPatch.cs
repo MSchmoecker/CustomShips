@@ -111,7 +111,7 @@ namespace CustomShips.Patches {
 
                 if (nearest) {
                     float placeRotation = player.m_placeRotationDegrees * player.m_placeRotation;
-                    return nearest.transform.rotation * Quaternion.Euler(0f, placeRotation, 0f);
+                    return nearest.CustomShip.transform.rotation * Quaternion.Euler(0f, placeRotation, 0f);
                 }
 
                 return rotation;
