@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace CustomShips.Pieces {
     public class Sail : ShipPart {
+        public float force = 0.03f;
         public Transform mast;
         public Transform sail;
         public Cloth sailCloth;
-        
+
         private bool sailWasInPosition;
 
         private void Update() {

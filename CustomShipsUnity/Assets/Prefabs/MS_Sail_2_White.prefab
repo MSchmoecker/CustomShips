@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCollider: {fileID: 0}
+  force: 0.03
   mast: {fileID: 7286044083167824658}
   sail: {fileID: 6416565014075711990}
   sailCloth: {fileID: 8035912322724137182}

@@ -34,7 +34,7 @@ namespace CustomShips.Pieces {
                 uniqueID.Set(Guid.NewGuid().ToString().GetStableHashCode());
             }
 
-            InvokeRepeating(nameof(UpdateRudder), 1, 1f);
+            InvokeRepeating(nameof(UpdatePieces), 1, 1f);
         }
 
         public void AddPart(ShipPart shipPart) {
@@ -46,6 +46,11 @@ namespace CustomShips.Pieces {
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(partParent);
             rigidbody.mass = (shipParts.Count) * 20f;
+        }
+
+        private void UpdatePieces() {
+            UpdateRudder();
+            UpdateSails();
         }
 
         public void UpdateRudder() {
@@ -71,8 +76,22 @@ namespace CustomShips.Pieces {
             }
         }
 
+        private void UpdateSails() {
+            List<Sail> sails = GetPartsOfType<Sail>();
+
+            float forceSum = sails.Sum(sail => sail.force);
+            float weightedForce = Mathf.Round(1000f * (Mathf.Log(1 + forceSum * 4f) / 4f)) / 1000f;
+            // Vector3 centerOfForce = sails.Aggregate(Vector3.zero, (current, sail) => current + ToLocalPosition(sail)) / sails.Count;
+
+            ship.m_sailForceFactor = weightedForce;
+        }
+
         public List<T> GetPartsOfType<T>() where T : ShipPart {
             return shipParts.Select(part => part as T).Where(part => part).ToList();
+        }
+
+        public Vector3 ToLocalPosition(ShipPart part) {
+            return transform.InverseTransformPoint(part.transform.position);
         }
 
         private void FixedUpdate() {
@@ -87,7 +106,7 @@ namespace CustomShips.Pieces {
                 }
 
                 hasValidPart = true;
-                float z = transform.InverseTransformPoint(shipPart.transform.position).z;
+                float z = ToLocalPosition(shipPart).z;
                 minZ = Mathf.Min(minZ, z);
                 maxZ = Mathf.Max(maxZ, z);
             }
