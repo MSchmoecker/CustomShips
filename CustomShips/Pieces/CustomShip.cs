@@ -142,8 +142,8 @@ namespace CustomShips.Pieces {
             }
 
             if (hasValidPart) {
-                float sizeZ = Mathf.Max(1f, Mathf.Abs(minZ - maxZ));
-                float sizeX = Mathf.Max(1f, Mathf.Abs(minX - maxX));
+                float sizeZ = Mathf.Abs(minZ - maxZ) + 1f;
+                float sizeX = Mathf.Abs(minX - maxX) + 1f;
 
                 ship.m_floatCollider.size = new Vector3(sizeX, 0.2f, sizeZ);
                 ship.m_floatCollider.transform.localPosition = center / partCount;
