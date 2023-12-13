@@ -104,6 +104,9 @@ namespace CustomShips.Pieces {
             float minX = 1000f;
             float maxX = -1000f;
 
+            Vector3 center = Vector3.zero;
+            int partCount = 0;
+
             bool hasValidPart = false;
 
             foreach (ShipPart shipPart in shipParts) {
@@ -112,17 +115,23 @@ namespace CustomShips.Pieces {
                 }
 
                 hasValidPart = true;
-                Vector3 local = ToLocalPosition(shipPart);
-                minZ = Mathf.Min(minZ, local.z);
-                maxZ = Mathf.Max(maxZ, local.z);
+
+                Vector3 local;
 
                 if (shipPart is Rib rib) {
                     local = ToLocalPosition(rib.EndPosition);
+                } else {
+                    local = ToLocalPosition(shipPart);
                 }
+
+                minZ = Mathf.Min(minZ, local.z);
+                maxZ = Mathf.Max(maxZ, local.z);
 
                 minX = Mathf.Min(minX, local.x);
                 maxX = Mathf.Max(maxX, local.x);
 
+                center += local;
+                partCount++;
             }
 
             if (hasValidPart) {
@@ -130,7 +139,7 @@ namespace CustomShips.Pieces {
                 float sizeX = Mathf.Max(1f, Mathf.Abs(minX - maxX));
 
                 ship.m_floatCollider.size = new Vector3(sizeX, 0.2f, sizeZ);
-                ship.m_floatCollider.transform.position = rigidbody.worldCenterOfMass;
+                ship.m_floatCollider.transform.localPosition = center / partCount;
 
                 onboardTrigger.size = new Vector3(6f, 5f, sizeZ + 1f);
                 onboardTrigger.transform.position = rigidbody.worldCenterOfMass;
