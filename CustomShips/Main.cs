@@ -16,7 +16,7 @@ namespace CustomShips {
     public class Main : BaseUnityPlugin {
         public const string PluginGUID = "com.maxsch.valheim.CustomShips";
         public const string PluginName = "CustomShips";
-        public const string PluginVersion = "0.0.4";
+        public const string PluginVersion = "0.0.5";
 
         private static AssetBundle assetBundle;
         private static List<CustomPiece> pieces = new List<CustomPiece>();
@@ -55,6 +55,10 @@ namespace CustomShips {
             AddShipPiece("MS_Crate_1", "FineWood", 8, "BronzeNails", 6);
             AddShipPiece("MS_Barrel_1", "FineWood", 8, "BronzeNails", 6);
             AddShipPiece("MS_Ladder_1", "Wood", 4, "BronzeNails", 2);
+            AddShipPiece("MS_Shield_Round_1_Style_1", "FineWood", 6, "BronzeNails", 4);
+            AddShipPiece("MS_Shield_Round_1_Style_2", "FineWood", 6, "BronzeNails", 4);
+            AddShipPiece("MS_Shield_Round_1_Style_3", "FineWood", 6, "BronzeNails", 4);
+            AddShipPiece("MS_Shield_Round_1_Style_4", "FineWood", 6, "BronzeNails", 4);
             AddShipPiece("MS_Sail_2_White", "FineWood", 20, "LeatherScraps", 12, "Resin", 8);
             AddShipPiece("MS_Sail_2_Red_1", "FineWood", 20, "LeatherScraps", 12, "Resin", 8, "Raspberry", 4);
             AddShipPiece("MS_Sail_2_Hide_1", "FineWood", 20, "DeerHide", 12, "Resin", 8);
