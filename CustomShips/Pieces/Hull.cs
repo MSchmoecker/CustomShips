@@ -7,6 +7,7 @@ namespace CustomShips.Pieces {
         public MeshFilter watermask;
         public Rib leftRib;
         public Rib rightRib;
+        public Transform outerSnappoint;
 
         public float height = 0.9f;
 
@@ -28,6 +29,21 @@ namespace CustomShips.Pieces {
             if (newLeftRib != leftRib || newRightRib != rightRib) {
                 leftRib = newLeftRib;
                 rightRib = newRightRib;
+
+                float size;
+
+                if (leftRib && rightRib) {
+                    size = (leftRib.size + rightRib.size) / 2f;
+                } else if (leftRib) {
+                    size = leftRib.size / 2f;
+                } else if (rightRib) {
+                    size = rightRib.size / 2f;
+                } else {
+                    size = 2f;
+                }
+
+                outerSnappoint.localPosition = new Vector3(-size, height, 0);
+
                 OnChange?.Invoke();
             }
         }

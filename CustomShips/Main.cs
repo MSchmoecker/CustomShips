@@ -60,6 +60,7 @@ namespace CustomShips {
             AddShipPiece("MS_Sail_1_White");
             AddShipPiece("MS_Sail_1_Red_1");
             AddShipPiece("MS_Sail_1_Hide_1");
+            AddShipPiece("MS_Ladder_1");
 
             PieceManager.OnPiecesRegistered += OnPiecesRegistered;
         }
