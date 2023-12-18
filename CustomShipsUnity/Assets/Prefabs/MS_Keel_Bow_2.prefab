@@ -288,7 +288,31 @@ MonoBehaviour:
   m_mustBeAboveConnected: 0
   m_onlyInBiome: 0
   m_placeEffect:
-    m_effectPrefabs: []
+    m_effectPrefabs:
+    - m_prefab: {fileID: 1448110300397667813, guid: c67a954b8795dad459b66f05a4f44faf,
+        type: 3}
+      m_enabled: 1
+      m_variant: -1
+      m_attach: 0
+      m_follow: 0
+      m_inheritParentRotation: 0
+      m_inheritParentScale: 0
+      m_multiplyParentVisualScale: 0
+      m_randomRotation: 0
+      m_scale: 0
+      m_childTransform: 
+    - m_prefab: {fileID: 5745049411562686143, guid: 8cc1f03eb04a88f42a838bc7f7227cbe,
+        type: 3}
+      m_enabled: 1
+      m_variant: -1
+      m_attach: 0
+      m_follow: 0
+      m_inheritParentRotation: 0
+      m_inheritParentScale: 0
+      m_multiplyParentVisualScale: 0
+      m_randomRotation: 0
+      m_scale: 0
+      m_childTransform: 
   m_dlc: 
   m_craftingStation: {fileID: 0}
   m_resources: []
@@ -330,9 +354,45 @@ MonoBehaviour:
   m_destroyNoise: 0
   m_triggerPrivateArea: 1
   m_destroyedEffect:
-    m_effectPrefabs: []
+    m_effectPrefabs:
+    - m_prefab: {fileID: 3620337597014759962, guid: d9b49dcb44c84e44ca0f81f550c6797e,
+        type: 3}
+      m_enabled: 1
+      m_variant: -1
+      m_attach: 0
+      m_follow: 0
+      m_inheritParentRotation: 0
+      m_inheritParentScale: 0
+      m_multiplyParentVisualScale: 0
+      m_randomRotation: 0
+      m_scale: 0
+      m_childTransform: 
+    - m_prefab: {fileID: 6226408891315518392, guid: 464b21b5758c64f4497519a5da03aa6c,
+        type: 3}
+      m_enabled: 1
+      m_variant: -1
+      m_attach: 0
+      m_follow: 0
+      m_inheritParentRotation: 0
+      m_inheritParentScale: 0
+      m_multiplyParentVisualScale: 0
+      m_randomRotation: 0
+      m_scale: 0
+      m_childTransform: 
   m_hitEffect:
-    m_effectPrefabs: []
+    m_effectPrefabs:
+    - m_prefab: {fileID: 6226408891315518392, guid: 464b21b5758c64f4497519a5da03aa6c,
+        type: 3}
+      m_enabled: 1
+      m_variant: -1
+      m_attach: 0
+      m_follow: 0
+      m_inheritParentRotation: 0
+      m_inheritParentScale: 0
+      m_multiplyParentVisualScale: 0
+      m_randomRotation: 0
+      m_scale: 0
+      m_childTransform: 
   m_switchEffect:
     m_effectPrefabs: []
   m_autoCreateFragments: 1
