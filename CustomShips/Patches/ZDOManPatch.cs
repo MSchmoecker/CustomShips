@@ -25,7 +25,9 @@ namespace CustomShips.Patches {
 
         [HarmonyPatch(typeof(ZDOMan), nameof(ZDOMan.CreateNewZDO), typeof(ZDOID), typeof(Vector3), typeof(int)), HarmonyPostfix]
         public static void OnCreateNewZDO(ref ZDO __result) {
-            newZDOs.Enqueue(__result);
+            if (ZNet.instance.IsServer()) {
+                newZDOs.Enqueue(__result);
+            }
         }
 
         [HarmonyPatch(typeof(ZDOMan), nameof(ZDOMan.Update)), HarmonyPostfix]
@@ -36,10 +38,25 @@ namespace CustomShips.Patches {
         }
 
         private static void CheckShip(int targetShip) {
-            if (ships.ContainsKey(targetShip) && (!shipPieces.ContainsKey(targetShip) || shipPieces[targetShip].Count == 0)) {
+            if (!HasAnyPiece(targetShip) && ships.TryGetValue(targetShip, out ZDO shipZDO)) {
                 Logger.LogInfo($"Deleting empty ship {targetShip}");
-                ZDOMan.instance.DestroyZDO(ships[targetShip]);
+
+                if (!shipZDO.IsOwner()) {
+                    shipZDO.SetOwner(ZDOMan.GetSessionID());
+                }
+
+                ZDOMan.instance.DestroyZDO(shipZDO);
+            } else {
+                Logger.LogInfo($"Not deleting ship {targetShip}, {shipPieces[targetShip].Count}");
             }
+        }
+
+        private static bool HasAnyPiece(int targetShip) {
+            if (shipPieces.TryGetValue(targetShip, out List<ZDO> pieces)) {
+                return pieces.Count > 0;
+            }
+
+            return false;
         }
 
         private static void OnZDODestroyed(ZDO zdo) {
