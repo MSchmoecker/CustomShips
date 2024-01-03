@@ -107,6 +107,14 @@ namespace CustomShips.Pieces {
             partParent.localRotation = localPartRotation.Get();
         }
 
+        private void OnDestroy() {
+            foreach (ShipPart shipPart in shipParts) {
+                if (shipPart) {
+                    shipPart.transform.SetParent(null);
+                }
+            }
+        }
+
         private void UpdateCollider() {
             float minZ = 1000f;
             float maxZ = -1000f;
