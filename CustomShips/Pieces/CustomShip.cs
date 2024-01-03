@@ -44,7 +44,9 @@ namespace CustomShips.Pieces {
                 return;
             }
 
+#if DEBUG
             Logger.LogInfo($"Adding part {shipPart.name} to ship");
+#endif
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(partParent);
             rigidbody.mass = (shipParts.Count) * 20f;

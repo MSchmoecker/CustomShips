@@ -46,15 +46,13 @@ namespace CustomShips.Patches {
 
         private static void CheckShip(int targetShip) {
             if (!HasAnyPiece(targetShip) && ships.TryGetValue(targetShip, out ZDO shipZDO)) {
-                Logger.LogInfo($"Deleting empty ship {targetShip}");
+                Logger.LogInfo($"Deleting empty ship {shipZDO}");
 
                 if (!shipZDO.IsOwner()) {
                     shipZDO.SetOwner(ZDOMan.GetSessionID());
                 }
 
                 ZDOMan.instance.DestroyZDO(shipZDO);
-            } else {
-                Logger.LogInfo($"Not deleting ship {targetShip}, {shipPieces[targetShip].Count}");
             }
         }
 
@@ -76,7 +74,9 @@ namespace CustomShips.Patches {
                 int ship = zdo.GetInt("MS_ConnectedShip");
 
                 if (shipPieces.TryGetValue(ship, out List<ZDO> pieces)) {
+#if DEBUG
                     Logger.LogInfo($"Removing ZDO from ship {ship}");
+#endif
                     pieces.Remove(zdo);
                 } else {
                     Logger.LogWarning($"ship {ship} for {zdo} not registered");
@@ -93,7 +93,9 @@ namespace CustomShips.Patches {
 
             if (Main.IsShipPiece(zdo)) {
                 int ship = zdo.GetInt("MS_ConnectedShip");
+#if DEBUG
                 Logger.LogInfo($"Registering ZDO with ship {ship}");
+#endif
 
                 if (shipPieces.TryGetValue(ship, out List<ZDO> pieces)) {
                     pieces.Add(zdo);

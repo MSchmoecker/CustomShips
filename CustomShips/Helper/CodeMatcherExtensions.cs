@@ -22,6 +22,7 @@ namespace CustomShips.Helper {
             return codeMatcher;
         }
 
+#if DEBUG
         internal static CodeMatcher Print(this CodeMatcher codeMatcher, int before, int after) {
             for (int i = -before; i <= after; ++i) {
                 int currentOffset = i;
@@ -45,6 +46,7 @@ namespace CustomShips.Helper {
 
             return codeMatcher;
         }
+#endif
 
         public static bool IsCall(this CodeInstruction i, string declaringType, string name) {
             return (i.opcode == OpCodes.Callvirt || i.opcode == OpCodes.Call) &&
