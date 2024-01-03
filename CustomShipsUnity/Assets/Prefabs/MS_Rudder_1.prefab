@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7751796936857838950}
   - component: {fileID: 5303751727212719986}
   - component: {fileID: 4610289149112860440}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bench_Backrest_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 1657922108806420201}
   - component: {fileID: 2778261210305932145}
   - component: {fileID: 1025839383493075284}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SteeringWheel_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

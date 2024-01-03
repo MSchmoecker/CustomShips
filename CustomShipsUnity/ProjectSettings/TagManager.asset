@@ -26,18 +26,18 @@ TagManager:
   - character_ghost
   - hitbox
   - skybox
+  - Default_small
+  - WaterVolume
+  - weapon
+  - blocker
+  - pathblocker
+  - viewblock
+  - character_net
+  - character_noenv
+  - vehicle
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - smoke
   m_SortingLayers:
   - name: Default
     uniqueID: 0

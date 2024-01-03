@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 357796315, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCollider: {fileID: 0}
+  mainCollider: {fileID: 1269157940495589869}
   force: 0.03
   mast: {fileID: 7286044083167824658}
   sail: {fileID: 6416565014075711990}

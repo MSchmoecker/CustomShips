@@ -490,6 +490,7 @@ MonoBehaviour:
   watermask: {fileID: 1380973063766829875}
   leftRib: {fileID: 0}
   rightRib: {fileID: 0}
+  outerSnappoint: {fileID: 0}
   height: 0.9
 --- !u!114 &-3455038063095954963
 MonoBehaviour:
@@ -603,7 +604,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9088536706770672560}
   - component: {fileID: 2517713836168421627}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
