@@ -51,8 +51,10 @@ namespace CustomShips.Pieces {
         }
 
         private void UpdatePieces() {
+            shipParts.RemoveAll(i => !i);
             UpdateRudder();
             UpdateSails();
+            UpdateCollider();
         }
 
         public void UpdateRudder() {
@@ -105,7 +107,7 @@ namespace CustomShips.Pieces {
             partParent.localRotation = localPartRotation.Get();
         }
 
-        private void FixedUpdate() {
+        private void UpdateCollider() {
             float minZ = 1000f;
             float maxZ = -1000f;
             float minX = 1000f;
