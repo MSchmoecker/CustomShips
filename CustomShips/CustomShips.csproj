@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\CodeMatcherExtensions.cs" />
+    <Compile Include="Patches\ZDOManPatch.cs" />
     <Compile Include="Pieces\Crate.cs" />
     <Compile Include="Pieces\CustomShip.cs" />
     <Compile Include="Pieces\DynamicHull.cs" />

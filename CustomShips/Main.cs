@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BepInEx;
 using CustomShips.Pieces;
 using HarmonyLib;
+using Jotunn;
 using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
@@ -21,8 +22,10 @@ namespace CustomShips {
         private static AssetBundle assetBundle;
         private static List<CustomPiece> pieces = new List<CustomPiece>();
         private static HashSet<string> shipPieceNames = new HashSet<string>();
+        private static HashSet<int> shipPieceHashes = new HashSet<int>();
 
         public static GameObject shipPrefab;
+        private static int shipPrefabHash;
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
 
@@ -36,6 +39,7 @@ namespace CustomShips {
 
             shipPrefab = assetBundle.LoadAsset<GameObject>("MS_CustomShip");
             PrefabManager.Instance.AddPrefab(shipPrefab);
+            shipPrefabHash = shipPrefab.name.GetStableHashCode();
 
             AddShipPiece("MS_Keel_2m", "RoundLog", 4, "BronzeNails", 2);
             AddShipPiece("MS_Keel_4m", "RoundLog", 8, "BronzeNails", 4);
@@ -96,14 +100,23 @@ namespace CustomShips {
 
             pieces.Add(piece);
             shipPieceNames.Add(pieceName);
+            shipPieceHashes.Add(pieceName.GetStableHashCode());
         }
 
         public static bool IsShipPiece(GameObject piece) {
             return shipPieceNames.Contains(Utils.GetPrefabName(piece));
         }
 
+        public static bool IsShipPiece(ZDO zdo) {
+            return shipPieceHashes.Contains(zdo.GetPrefab());
+        }
+
         public static bool IsCustomShip(GameObject piece) {
             return shipPrefab.name == Utils.GetPrefabName(piece);
+        }
+
+        public static bool IsCustomShip(ZDO zdo) {
+            return zdo.GetPrefab() == shipPrefabHash;
         }
 
         private PieceConfig ShipPartConfig(string ingredient1, int amount1, string ingredient2, int amount2, string ingredient3, int amount3, string ingredient4, int amount4) {

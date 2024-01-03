@@ -60,7 +60,11 @@ namespace CustomShips.Patches {
 
         private static GameObject AfterPlacePiece(GameObject piece) {
             if (piece && Main.IsShipPiece(piece) && piece.TryGetComponent(out ShipPart shipPart)) {
-                shipPart.CustomShip = snapShip;
+                if (snapShip) {
+                    shipPart.CustomShip = snapShip;
+                } else {
+                    shipPart.CreateCustomShip();
+                }
             }
 
             snapShip = null;

@@ -67,12 +67,6 @@ namespace CustomShips.Pieces {
             }
 
             int connectedShipId = connectedShip.Get();
-
-            if (connectedShipId == 0) {
-                CreateCustomShip();
-                return;
-            }
-
             CustomShip shipInstance = CustomShip.FindCustomShip(connectedShipId);
 
             if (shipInstance) {
@@ -87,7 +81,7 @@ namespace CustomShips.Pieces {
             }
         }
 
-        private void CreateCustomShip() {
+        public void CreateCustomShip() {
             Logger.LogInfo("Creating new ship");
             GameObject parent = Instantiate(Main.shipPrefab, transform.position, Quaternion.identity);
             CustomShip = parent.GetComponent<CustomShip>();
