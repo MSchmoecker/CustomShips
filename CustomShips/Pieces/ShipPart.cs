@@ -102,7 +102,7 @@ namespace CustomShips.Pieces {
             for (int i = 0; i < piecesOverlap; i++) {
                 ShipPart shipPart = tmpColliders[i].GetComponentInParent<ShipPart>();
 
-                if (shipPart) {
+                if (shipPart && shipPart.CustomShip) {
                     float distance = Vector3.Distance(shipPart.transform.position, position);
 
                     if (distance < minDistance) {
