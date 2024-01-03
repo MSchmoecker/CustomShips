@@ -23,6 +23,13 @@ namespace CustomShips.Patches {
             __instance.m_onZDODestroyed += OnZDODestroyed;
         }
 
+        [HarmonyPatch(typeof(ZDOMan), nameof(ZDOMan.ShutDown)), HarmonyPostfix]
+        public static void OnShutDown() {
+            ships.Clear();
+            shipPieces.Clear();
+            newZDOs.Clear();
+        }
+
         [HarmonyPatch(typeof(ZDOMan), nameof(ZDOMan.CreateNewZDO), typeof(ZDOID), typeof(Vector3), typeof(int)), HarmonyPostfix]
         public static void OnCreateNewZDO(ref ZDO __result) {
             if (ZNet.instance.IsServer()) {
