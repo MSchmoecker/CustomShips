@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using BepInEx.Bootstrap;
 using CustomShips.Helper;
 using CustomShips.Pieces;
 using HarmonyLib;
@@ -73,6 +74,7 @@ namespace CustomShips.Patches {
 
         [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> UpdatePlacementGhostRotationTranspiler(IEnumerable<CodeInstruction> instructions) {
+            bool isGizmoInstalled = Chainloader.PluginInfos.ContainsKey("bruce.valheim.comfymods.gizmo");
             MethodInfo euler = AccessTools.Method(typeof(Quaternion), nameof(Quaternion.Euler), new[] { typeof(float), typeof(float), typeof(float) });
 
             CodeMatch[] loadPlacementRotation = {
@@ -90,11 +92,13 @@ namespace CustomShips.Patches {
 
             CodeMatch[] makeAndStoreRotation = {
                 new CodeMatch(OpCodes.Call, euler),
+                isGizmoInstalled ? new CodeMatch() : null,
                 new CodeMatch(OpCodes.Stloc_S),
             };
 
             return new CodeMatcher(instructions)
-                .MatchForward(true, loadPlacementRotation.Concat(prepareEuler).Concat(makeAndStoreRotation).ToArray())
+                .MatchForward(true, loadPlacementRotation.Concat(prepareEuler).Concat(makeAndStoreRotation).Where(i => i != null).ToArray())
+                .ThrowIfInvalid("Could not find rotation calculation")
                 .GetOperand(out object localRotation)
                 .Advance(1)
                 .InsertAndAdvance(
@@ -114,8 +118,7 @@ namespace CustomShips.Patches {
                 ShipPart nearest = ShipPart.FindNearest(point);
 
                 if (nearest) {
-                    float placeRotation = player.m_placeRotationDegrees * player.m_placeRotation;
-                    return nearest.CustomShip.transform.rotation * Quaternion.Euler(0f, placeRotation, 0f);
+                    return nearest.CustomShip.transform.rotation * rotation;
                 }
 
                 return rotation;
