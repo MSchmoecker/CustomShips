@@ -24,5 +24,9 @@
   "MS_CustomShips_Rib_2_2m": "Rib 2.2m",
   "MS_CustomShips_Rib_2_4m": "Rib 2.4m",
   "MS_CustomShips_Rib_2_6m": "Rib 2.6m",
+  "MS_CustomShips_Shield_1_Style_1": "Shield",
+  "MS_CustomShips_Shield_1_Style_2": "Red-White Shield",
+  "MS_CustomShips_Shield_1_Style_3": "Blue-White Shield",
+  "MS_CustomShips_Shield_1_Style_4": "Red-Back Shield",
   "MS_CustomShips_MultipleRudder": "Only one rudder can be placed on a ship"
 }
