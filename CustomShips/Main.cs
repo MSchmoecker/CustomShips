@@ -24,7 +24,7 @@ namespace CustomShips {
         private static HashSet<string> shipPieceNames = new HashSet<string>();
         private static HashSet<int> shipPieceHashes = new HashSet<int>();
 
-        public static GameObject shipPrefab;
+        public static CustomPiece customShip;
         private static int shipPrefabHash;
 
         public static CustomLocalization Localization = LocalizationManager.Instance.GetLocalization();
@@ -37,9 +37,9 @@ namespace CustomShips {
 
             assetBundle = AssetUtils.LoadAssetBundleFromResources("customships");
 
-            shipPrefab = assetBundle.LoadAsset<GameObject>("MS_CustomShip");
-            PrefabManager.Instance.AddPrefab(shipPrefab);
-            shipPrefabHash = shipPrefab.name.GetStableHashCode();
+            customShip = new CustomPiece(assetBundle, "MS_CustomShip", false, ShipPartConfig(false));
+            PieceManager.Instance.AddPiece(customShip);
+            shipPrefabHash = customShip.PiecePrefab.name.GetStableHashCode();
 
             AddShipPiece("MS_Keel_2m", "RoundLog", 4, "BronzeNails", 2);
             AddShipPiece("MS_Keel_4m", "RoundLog", 8, "BronzeNails", 4);
@@ -91,7 +91,8 @@ namespace CustomShips {
         }
 
         private void AddShipPiece(string pieceName, string ingredient1 = "", int amount1 = 0, string ingredient2 = "", int amount2 = 0, string ingredient3 = "", int amount3 = 0, string ingredient4 = "", int amount4 = 0) {
-            CustomPiece piece = new CustomPiece(assetBundle, pieceName, true, ShipPartConfig(ingredient1, amount1, ingredient2, amount2, ingredient3, amount3, ingredient4, amount4));
+            PieceConfig config = ShipPartConfig(true, ingredient1, amount1, ingredient2, amount2, ingredient3, amount3, ingredient4, amount4);
+            CustomPiece piece = new CustomPiece(assetBundle, pieceName, true, config);
             PieceManager.Instance.AddPiece(piece);
 
             if (piece.PiecePrefab.TryGetComponent(out DynamicHull dynamicHull)) {
@@ -112,18 +113,19 @@ namespace CustomShips {
         }
 
         public static bool IsCustomShip(GameObject piece) {
-            return shipPrefab.name == Utils.GetPrefabName(piece);
+            return Utils.GetPrefabName(piece).GetStableHashCode() == shipPrefabHash;
         }
 
         public static bool IsCustomShip(ZDO zdo) {
             return zdo.GetPrefab() == shipPrefabHash;
         }
 
-        private PieceConfig ShipPartConfig(string ingredient1, int amount1, string ingredient2, int amount2, string ingredient3, int amount3, string ingredient4, int amount4) {
+        private PieceConfig ShipPartConfig(bool enabled, string ingredient1 = "", int amount1 = 0, string ingredient2 = "", int amount2 = 0, string ingredient3 = "", int amount3 = 0, string ingredient4 = "", int amount4 = 0) {
             PieceConfig stackConfig = new PieceConfig();
             stackConfig.PieceTable = PieceTables.Hammer;
             stackConfig.CraftingStation = CraftingStations.Workbench;
             stackConfig.Category = "Ship";
+            stackConfig.Enabled = enabled;
 
             stackConfig.AddRequirement(new RequirementConfig(ingredient1, amount1, 0, true));
             stackConfig.AddRequirement(new RequirementConfig(ingredient2, amount2, 0, true));

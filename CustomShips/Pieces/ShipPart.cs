@@ -85,7 +85,7 @@ namespace CustomShips.Pieces {
 #if DEBUG
             Logger.LogInfo("Creating new ship");
 #endif
-            GameObject parent = Instantiate(Main.shipPrefab, transform.position, Quaternion.identity);
+            GameObject parent = Instantiate(Main.customShip.PiecePrefab, transform.position, Quaternion.identity);
             CustomShip = parent.GetComponent<CustomShip>();
         }
 

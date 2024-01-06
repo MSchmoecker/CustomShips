@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 7456785984547489918}
   - component: {fileID: 3634806631194408366}
   - component: {fileID: 4971925354257638755}
+  - component: {fileID: 3258482937066973896}
   m_Layer: 0
   m_Name: MS_CustomShip
   m_TagString: Untagged
@@ -505,6 +506,64 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3258482937066973896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653642192051029149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2094620348, guid: 02f806226319f1d4b8ae0232b57e8b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_primaryTarget: 0
+  m_randomTarget: 1
+  m_targetNonPlayerBuilt: 1
+  m_icon: {fileID: 21300000, guid: 6478dfcd07900604e86959e660e25533, type: 3}
+  m_name: $MS_CustomShip_Ship
+  m_description: $MS_CustomShip_Ship
+  m_enabled: 0
+  m_category: 0
+  m_isUpgrade: 0
+  m_comfort: 0
+  m_comfortGroup: 0
+  m_comfortObject: {fileID: 0}
+  m_groundPiece: 0
+  m_allowAltGroundPlacement: 0
+  m_groundOnly: 0
+  m_cultivatedGroundOnly: 0
+  m_waterPiece: 0
+  m_clipGround: 0
+  m_clipEverything: 0
+  m_noInWater: 0
+  m_notOnWood: 0
+  m_notOnTiltingSurface: 0
+  m_inCeilingOnly: 0
+  m_notOnFloor: 0
+  m_noClipping: 0
+  m_onlyInTeleportArea: 0
+  m_allowedInDungeons: 0
+  m_spaceRequirement: 0
+  m_repairPiece: 0
+  m_canRotate: 1
+  m_randomInitBuildRotation: 0
+  m_canBeRemoved: 1
+  m_allowRotatedOverlap: 0
+  m_vegetationGroundOnly: 0
+  m_blockingPieces: []
+  m_blockRadius: 0
+  m_mustConnectTo: {fileID: 0}
+  m_connectRadius: 0
+  m_mustBeAboveConnected: 0
+  m_onlyInBiome: 0
+  m_placeEffect:
+    m_effectPrefabs: []
+  m_dlc: 
+  m_craftingStation: {fileID: 0}
+  m_resources: []
+  m_destroyedLootPrefab: {fileID: 0}
 --- !u!1 &7578289849770191791
 GameObject:
   m_ObjectHideFlags: 0
