@@ -1,8 +1,8 @@
 ﻿{
   "name": "CustomShips",
   "description": "Build and customize ships out of a variety of different ship pieces",
-  "version_number": "0.0.1",
-  "website_url": "",
+  "version_number": "0.1.0",
+  "website_url": "https://github.com/MSchmoecker/CustomShips",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2202",
     "ValheimModding-Jotunn-2.16.1"

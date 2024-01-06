@@ -41,10 +41,10 @@ The pieces are specifically made for the ship and don't allow vanilla or modded 
 Therefore most other ship related mods should be compatible too, please let me know if there is a conflict somewhere.
 
 
-## Installation
+## Manual Installation
 
 This mod requires [BepInEx](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/) and [Jötunn](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/).
-Extract all files to `BepInEx/plugins/MultiUserChest`
+Extract all files to `BepInEx/plugins/CustomShips`
 
 The mod must be installed on the server and all client.
 It is ensured that all players have the mod installed with the same mod version, otherwise no connection is possible.
@@ -56,3 +56,8 @@ It is ensured that all players have the mod installed with the same mod version,
 - [Nexus](https://www.nexusmods.com/valheim/mods/2653)
 - [Github](https://github.com/MSchmoecker/CustomShips)
 - Discord: Margmas. Feel free to DM or ping me about feedback or questions, for example in the [Jötunn discord](https://discord.gg/DdUt6g7gyA)
+
+## Changelog
+
+0.1.0
+- Release
