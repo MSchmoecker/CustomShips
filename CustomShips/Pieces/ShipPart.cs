@@ -6,6 +6,7 @@ using Logger = Jotunn.Logger;
 
 namespace CustomShips.Pieces {
     public abstract class ShipPart : MonoBehaviour {
+        public float buoyancy = 1;
         private CustomShip customShip;
         private ZNetView nview;
         private ZInt connectedShip;

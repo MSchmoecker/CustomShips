@@ -32,8 +32,13 @@ namespace CustomShips.Pieces {
             }
 
             ships.Add(this);
+
             ship = gameObject.GetComponent<Ship>();
+            ship.m_disableLevel = 0;
+
             rigidbody = gameObject.GetComponent<Rigidbody>();
+            rigidbody.automaticCenterOfMass = false;
+
             uniqueID = new ZInt("MS_UniqueID", 0, nview);
             localPartRotation = new ZQuaternion("MS_LocalPartRotation", Quaternion.identity, nview);
 
@@ -130,6 +135,8 @@ namespace CustomShips.Pieces {
 
             Vector3 center = Vector3.zero;
             int partCount = 0;
+            Vector3 buoyancyCenter = Vector3.zero;
+            float buoyancySum = 0;
 
             bool hasValidPart = false;
 
@@ -156,6 +163,9 @@ namespace CustomShips.Pieces {
 
                 center += local;
                 partCount++;
+
+                buoyancyCenter += local * shipPart.buoyancy;
+                buoyancySum += shipPart.buoyancy;
             }
 
             if (hasValidPart) {
@@ -163,7 +173,8 @@ namespace CustomShips.Pieces {
                 float sizeX = Mathf.Abs(minX - maxX) + 1f;
 
                 ship.m_floatCollider.size = new Vector3(sizeX, 0.2f, sizeZ);
-                ship.m_floatCollider.transform.localPosition = center / partCount;
+                ship.m_floatCollider.transform.localPosition = buoyancyCenter / buoyancySum;
+                rigidbody.centerOfMass = center / partCount;
 
                 onboardTrigger.size = new Vector3(6f, 5f, sizeZ + 1f);
                 onboardTrigger.transform.position = rigidbody.worldCenterOfMass;

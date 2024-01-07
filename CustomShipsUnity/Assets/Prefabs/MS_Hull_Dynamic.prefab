@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: -1197701274, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buoyancy: 4
   mainCollider: {fileID: 8129461636691153670}
   watermask: {fileID: 3196854857036165472}
   leftRib: {fileID: 0}

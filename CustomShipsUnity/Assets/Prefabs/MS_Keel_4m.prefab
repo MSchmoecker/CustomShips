@@ -234,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 1758270728, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buoyancy: 4
   mainCollider: {fileID: 4240096684458467019}
 --- !u!114 &-4335232181287358564
 MonoBehaviour:
