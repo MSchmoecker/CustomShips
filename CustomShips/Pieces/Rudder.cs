@@ -13,6 +13,12 @@ namespace CustomShips.Pieces {
             InvokeRepeating(nameof(UpdateRudder), 0f, 3f);
         }
 
+        private void Update() {
+            if (CustomShip) {
+                rudder.localRotation = CustomShip.ship.m_rudderObject.transform.localRotation;
+            }
+        }
+
         private void UpdateRudder() {
             Rib newRightRib = Rib.FindRib(transform.position + transform.right * 1f);
 
