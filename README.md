@@ -40,6 +40,8 @@ The ships behave mostly like regular vanilla ship and only update their stats at
 The pieces are specifically made for the ship and don't allow vanilla or modded pieces, decreasing the possibility of unwanted interactions.
 Therefore most other ship related mods should be compatible too, please let me know if there is a conflict somewhere.
 
+PlanBuild is not fully compatible, ships build with it have no behavior or physics.
+
 
 ## Manual Installation
 
@@ -59,5 +61,12 @@ It is ensured that all players have the mod installed with the same mod version,
 
 ## Changelog
 
-0.1.0
+0.1.0 (named 0.0.1 on Thunderstore)
 - Release
+
+0.1.1
+- Fixed Gizmo (by ComfyMods) incompatibility
+- Fixed Sailing (by Smoothbrain) incompatibility
+- Fixed some cases where ships could float in the air
+- Fixed rudder animation was not updating
+- Decreased ship steer rotation force
