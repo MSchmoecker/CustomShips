@@ -468,7 +468,7 @@ MonoBehaviour:
   m_sailForceFactor: 0
   m_rudderSpeed: 1
   m_stearForceOffset: 0
-  m_stearForce: 1
+  m_stearForce: 0.25
   m_stearVelForceFactor: 0.1
   m_backwardForce: 0.5
   m_rudderRotationMax: 45
