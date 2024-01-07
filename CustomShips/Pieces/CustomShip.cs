@@ -25,10 +25,15 @@ namespace CustomShips.Pieces {
         private ZQuaternion localPartRotation;
 
         private void Awake() {
+            nview = gameObject.GetComponent<ZNetView>();
+
+            if (nview.GetZDO() == null) {
+                return;
+            }
+
             ships.Add(this);
             ship = gameObject.GetComponent<Ship>();
             rigidbody = gameObject.GetComponent<Rigidbody>();
-            nview = gameObject.GetComponent<ZNetView>();
             uniqueID = new ZInt("MS_UniqueID", 0, nview);
             localPartRotation = new ZQuaternion("MS_LocalPartRotation", Quaternion.identity, nview);
 

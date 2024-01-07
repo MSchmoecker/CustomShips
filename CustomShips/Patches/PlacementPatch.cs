@@ -26,6 +26,10 @@ namespace CustomShips.Patches {
             foreach (ShipPart shipPart in __instance.m_placementGhost.GetComponentsInChildren<ShipPart>()) {
                 Object.Destroy(shipPart);
             }
+
+            foreach (CustomShip customShip in __instance.m_placementGhost.GetComponentsInChildren<CustomShip>()) {
+                Object.Destroy(customShip);
+            }
         }
 
         [HarmonyPatch(typeof(Player), nameof(Player.PlacePiece)), HarmonyTranspiler]
