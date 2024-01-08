@@ -77,8 +77,6 @@ namespace CustomShips.Patches {
 
         [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> UpdatePlacementGhostRotationTranspiler(IEnumerable<CodeInstruction> instructions) {
-            MethodInfo euler = AccessTools.Method(typeof(Quaternion), nameof(Quaternion.Euler), new[] { typeof(float), typeof(float), typeof(float) });
-
             List<CodeInstruction> instr = instructions.ToList();
             int matchPosition = -1;
 
@@ -92,7 +90,8 @@ namespace CustomShips.Patches {
                     instr[i + 4].opcode == OpCodes.Conv_R4 &&
                     instr[i + 5].opcode == OpCodes.Mul &&
                     instr[i + 6].opcode == OpCodes.Ldc_R4 &&
-                    instr[i + 7].Calls(euler)
+                    // ValheimRaft replaces the vanilla method call
+                    instr[i + 7].CallReturns(typeof(Quaternion))
                 ) {
                     if (
                         // Vanilla or with Comfy Gizmos at shutdown
@@ -153,17 +152,41 @@ namespace CustomShips.Patches {
             MethodInfo getAttachedRigidbody = AccessTools.PropertyGetter(typeof(Collider), nameof(Collider.attachedRigidbody));
             MethodInfo opImplicit = AccessTools.Method(typeof(Object), "op_Implicit");
 
-            CodeMatch[] loadRigidbody = {
-                new CodeMatch(i => i.opcode == OpCodes.Ldloca_S),
-                new CodeMatch(i => i.Calls(getCollider)),
-                new CodeMatch(i => i.Calls(getAttachedRigidbody)),
-                new CodeMatch(i => i.Calls(opImplicit)),
-            };
+            List<CodeInstruction> instr = instructions.ToList();
+            int matchPosition = -1;
 
-            return new CodeMatcher(instructions)
-                .MatchForward(false, loadRigidbody)
+            for (var i = 0; i < instr.Count; i++) {
+                if (
+                    // Vanilla
+                    instr[i + 0].opcode == OpCodes.Ldloca_S &&
+                    instr[i + 1].Calls(getCollider) &&
+                    instr[i + 2].Calls(getAttachedRigidbody) &&
+                    instr[i + 3].Calls(opImplicit)
+                ) {
+                    matchPosition = i;
+                    break;
+                }
+
+                if (
+                    // ValheimRaft replaces the getAttachedRigidbody call
+                    instr[i + 0].opcode == OpCodes.Ldloca_S &&
+                    instr[i + 1].Calls(getCollider) &&
+                    instr[i + 2].IsCall("ValheimRAFT_Patch", "AttachRigidbodyMovableBase") &&
+                    instr[i + 3].Calls(opImplicit)
+                ) {
+                    matchPosition = i;
+                    break;
+                }
+            }
+
+            if (matchPosition < 0) {
+                throw new System.InvalidOperationException("Could not find rigidbody load");
+            }
+
+            return new CodeMatcher(instr)
+                .Advance(matchPosition + 1)
                 .GetOperand(out object loadHitInfo)
-                .Advance(loadRigidbody.Length)
+                .Advance(4)
                 .InsertAndAdvance(
                     new CodeInstruction(OpCodes.Ldloca_S, loadHitInfo),
                     new CodeInstruction(OpCodes.Call, getCollider),
