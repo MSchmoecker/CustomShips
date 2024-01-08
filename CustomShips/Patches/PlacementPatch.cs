@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using BepInEx.Bootstrap;
 using CustomShips.Helper;
 using CustomShips.Pieces;
 using HarmonyLib;
@@ -78,31 +77,48 @@ namespace CustomShips.Patches {
 
         [HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost)), HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> UpdatePlacementGhostRotationTranspiler(IEnumerable<CodeInstruction> instructions) {
-            bool isGizmoInstalled = Chainloader.PluginInfos.ContainsKey("bruce.valheim.comfymods.gizmo");
             MethodInfo euler = AccessTools.Method(typeof(Quaternion), nameof(Quaternion.Euler), new[] { typeof(float), typeof(float), typeof(float) });
 
-            CodeMatch[] loadPlacementRotation = {
-                new CodeMatch(OpCodes.Ldarg_0),
-                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Player), nameof(Player.m_placeRotationDegrees))),
-                new CodeMatch(OpCodes.Ldarg_0),
-                new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(Player), nameof(Player.m_placeRotation))),
-            };
+            List<CodeInstruction> instr = instructions.ToList();
+            int matchPosition = -1;
 
-            CodeMatch[] prepareEuler = {
-                new CodeMatch(OpCodes.Conv_R4),
-                new CodeMatch(OpCodes.Mul),
-                new CodeMatch(OpCodes.Ldc_R4),
-            };
+            for (var i = 0; i < instr.Count; i++) {
+                if (
+                    // placeRotation match
+                    instr[i + 0].opcode == OpCodes.Ldarg_0 &&
+                    instr[i + 1].LoadsField(AccessTools.Field(typeof(Player), nameof(Player.m_placeRotationDegrees))) &&
+                    instr[i + 2].opcode == OpCodes.Ldarg_0 &&
+                    instr[i + 3].LoadsField(AccessTools.Field(typeof(Player), nameof(Player.m_placeRotation))) &&
+                    instr[i + 4].opcode == OpCodes.Conv_R4 &&
+                    instr[i + 5].opcode == OpCodes.Mul &&
+                    instr[i + 6].opcode == OpCodes.Ldc_R4 &&
+                    instr[i + 7].Calls(euler)
+                ) {
+                    if (
+                        // Vanilla or with Comfy Gizmos at shutdown
+                        instr[i + 8].opcode == OpCodes.Stloc_S
+                    ) {
+                        matchPosition = i + 8;
+                        break;
+                    }
 
-            CodeMatch[] makeAndStoreRotation = {
-                new CodeMatch(OpCodes.Call, euler),
-                isGizmoInstalled ? new CodeMatch() : null,
-                new CodeMatch(OpCodes.Stloc_S),
-            };
+                    if (
+                        // with Comfy Gizmos at startup
+                        instr[i + 8].CallReturns(typeof(Quaternion)) &&
+                        instr[i + 9].opcode == OpCodes.Stloc_S
+                    ) {
+                        matchPosition = i + 9;
+                        break;
+                    }
+                }
+            }
 
-            return new CodeMatcher(instructions)
-                .MatchForward(true, loadPlacementRotation.Concat(prepareEuler).Concat(makeAndStoreRotation).Where(i => i != null).ToArray())
-                .ThrowIfInvalid("Could not find rotation calculation")
+            if (matchPosition < 0) {
+                throw new System.InvalidOperationException("Could not find rotation calculation");
+            }
+
+            return new CodeMatcher(instr)
+                .Advance(matchPosition + 1)
                 .GetOperand(out object localRotation)
                 .Advance(1)
                 .InsertAndAdvance(

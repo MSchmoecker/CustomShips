@@ -52,5 +52,10 @@ namespace CustomShips.Helper {
             return (i.opcode == OpCodes.Callvirt || i.opcode == OpCodes.Call) &&
                    i.operand is MethodInfo methodInfo && methodInfo.DeclaringType?.Name == declaringType && methodInfo.Name == name;
         }
+
+        public static bool CallReturns(this CodeInstruction i, Type returnType) {
+            return (i.opcode == OpCodes.Callvirt || i.opcode == OpCodes.Call) &&
+                   i.operand is MethodInfo methodInfo && methodInfo.ReturnType == returnType;
+        }
     }
 }
