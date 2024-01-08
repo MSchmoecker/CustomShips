@@ -17,7 +17,7 @@ namespace CustomShips {
     public class Main : BaseUnityPlugin {
         public const string PluginGUID = "com.maxsch.valheim.CustomShips";
         public const string PluginName = "CustomShips";
-        public const string PluginVersion = "0.1.1";
+        public const string PluginVersion = "0.1.2";
 
         private static AssetBundle assetBundle;
         private static List<CustomPiece> pieces = new List<CustomPiece>();

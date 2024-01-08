@@ -59,10 +59,12 @@ It is ensured that all players have the mod installed with the same mod version,
 - [Github](https://github.com/MSchmoecker/CustomShips)
 - Discord: Margmas. Feel free to DM or ping me about feedback or questions, for example in the [Jötunn discord](https://discord.gg/DdUt6g7gyA)
 
+
 ## Changelog
 
-0.1.0 (named 0.0.1 on Thunderstore)
-- Release
+0.1.2
+- Fixed error on shutdown with Gizmo
+- Fixed ValheimRaft incompatibility
 
 0.1.1
 - Fixed Gizmo (by ComfyMods) incompatibility
@@ -70,3 +72,6 @@ It is ensured that all players have the mod installed with the same mod version,
 - Fixed some cases where ships could float in the air
 - Fixed rudder animation was not updating
 - Decreased ship steer rotation force
+
+0.1.0 (named 0.0.1 on Thunderstore)
+- Release
