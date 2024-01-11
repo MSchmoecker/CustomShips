@@ -27,7 +27,7 @@ namespace CustomShips.Pieces {
         private void Awake() {
             nview = gameObject.GetComponent<ZNetView>();
 
-            if (nview.GetZDO() == null) {
+            if (!nview || nview.GetZDO() == null) {
                 return;
             }
 

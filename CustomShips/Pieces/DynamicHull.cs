@@ -103,7 +103,11 @@ namespace CustomShips.Pieces {
             }
 
             if (hull.mainCollider is MeshCollider mainCollider) {
-                mainCollider.sharedMesh = mesh;
+                mainCollider.sharedMesh = GenerateBottomCollider(left + 0.1f, right + 0.1f, 0.1f, 0.2f);
+            }
+
+            if (hull.sideCollider) {
+                hull.sideCollider.sharedMesh = GenerateSideCollider(left, right, 0f, height, 0.2f);
             }
 
             if (hull.watermask) {
@@ -122,6 +126,56 @@ namespace CustomShips.Pieces {
 
             MakeTriangle(0, triangles, 0, 2, 1);
             MakeTriangle(3, triangles, 1, 2, 3);
+
+            Mesh mesh = new Mesh();
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+            mesh.RecalculateNormals();
+            return mesh;
+        }
+
+        private Mesh GenerateBottomCollider(float left, float right, float offset, float colliderWidth) {
+            Vector3[] vertices = new Vector3[8];
+            int[] triangles = new int[12];
+
+            vertices[0] = new Vector3(0, offset + colliderWidth / 2f, -1f);
+            vertices[1] = new Vector3(0, offset + colliderWidth / 2f, 1f);
+            vertices[2] = new Vector3(-left, offset + colliderWidth / 2f, -1f);
+            vertices[3] = new Vector3(-right, offset + colliderWidth / 2f, 1f);
+            vertices[4] = new Vector3(0, offset - colliderWidth / 2f, -1f);
+            vertices[5] = new Vector3(0, offset - colliderWidth / 2f, 1f);
+            vertices[6] = new Vector3(-left, offset - colliderWidth / 2f, -1f);
+            vertices[7] = new Vector3(-right, offset - colliderWidth / 2f, 1f);
+
+            MakeTriangle(0, triangles, 0, 2, 1);
+            MakeTriangle(3, triangles, 1, 2, 3);
+            MakeTriangle(6, triangles, 3 + 0, 3 + 2, 3 + 1);
+            MakeTriangle(9, triangles, 3 + 1, 3 + 2, 3 + 3);
+
+            Mesh mesh = new Mesh();
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+            mesh.RecalculateNormals();
+            return mesh;
+        }
+
+        private Mesh GenerateSideCollider(float left, float right, float startHeight, float endHeight, float colliderWidth) {
+            Vector3[] vertices = new Vector3[8];
+            int[] triangles = new int[12];
+
+            vertices[0] = new Vector3(-left + colliderWidth / 2f, startHeight, -1f);
+            vertices[1] = new Vector3(-right + colliderWidth / 2f, startHeight, 1f);
+            vertices[2] = new Vector3(-left + colliderWidth / 2f, endHeight, -1f);
+            vertices[3] = new Vector3(-right + colliderWidth / 2f, endHeight, 1f);
+            vertices[4] = new Vector3(-left - colliderWidth / 2f, startHeight, -1f);
+            vertices[5] = new Vector3(-right - colliderWidth / 2f, startHeight, 1f);
+            vertices[6] = new Vector3(-left - colliderWidth / 2f, endHeight, -1f);
+            vertices[7] = new Vector3(-right - colliderWidth / 2f, endHeight, 1f);
+
+            MakeTriangle(0, triangles, 0, 2, 1);
+            MakeTriangle(3, triangles, 1, 2, 3);
+            MakeTriangle(6, triangles, 3 + 0, 3 + 2, 3 + 1);
+            MakeTriangle(9, triangles, 3 + 1, 3 + 2, 3 + 3);
 
             Mesh mesh = new Mesh();
             mesh.vertices = vertices;
