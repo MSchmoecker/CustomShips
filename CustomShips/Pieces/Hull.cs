@@ -19,6 +19,20 @@ namespace CustomShips.Pieces {
             InvokeRepeating(nameof(UpdateHull), 0f, 3f);
         }
 
+        public override float Weight {
+            get {
+                if (leftRib && rightRib) {
+                    return weight * (leftRib.size + rightRib.size) / 2f;
+                } else if (leftRib) {
+                    return weight * leftRib.size;
+                } else if (rightRib) {
+                    return weight * rightRib.size;
+                } else {
+                    return weight * 2f;
+                }
+            }
+        }
+
         private void UpdateHull() {
             Vector3 position = transform.position;
             Vector3 right = transform.forward;

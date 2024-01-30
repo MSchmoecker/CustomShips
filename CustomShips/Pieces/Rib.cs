@@ -8,6 +8,8 @@ namespace CustomShips.Pieces {
         private static List<Rib> ribs = new List<Rib>();
         public Vector3 EndPosition => transform.position - transform.right * size;
 
+        public override float Weight => weight * size;
+
         protected override void Awake() {
             base.Awake();
             ribs.Add(this);

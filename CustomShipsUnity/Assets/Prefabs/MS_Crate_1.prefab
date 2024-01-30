@@ -539,6 +539,8 @@ MonoBehaviour:
   m_Script: {fileID: -1733517930, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weight: 50
+  buoyancy: 1
   mainCollider: {fileID: 4228981923116886572}
 --- !u!114 &-4335232181287358564
 MonoBehaviour:

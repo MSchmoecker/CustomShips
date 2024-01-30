@@ -27,7 +27,7 @@ namespace CustomShips.Pieces {
         private void Awake() {
             nview = gameObject.GetComponent<ZNetView>();
 
-            if (!nview || nview.GetZDO() == null) {
+            if (!Application.isEditor && (!nview || nview.GetZDO() == null)) {
                 return;
             }
 
@@ -59,7 +59,6 @@ namespace CustomShips.Pieces {
 #endif
             shipParts.Add(shipPart);
             shipPart.transform.SetParent(partParent);
-            rigidbody.mass = (shipParts.Count) * 20f;
         }
 
         private void UpdatePieces() {
@@ -67,6 +66,7 @@ namespace CustomShips.Pieces {
             UpdateRudder();
             UpdateSails();
             UpdateCollider();
+            UpdateWeight();
         }
 
         public void UpdateRudder() {
@@ -116,10 +116,16 @@ namespace CustomShips.Pieces {
         }
 
         private void Update() {
-            partParent.localRotation = localPartRotation.Get();
+            if (localPartRotation != null) {
+                partParent.localRotation = localPartRotation.Get();
+            }
         }
 
         private void OnDestroy() {
+            if (Application.isEditor) {
+                return;
+            }
+
             foreach (ShipPart shipPart in shipParts) {
                 if (shipPart) {
                     shipPart.transform.SetParent(null);
@@ -179,6 +185,10 @@ namespace CustomShips.Pieces {
                 onboardTrigger.size = new Vector3(6f, 5f, sizeZ + 1f);
                 onboardTrigger.transform.position = rigidbody.worldCenterOfMass;
             }
+        }
+
+        private void UpdateWeight() {
+            rigidbody.mass = Mathf.Max(100, shipParts.Sum(part => part.Weight));
         }
 
         public static CustomShip FindCustomShip(int uniqueID) {
