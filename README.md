@@ -30,7 +30,6 @@ Build and customize ships out of a variety of different ship pieces.
 
 ## Planned Features
 
-The mod has gone through different implementation iterations already and is now at a good state to be released.
 The most important pieces have been added to build a ship, the next big update will likely bring more decoration and a second deck to build on.
 
 
