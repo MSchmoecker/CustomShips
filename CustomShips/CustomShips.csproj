@@ -136,6 +136,7 @@
     <Copy SourceFiles="$(TargetDir)$(TargetName).dll.mdb" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)Package/icon.png" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)README.md" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
+    <Copy SourceFiles="$(SolutionDir)CHANGELOG.md" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <Copy SourceFiles="$(SolutionDir)Package/manifest.json" DestinationFolder="$(TMP_DEPLOY_FOLDER)" />
     <ZipDirectory SourceDirectory="$(TMP_DEPLOY_FOLDER)" DestinationFile="$(FULL_DEPLOY_FOLDER)/$(TargetName).zip" Overwrite="true" />
 
