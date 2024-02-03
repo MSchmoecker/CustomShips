@@ -34,10 +34,7 @@ namespace CustomShips.Pieces {
             ships.Add(this);
 
             ship = gameObject.GetComponent<Ship>();
-            ship.m_disableLevel = 0;
-
             rigidbody = gameObject.GetComponent<Rigidbody>();
-            rigidbody.automaticCenterOfMass = false;
 
             uniqueID = new ZInt("MS_UniqueID", 0, nview);
             localPartRotation = new ZQuaternion("MS_LocalPartRotation", Quaternion.identity, nview);

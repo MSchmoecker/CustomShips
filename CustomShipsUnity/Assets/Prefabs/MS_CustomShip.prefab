@@ -462,15 +462,15 @@ MonoBehaviour:
   m_damping: 0.05
   m_dampingSideway: 0.15
   m_dampingForward: 0.001
-  m_angularDamping: 0.05
-  m_disableLevel: 10
+  m_angularDamping: 0.3
+  m_disableLevel: 0
   m_sailForceOffset: 3
   m_sailForceFactor: 0
   m_rudderSpeed: 1
   m_stearForceOffset: 0
-  m_stearForce: 0.25
-  m_stearVelForceFactor: 0.1
-  m_backwardForce: 0.5
+  m_stearForce: 0.8
+  m_stearVelForceFactor: 0.6
+  m_backwardForce: 0.2
   m_rudderRotationMax: 45
   m_minWaterImpactForce: 4
   m_minWaterImpactInterval: 2
@@ -499,7 +499,7 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
