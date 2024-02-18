@@ -363,6 +363,8 @@ MonoBehaviour:
   watermask: {fileID: 3196854857036165472}
   leftRib: {fileID: 0}
   rightRib: {fileID: 0}
+  preLeftRib: {fileID: 0}
+  preRightRib: {fileID: 0}
   outerSnappoint: {fileID: 8744031370390790127}
   height: 0.9
 --- !u!114 &4696919667065226445
@@ -582,6 +584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segments: 10
+  splits: 2
   width: 0.2
   offsetY: -0.05
   uvRect:
