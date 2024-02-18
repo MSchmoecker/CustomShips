@@ -8,8 +8,6 @@ namespace CustomShips.Pieces {
         public MeshFilter watermask;
         public Rib leftRib;
         public Rib rightRib;
-        public Rib preLeftRib;
-        public Rib preRightRib;
         public Transform outerSnappoint;
 
         public float height = 0.9f;
@@ -42,14 +40,16 @@ namespace CustomShips.Pieces {
 
             Rib newLeftRib = Rib.FindRib(position + right * -1f + forward * 0.5f);
             Rib newRightRib = Rib.FindRib(position + right * 1f + forward * 0.5f);
-            Rib newPreLeftRib = Rib.FindRib(position + right * -3f + forward * 0.5f);
-            Rib newPreRightRib = Rib.FindRib(position + right * 3f + forward * 0.5f);
 
-            if (newLeftRib != leftRib || newRightRib != rightRib || newPreLeftRib != preLeftRib || newPreRightRib != preRightRib) {
+            if (newLeftRib != leftRib || newRightRib != rightRib) {
+                if (leftRib) leftRib.OnChange -= OnChange;
+                if (rightRib) rightRib.OnChange -= OnChange;
+
                 leftRib = newLeftRib;
                 rightRib = newRightRib;
-                preLeftRib = newPreLeftRib;
-                preRightRib = newPreRightRib;
+
+                if (leftRib) leftRib.OnChange += OnChange;
+                if (rightRib) rightRib.OnChange += OnChange;
 
                 float size;
 

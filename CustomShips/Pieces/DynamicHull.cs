@@ -29,33 +29,42 @@ namespace CustomShips.Pieces {
         }
 
         private void UpdateCurve() {
-            curve.ClearKeys();
-            curve.AddKey(-1f, hull.leftRib ? hull.leftRib.size : 0.1f);
-            curve.AddKey(1f, hull.rightRib ? hull.rightRib.size : 0.1f);
+            float preLeft = 0f;
+            float left = hull.leftRib ? hull.leftRib.size : 0.1f;
+            float right = hull.rightRib ? hull.rightRib.size : 0.1f;
+            float preRight = 0f;
 
-            if (hull.preLeftRib) {
-                curve.AddKey(-3f, hull.preLeftRib.size);
-            } else {
-                if (hull.leftRib) {
-                    curve.AddKey(-3f, 0.1f);
+            if (hull.leftRib) {
+                if (hull.leftRib.leftRib) {
+                    preLeft = hull.leftRib.leftRib.size;
                 } else if (hull.rightRib) {
-                    curve.AddKey(-3f, -hull.rightRib.size);
+                    preLeft = Mathf.Min(hull.leftRib.size, hull.rightRib.size) -
+                              Mathf.Clamp(Mathf.Abs(hull.leftRib.size - hull.rightRib.size), 0.1f, 0.6f);
                 } else {
-                    curve.AddKey(-3f, 0f);
+                    preLeft = 0.1f;
                 }
+            } else if (hull.rightRib) {
+                preLeft = -hull.rightRib.size * 2f;
             }
 
-            if (hull.preRightRib) {
-                curve.AddKey(3f, hull.preRightRib.size);
-            } else {
-                if (hull.rightRib) {
-                    curve.AddKey(3f, 0.1f);
+            if (hull.rightRib) {
+                if (hull.rightRib.rightRib) {
+                    preRight = hull.rightRib.rightRib.size;
                 } else if (hull.leftRib) {
-                    curve.AddKey(3f, -hull.leftRib.size);
+                    preRight = Mathf.Min(hull.leftRib.size, hull.rightRib.size) -
+                               Mathf.Clamp(Mathf.Abs(hull.leftRib.size - hull.rightRib.size), 0.1f, 0.6f);
                 } else {
-                    curve.AddKey(3f, 0f);
+                    preRight = 0.1f;
                 }
+            } else if (hull.leftRib) {
+                preRight = -hull.leftRib.size * 2f;
             }
+
+            curve.ClearKeys();
+            curve.AddKey(-3f, preLeft);
+            curve.AddKey(-1f, left);
+            curve.AddKey(1f, right);
+            curve.AddKey(3f, preRight);
         }
 
         private void MakeTriangle(int index, int[] triangles, int a, int b, int c) {
@@ -121,7 +130,7 @@ namespace CustomShips.Pieces {
                     float splitT = (float)split / (splits + 1);
                     float startY = startLeft * (1f - splitT) + startRight * splitT;
 
-                    float x = -curve.Evaluate(splitT * 2f - 1f);
+                    float x = -curve.Evaluate(splitT * 2f - 1f) - width / 4f;
                     float y = Mathf.Max(0, segmentHeight - startY) + startY;
                     float z = Mathf.Lerp(-1f, 1f, splitT);
 
