@@ -84,38 +84,62 @@ namespace CustomShips.Pieces {
             index += 6;
         }
 
-        private int GetVertice(int segment, int split, bool top) {
-            return segment * (splits + 2) * 2 + split * 2 + (top ? 0 : 1);
+        private int GetTopVertice(int segment, int split) {
+            return segment * (splits + 2) * 2 + split * 2;
+        }
+
+        private int GetBottomVertice(int segment, int split) {
+            return segment * (splits + 2) * 2 + split * 2 + 1;
         }
 
         public void RegenerateMesh(float left, float right, float height, float startLeft, float startRight) {
-            Vector3[] vertices = new Vector3[(segments + 1) * (splits + 2) * 4];
-            int[] triangles = new int[(segments + 1) * 4 * 6 * (splits + 1) + 12 * (splits + 1)];
+            int topVertices = (segments + 1) * (splits + 2);
+            int bottomVertices = (segments + 1) * (splits + 2);
+            int frontVertices = (splits + 2) * 4;
+            int backVertices = (splits + 2) * 4;
+            int rightVertices = (segments + 1) * 4;
+            int leftVertices = (segments + 1) * 4;
+
+            int vertY = topVertices + bottomVertices;
+            int vertX = vertY + frontVertices + backVertices;
+
+            Vector3[] vertices = new Vector3[
+                topVertices + bottomVertices +
+                frontVertices + backVertices +
+                rightVertices + leftVertices
+            ];
+
+            int[] triangles = new int[
+                segments * (splits + 1) * 6 * 2 +
+                (splits + 1) * 6 * 2 +
+                segments * 6 * 2
+            ];
+
             Vector2[] uv = new Vector2[vertices.Length];
 
             int triangle = 0;
 
-            // start cap
+            // front
             for (int split = 0; split <= splits; split++) {
                 MakeFace(ref triangle, triangles,
-                    GetVertice(0, split, false),
-                    GetVertice(0, split + 1, false),
-                    GetVertice(0, split, true),
-                    GetVertice(0, split + 1, true)
+                    vertY + (split + 0) * 2 + 1,
+                    vertY + (split + 1) * 2 + 1,
+                    vertY + (split + 0) * 2 + 0,
+                    vertY + (split + 1) * 2 + 0
                 );
             }
 
-            // end cap
+            // back
             for (int split = 0; split <= splits; split++) {
                 MakeFace(ref triangle, triangles,
-                    GetVertice(segments, split, false),
-                    GetVertice(segments, split, true),
-                    GetVertice(segments, split + 1, false),
-                    GetVertice(segments, split + 1, true)
+                    vertY + frontVertices + (split + 0) * 2 + 0,
+                    vertY + frontVertices + (split + 1) * 2 + 0,
+                    vertY + frontVertices + (split + 0) * 2 + 1,
+                    vertY + frontVertices + (split + 1) * 2 + 1
                 );
             }
 
-            for (int segment = 0; segment < segments + 1; segment++) {
+            for (int segment = 0; segment <= segments; segment++) {
                 float t = (float)segment / segments;
                 float halfWidth = width / 2f;
 
@@ -126,6 +150,24 @@ namespace CustomShips.Pieces {
                 float sinHalf = Mathf.Sin(angle) * halfWidth;
                 float cosHalf = Mathf.Cos(angle) * halfWidth;
 
+                if (segment < segments) {
+                    // right
+                    MakeFace(ref triangle, triangles,
+                        vertX + (segment + 0) * 2 + 0,
+                        vertX + (segment + 1) * 2 + 0,
+                        vertX + (segment + 0) * 2 + 1,
+                        vertX + (segment + 1) * 2 + 1
+                    );
+
+                    // left
+                    MakeFace(ref triangle, triangles,
+                        vertX + rightVertices + (segment + 0) * 2 + 1,
+                        vertX + rightVertices + (segment + 1) * 2 + 1,
+                        vertX + rightVertices + (segment + 0) * 2 + 0,
+                        vertX + rightVertices + (segment + 1) * 2 + 0
+                    );
+                }
+
                 for (int split = 0; split <= splits + 1; split++) {
                     float splitT = (float)split / (splits + 1);
                     float startY = startLeft * (1f - splitT) + startRight * splitT;
@@ -134,52 +176,68 @@ namespace CustomShips.Pieces {
                     float y = Mathf.Max(0, segmentHeight - startY) + startY;
                     float z = Mathf.Lerp(-1f, 1f, splitT);
 
-                    vertices[GetVertice(segment, split, true)] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
-                    vertices[GetVertice(segment, split, false)] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+                    vertices[GetTopVertice(segment, split)] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
+                    vertices[GetBottomVertice(segment, split)] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
 
                     if (segment < segments && split < splits + 1) {
                         // top
                         MakeFace(ref triangle, triangles,
-                            GetVertice(segment + 0, split + 0, true),
-                            GetVertice(segment + 0, split + 1, true),
-                            GetVertice(segment + 1, split + 0, true),
-                            GetVertice(segment + 1, split + 1, true)
+                            GetTopVertice(segment + 0, split + 0),
+                            GetTopVertice(segment + 0, split + 1),
+                            GetTopVertice(segment + 1, split + 0),
+                            GetTopVertice(segment + 1, split + 1)
                         );
 
                         // bottom
                         MakeFace(ref triangle, triangles,
-                            GetVertice(segment + 0, split + 0, false),
-                            GetVertice(segment + 1, split + 0, false),
-                            GetVertice(segment + 0, split + 1, false),
-                            GetVertice(segment + 1, split + 1, false)
+                            GetBottomVertice(segment + 0, split + 0),
+                            GetBottomVertice(segment + 1, split + 0),
+                            GetBottomVertice(segment + 0, split + 1),
+                            GetBottomVertice(segment + 1, split + 1)
                         );
-
-                        // right
-                        if (split == 0) {
-                            MakeFace(ref triangle, triangles,
-                                GetVertice(segment + 1, split + 0, false),
-                                GetVertice(segment + 0, split + 0, false),
-                                GetVertice(segment + 1, split + 0, true),
-                                GetVertice(segment + 0, split + 0, true)
-                            );
-                        }
-
-                        // left
-                        if (split == splits) {
-                            MakeFace(ref triangle, triangles,
-                                GetVertice(segment + 0, split + 1, false),
-                                GetVertice(segment + 1, split + 1, false),
-                                GetVertice(segment + 0, split + 1, true),
-                                GetVertice(segment + 1, split + 1, true)
-                            );
-                        }
                     }
 
                     float uvX = Mathf.LerpUnclamped(uvRect.xMin, uvRect.xMax, (float)split / (splits + 1));
                     float uvY = Mathf.LerpUnclamped(uvRect.yMin, uvRect.yMax, t);
 
-                    uv[GetVertice(segment, split, true)] = new Vector2(uvX, uvY + uvRect.height / 10f);
-                    uv[GetVertice(segment, split, false)] = new Vector2(uvX, uvY);
+                    uv[GetTopVertice(segment, split)] = new Vector2(uvX, uvY + uvRect.height / 10f);
+                    uv[GetBottomVertice(segment, split)] = new Vector2(uvX, uvY);
+
+                    if (segment == 0) {
+                        // front
+                        vertices[vertY + split * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
+                        vertices[vertY + split * 2 + 1] = new Vector3(x * t + sinHalf, y - cosHalf + offsetY, z);
+
+                        uv[vertY + split * 2 + 0] = new Vector2(uvX, uvY + uvRect.height / 10f);
+                        uv[vertY + split * 2 + 1] = new Vector2(uvX, uvY);
+                    }
+
+                    if (segment == segments) {
+                        // back
+                        vertices[vertY + frontVertices + split * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
+                        vertices[vertY + frontVertices + split * 2 + 1] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+
+                        uv[vertY + frontVertices + split * 2 + 0] = new Vector2(uvX, uvY + uvRect.height / 10f);
+                        uv[vertY + frontVertices + split * 2 + 1] = new Vector2(uvX, uvY);
+                    }
+
+                    if (split == 0) {
+                        // right
+                        vertices[vertX + segment * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
+                        vertices[vertX + segment * 2 + 1] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+
+                        uv[vertX + segment * 2 + 0] = new Vector2(uvX + uvRect.height / 10f, uvY);
+                        uv[vertX + segment * 2 + 1] = new Vector2(uvX, uvY);
+                    }
+
+                    if (split == splits + 1) {
+                        // left
+                        vertices[vertX + rightVertices + segment * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
+                        vertices[vertX + rightVertices + segment * 2 + 1] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+
+                        uv[vertX + rightVertices + segment * 2 + 0] = new Vector2(uvX + uvRect.height / 10f, uvY);
+                        uv[vertX + rightVertices + segment * 2 + 1] = new Vector2(uvX, uvY);
+                    }
                 }
             }
 

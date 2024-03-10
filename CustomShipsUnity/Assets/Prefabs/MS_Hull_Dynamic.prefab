@@ -363,8 +363,6 @@ MonoBehaviour:
   watermask: {fileID: 3196854857036165472}
   leftRib: {fileID: 0}
   rightRib: {fileID: 0}
-  preLeftRib: {fileID: 0}
-  preRightRib: {fileID: 0}
   outerSnappoint: {fileID: 8744031370390790127}
   height: 0.9
 --- !u!114 &4696919667065226445
@@ -589,9 +587,9 @@ MonoBehaviour:
   offsetY: -0.05
   uvRect:
     serializedVersion: 2
-    x: 0.54
+    x: 0.5
     y: 0.04
-    width: 0.08
+    width: 0.0625
     height: 0.1
 --- !u!33 &9205356821914280758
 MeshFilter:
@@ -600,4 +598,4 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8954065086045177781}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 5101410637510286001, guid: da43c5533f4b1d74cb4cc15d1b622e2e, type: 3}
