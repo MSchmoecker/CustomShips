@@ -96,6 +96,7 @@ namespace CustomShips {
             PieceManager.Instance.AddPiece(piece);
 
             if (piece.PiecePrefab.TryGetComponent(out DynamicHull dynamicHull)) {
+                dynamicHull.UpdateCurve(2, 2, 2, 2);
                 dynamicHull.RegenerateMesh(2, 2, 0.9f, 0, 0);
             }
 

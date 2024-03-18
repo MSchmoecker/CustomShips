@@ -67,6 +67,14 @@ namespace CustomShips.Pieces {
             curve.AddKey(3f, preRight);
         }
 
+        public void UpdateCurve(float preLeft, float left, float right, float preRight) {
+            curve.ClearKeys();
+            curve.AddKey(-3f, preLeft);
+            curve.AddKey(-1f, left);
+            curve.AddKey(1f, right);
+            curve.AddKey(3f, preRight);
+        }
+
         private void MakeTriangle(int index, int[] triangles, int a, int b, int c) {
             if (index > triangles.Length - 3) {
                 Debug.Log("Index " + index + " out of bounds " + triangles.Length);
