@@ -1,5 +1,9 @@
 ## Changelog
 
+0.3.0
+- Reworked visual hull generation to create smoother curves
+- Changed steer and rudder speed to change depending on ship size
+
 0.2.0
 - Changed the ship hull colliders to be flat instead of curved, so there's more space to walk on and prevent physics issues
 - Changed the weight approximation for the ship, bigger ships are now heavier
