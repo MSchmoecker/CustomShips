@@ -181,11 +181,24 @@ namespace CustomShips.Pieces {
 
                 onboardTrigger.size = new Vector3(6f, 5f, sizeZ + 1f);
                 onboardTrigger.transform.position = rigidbody.worldCenterOfMass;
+
+                UpdateSteerForce(sizeZ);
             }
         }
 
         private void UpdateWeight() {
             rigidbody.mass = Mathf.Max(100, shipParts.Sum(part => part.Weight));
+        }
+
+        private void UpdateSteerForce(float sizeZ) {
+            const float fromSize = 4f;
+            const float toSize = 20f;
+            float t = (sizeZ - fromSize) / (toSize - fromSize);
+
+            ship.m_stearForce = Mathf.Lerp(0.2f, 1f, t);
+            ship.m_stearVelForceFactor = Mathf.Lerp(0.2f, 0.8f, t);
+            ship.m_backwardForce = Mathf.Lerp(0.5f, 0.2f, t);
+            ship.m_angularDamping = Mathf.Lerp(0.05f, 0.3f, t);
         }
 
         public static CustomShip FindCustomShip(int uniqueID) {
