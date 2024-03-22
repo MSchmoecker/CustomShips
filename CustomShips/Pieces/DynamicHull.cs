@@ -296,6 +296,7 @@ namespace CustomShips.Pieces {
         private Mesh GenerateBottomCollider(float left, float right, float offset, float colliderWidth) {
             Vector3[] vertices = new Vector3[8];
             int[] triangles = new int[12];
+            int triangle = 0;
 
             vertices[0] = new Vector3(0, offset + colliderWidth / 2f, -1f);
             vertices[1] = new Vector3(0, offset + colliderWidth / 2f, 1f);
@@ -306,10 +307,8 @@ namespace CustomShips.Pieces {
             vertices[6] = new Vector3(-left, offset - colliderWidth / 2f, -1f);
             vertices[7] = new Vector3(-right, offset - colliderWidth / 2f, 1f);
 
-            MakeTriangle(0, triangles, 0, 2, 1);
-            MakeTriangle(3, triangles, 1, 2, 3);
-            MakeTriangle(6, triangles, 3 + 0, 3 + 2, 3 + 1);
-            MakeTriangle(9, triangles, 3 + 1, 3 + 2, 3 + 3);
+            MakeFace(ref triangle, triangles, 0, 1, 2, 3);
+            MakeFace(ref triangle, triangles, 4, 5, 6, 7);
 
             Mesh mesh = new Mesh();
             mesh.vertices = vertices;
@@ -321,6 +320,7 @@ namespace CustomShips.Pieces {
         private Mesh GenerateSideCollider(float left, float right, float startHeight, float endHeight, float colliderWidth) {
             Vector3[] vertices = new Vector3[8];
             int[] triangles = new int[12];
+            int triangle = 0;
 
             vertices[0] = new Vector3(-left + colliderWidth / 2f, startHeight, -1f);
             vertices[1] = new Vector3(-right + colliderWidth / 2f, startHeight, 1f);
@@ -331,10 +331,8 @@ namespace CustomShips.Pieces {
             vertices[6] = new Vector3(-left - colliderWidth / 2f, endHeight, -1f);
             vertices[7] = new Vector3(-right - colliderWidth / 2f, endHeight, 1f);
 
-            MakeTriangle(0, triangles, 0, 2, 1);
-            MakeTriangle(3, triangles, 1, 2, 3);
-            MakeTriangle(6, triangles, 3 + 0, 3 + 2, 3 + 1);
-            MakeTriangle(9, triangles, 3 + 1, 3 + 2, 3 + 3);
+            MakeFace(ref triangle, triangles, 0, 1, 2, 3);
+            MakeFace(ref triangle, triangles, 4, 5, 6, 7);
 
             Mesh mesh = new Mesh();
             mesh.vertices = vertices;
