@@ -21,17 +21,17 @@ namespace CustomShips.Pieces {
                 if (hull.leftRib && hull.rightRib) {
                     RegenerateMesh(hull.leftRib.size + 0.1f, hull.rightRib.size + 0.1f, 0.9f, 0, 0);
                 } else if (hull.leftRib) {
-                    RegenerateMesh(hull.leftRib.size + 0.1f, 0.1f, 0.9f, 0, 0.4f);
+                    RegenerateMesh(hull.leftRib.size + 0.1f, -0.1f, 0.9f, 0, 0.4f);
                 } else if (hull.rightRib) {
-                    RegenerateMesh(0.1f, hull.rightRib.size + 0.1f, 0.9f, 0.4f, 0);
+                    RegenerateMesh(-0.1f, hull.rightRib.size + 0.1f, 0.9f, 0.4f, 0);
                 }
             };
         }
 
         private void UpdateCurve() {
             float preLeft = 0f;
-            float left = hull.leftRib ? hull.leftRib.size : 0.1f;
-            float right = hull.rightRib ? hull.rightRib.size : 0.1f;
+            float left = hull.leftRib ? hull.leftRib.size : -0.1f;
+            float right = hull.rightRib ? hull.rightRib.size : -0.1f;
             float preRight = 0f;
 
             if (hull.leftRib) {
@@ -41,7 +41,7 @@ namespace CustomShips.Pieces {
                     preLeft = Mathf.Min(hull.leftRib.size, hull.rightRib.size) -
                               Mathf.Clamp(Mathf.Abs(hull.leftRib.size - hull.rightRib.size), 0.1f, 0.6f);
                 } else {
-                    preLeft = 0.1f;
+                    preLeft = -0.1f;
                 }
             } else if (hull.rightRib) {
                 preLeft = -hull.rightRib.size * 2f;
@@ -54,7 +54,7 @@ namespace CustomShips.Pieces {
                     preRight = Mathf.Min(hull.leftRib.size, hull.rightRib.size) -
                                Mathf.Clamp(Mathf.Abs(hull.leftRib.size - hull.rightRib.size), 0.1f, 0.6f);
                 } else {
-                    preRight = 0.1f;
+                    preRight = -0.1f;
                 }
             } else if (hull.leftRib) {
                 preRight = -hull.leftRib.size * 2f;
@@ -180,7 +180,7 @@ namespace CustomShips.Pieces {
                     float splitT = (float)split / (splits + 1);
                     float startY = startLeft * (1f - splitT) + startRight * splitT;
 
-                    float x = -curve.Evaluate(splitT * 2f - 1f) - width / 4f;
+                    float x = -curve.Evaluate(splitT * 2f - 1f) - width;
                     float y = Mathf.Max(0, segmentHeight - startY) + startY;
                     float z = Mathf.Lerp(-1f, 1f, splitT);
 
