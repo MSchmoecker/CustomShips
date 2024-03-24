@@ -6,6 +6,7 @@ namespace CustomShips.Pieces {
         public int segments = 2;
         public int splits = 1;
         public float width = 0.2f;
+        public float height = 1f;
         public float offsetY = -0.1f;
         public Rect uvRect = new Rect(0.54f, 0.04f, 0.08f, 0.1f);
 
@@ -19,11 +20,11 @@ namespace CustomShips.Pieces {
                 UpdateCurve();
 
                 if (hull.leftRib && hull.rightRib) {
-                    RegenerateMesh(hull.leftRib.size + 0.1f, hull.rightRib.size + 0.1f, 0.9f, 0, 0);
+                    RegenerateMesh(hull.leftRib.size + 0.1f, hull.rightRib.size + 0.1f, 0, 0);
                 } else if (hull.leftRib) {
-                    RegenerateMesh(hull.leftRib.size + 0.1f, -0.1f, 0.9f, 0, 0.4f);
+                    RegenerateMesh(hull.leftRib.size + 0.1f, -0.1f, 0, 0.4f);
                 } else if (hull.rightRib) {
-                    RegenerateMesh(-0.1f, hull.rightRib.size + 0.1f, 0.9f, 0.4f, 0);
+                    RegenerateMesh(-0.1f, hull.rightRib.size + 0.1f, 0.4f, 0);
                 }
             };
         }
@@ -100,7 +101,7 @@ namespace CustomShips.Pieces {
             return segment * (splits + 2) * 2 + split * 2 + 1;
         }
 
-        public void RegenerateMesh(float left, float right, float height, float startLeft, float startRight) {
+        public void RegenerateMesh(float left, float right, float startLeft, float startRight) {
             int topVertices = (segments + 1) * (splits + 2);
             int bottomVertices = (segments + 1) * (splits + 2);
             int frontVertices = (splits + 2) * 4;
@@ -270,11 +271,11 @@ namespace CustomShips.Pieces {
             }
 
             if (hull.watermask) {
-                hull.watermask.mesh = GenerateWatermask(left, right, height);
+                hull.watermask.mesh = GenerateWatermask(left, right);
             }
         }
 
-        private Mesh GenerateWatermask(float left, float right, float height) {
+        private Mesh GenerateWatermask(float left, float right) {
             Vector3[] vertices = new Vector3[8];
             int[] triangles = new int[18];
             int triangle = 0;

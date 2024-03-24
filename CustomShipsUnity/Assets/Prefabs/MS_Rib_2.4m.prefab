@@ -197,7 +197,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 843068858076353302}
@@ -233,8 +233,12 @@ MonoBehaviour:
   m_Script: {fileID: 1750486864, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weight: 5
+  buoyancy: 1
   mainCollider: {fileID: 7169659355901742447}
   size: 2.4
+  leftRib: {fileID: 0}
+  rightRib: {fileID: 0}
 --- !u!114 &9140146761412609890
 MonoBehaviour:
   m_ObjectHideFlags: 0
