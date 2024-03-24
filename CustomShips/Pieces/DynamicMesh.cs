@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace CustomShips.Pieces {
-    public class DynamicHull : MonoBehaviour {
+    public class DynamicMesh : MonoBehaviour {
         public int segments = 2;
         public int splits = 1;
         public float width = 0.2f;
