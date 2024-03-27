@@ -55,6 +55,8 @@ namespace CustomShips {
             AddShipPiece("MS_Rib_2.4m", "RoundLog", 7, "BronzeNails", 2);
             AddShipPiece("MS_Rib_2.6m", "RoundLog", 8, "BronzeNails", 2);
             AddShipPiece("MS_Hull_Dynamic", "Wood", 6, "BronzeNails", 2, "Resin", 10);
+            AddShipPiece("MS_Hull_Side_Dynamic", "Wood", 4, "BronzeNails", 2, "Resin", 6);
+            AddShipPiece("MS_Deck_Dynamic", "Wood", 4, "BronzeNails", 2, "Resin", 6);
             AddShipPiece("MS_Rudder_1", "Wood", 12, "BronzeNails", 8);
             AddShipPiece("MS_Crate_1", "FineWood", 8, "BronzeNails", 6);
             AddShipPiece("MS_Barrel_1", "FineWood", 8, "BronzeNails", 6);

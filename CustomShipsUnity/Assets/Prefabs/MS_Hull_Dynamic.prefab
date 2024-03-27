@@ -364,7 +364,7 @@ MonoBehaviour:
   leftRib: {fileID: 0}
   rightRib: {fileID: 0}
   outerSnappoint: {fileID: 8744031370390790127}
-  height: 0.9
+  height: 1
 --- !u!114 &4696919667065226445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +584,11 @@ MonoBehaviour:
   segments: 10
   splits: 2
   width: 0.2
+  height: 1
+  meshOffset: {x: 0, y: -0.05, z: 0}
+  colliderOffset: {x: 0, y: 0.1, z: 0}
   offsetY: -0.05
+  colliderOffsetY: 0.1
   uvRect:
     serializedVersion: 2
     x: 0.5

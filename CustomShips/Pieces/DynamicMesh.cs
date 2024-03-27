@@ -7,7 +7,12 @@ namespace CustomShips.Pieces {
         public int splits = 1;
         public float width = 0.2f;
         public float height = 1f;
-        public float offsetY = -0.1f;
+
+        public bool rotateMesh = true;
+        public bool useCurve = true;
+
+        public Vector3 meshOffset;
+        public Vector3 colliderOffset;
         public Rect uvRect = new Rect(0.54f, 0.04f, 0.08f, 0.1f);
 
         private AnimationCurve curve = new AnimationCurve();
@@ -156,6 +161,10 @@ namespace CustomShips.Pieces {
                 float segmentHeight = (height - halfWidth) * heightCurve;
                 float angle = Mathf.Lerp(0, Mathf.PI / 2f, segmentHeight);
 
+                if (!rotateMesh) {
+                    angle = Mathf.PI / 2f;
+                }
+
                 float sinHalf = Mathf.Sin(angle) * halfWidth;
                 float cosHalf = Mathf.Cos(angle) * halfWidth;
 
@@ -185,8 +194,19 @@ namespace CustomShips.Pieces {
                     float y = Mathf.Max(0, segmentHeight - startY) + startY;
                     float z = Mathf.Lerp(-1f, 1f, splitT);
 
-                    vertices[GetTopVertice(segment, split)] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
-                    vertices[GetBottomVertice(segment, split)] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+                    Vector3 top;
+                    Vector3 bottom;
+
+                    if (useCurve) {
+                        top = new Vector3(x * t + sinHalf, y + cosHalf, z) + meshOffset;
+                        bottom = new Vector3(x * t - sinHalf, y - cosHalf, z) + meshOffset;
+                    } else {
+                        top = new Vector3(x + sinHalf, y + cosHalf, z) + meshOffset;
+                        bottom = new Vector3(x - sinHalf, y - cosHalf, z) + meshOffset;
+                    }
+
+                    vertices[GetTopVertice(segment, split)] = top;
+                    vertices[GetBottomVertice(segment, split)] = bottom;
 
                     if (segment < segments && split < splits + 1) {
                         // top
@@ -214,8 +234,8 @@ namespace CustomShips.Pieces {
 
                     if (segment == 0) {
                         // front
-                        vertices[vertY + split * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
-                        vertices[vertY + split * 2 + 1] = new Vector3(x * t + sinHalf, y - cosHalf + offsetY, z);
+                        vertices[vertY + split * 2 + 0] = top;
+                        vertices[vertY + split * 2 + 1] = new Vector3(x * t + sinHalf, y - cosHalf, z) + meshOffset;
 
                         uv[vertY + split * 2 + 0] = new Vector2(uvX, uvY + uvRect.height / 10f);
                         uv[vertY + split * 2 + 1] = new Vector2(uvX, uvY);
@@ -223,8 +243,8 @@ namespace CustomShips.Pieces {
 
                     if (segment == segments) {
                         // back
-                        vertices[vertY + frontVertices + split * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
-                        vertices[vertY + frontVertices + split * 2 + 1] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+                        vertices[vertY + frontVertices + split * 2 + 0] = top;
+                        vertices[vertY + frontVertices + split * 2 + 1] = bottom;
 
                         uv[vertY + frontVertices + split * 2 + 0] = new Vector2(uvX, uvY + uvRect.height / 10f);
                         uv[vertY + frontVertices + split * 2 + 1] = new Vector2(uvX, uvY);
@@ -232,8 +252,8 @@ namespace CustomShips.Pieces {
 
                     if (split == 0) {
                         // right
-                        vertices[vertX + segment * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
-                        vertices[vertX + segment * 2 + 1] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+                        vertices[vertX + segment * 2 + 0] = top;
+                        vertices[vertX + segment * 2 + 1] = bottom;
 
                         uv[vertX + segment * 2 + 0] = new Vector2(uvX + uvRect.height / 10f, uvY);
                         uv[vertX + segment * 2 + 1] = new Vector2(uvX, uvY);
@@ -241,8 +261,8 @@ namespace CustomShips.Pieces {
 
                     if (split == splits + 1) {
                         // left
-                        vertices[vertX + rightVertices + segment * 2 + 0] = new Vector3(x * t + sinHalf, y + cosHalf + offsetY, z);
-                        vertices[vertX + rightVertices + segment * 2 + 1] = new Vector3(x * t - sinHalf, y - cosHalf + offsetY, z);
+                        vertices[vertX + rightVertices + segment * 2 + 0] = top;
+                        vertices[vertX + rightVertices + segment * 2 + 1] = bottom;
 
                         uv[vertX + rightVertices + segment * 2 + 0] = new Vector2(uvX + uvRect.height / 10f, uvY);
                         uv[vertX + rightVertices + segment * 2 + 1] = new Vector2(uvX, uvY);
@@ -263,11 +283,11 @@ namespace CustomShips.Pieces {
             }
 
             if (hull.mainCollider is MeshCollider mainCollider) {
-                mainCollider.sharedMesh = GenerateBottomCollider(left + 0.1f, right + 0.1f, 0.1f, 0.2f);
+                mainCollider.sharedMesh = GenerateBottomCollider(left + 0.1f, right + 0.1f, colliderOffset);
             }
 
             if (hull.sideCollider) {
-                hull.sideCollider.sharedMesh = GenerateSideCollider(left, right, 0f, height, 0.2f);
+                hull.sideCollider.sharedMesh = GenerateSideCollider(left, right, 0f, height);
             }
 
             if (hull.watermask) {
@@ -300,19 +320,19 @@ namespace CustomShips.Pieces {
             return mesh;
         }
 
-        private Mesh GenerateBottomCollider(float left, float right, float offset, float colliderWidth) {
+        private Mesh GenerateBottomCollider(float left, float right, Vector3 offset) {
             Vector3[] vertices = new Vector3[8];
             int[] triangles = new int[12];
             int triangle = 0;
 
-            vertices[0] = new Vector3(0, offset + colliderWidth / 2f, -1f);
-            vertices[1] = new Vector3(0, offset + colliderWidth / 2f, 1f);
-            vertices[2] = new Vector3(-left, offset + colliderWidth / 2f, -1f);
-            vertices[3] = new Vector3(-right, offset + colliderWidth / 2f, 1f);
-            vertices[4] = new Vector3(0, offset - colliderWidth / 2f, -1f);
-            vertices[5] = new Vector3(0, offset - colliderWidth / 2f, 1f);
-            vertices[6] = new Vector3(-left, offset - colliderWidth / 2f, -1f);
-            vertices[7] = new Vector3(-right, offset - colliderWidth / 2f, 1f);
+            vertices[0] = new Vector3(0, +width / 2f, -1f) + offset;
+            vertices[1] = new Vector3(0, width / 2f, 1f) + offset;
+            vertices[2] = new Vector3(-left, width / 2f, -1f) + offset;
+            vertices[3] = new Vector3(-right, width / 2f, 1f) + offset;
+            vertices[4] = new Vector3(0, -width / 2f, -1f) + offset;
+            vertices[5] = new Vector3(0, -width / 2f, 1f) + offset;
+            vertices[6] = new Vector3(-left, -width / 2f, -1f) + offset;
+            vertices[7] = new Vector3(-right, -width / 2f, 1f) + offset;
 
             MakeFace(ref triangle, triangles, 0, 1, 2, 3);
             MakeFace(ref triangle, triangles, 4, 5, 6, 7);
@@ -324,19 +344,19 @@ namespace CustomShips.Pieces {
             return mesh;
         }
 
-        private Mesh GenerateSideCollider(float left, float right, float startHeight, float endHeight, float colliderWidth) {
+        private Mesh GenerateSideCollider(float left, float right, float startHeight, float endHeight) {
             Vector3[] vertices = new Vector3[8];
             int[] triangles = new int[12];
             int triangle = 0;
 
-            vertices[0] = new Vector3(-left + colliderWidth / 2f, startHeight, -1f);
-            vertices[1] = new Vector3(-right + colliderWidth / 2f, startHeight, 1f);
-            vertices[2] = new Vector3(-left + colliderWidth / 2f, endHeight, -1f);
-            vertices[3] = new Vector3(-right + colliderWidth / 2f, endHeight, 1f);
-            vertices[4] = new Vector3(-left - colliderWidth / 2f, startHeight, -1f);
-            vertices[5] = new Vector3(-right - colliderWidth / 2f, startHeight, 1f);
-            vertices[6] = new Vector3(-left - colliderWidth / 2f, endHeight, -1f);
-            vertices[7] = new Vector3(-right - colliderWidth / 2f, endHeight, 1f);
+            vertices[0] = new Vector3(-left + width / 2f, startHeight, -1f);
+            vertices[1] = new Vector3(-right + width / 2f, startHeight, 1f);
+            vertices[2] = new Vector3(-left + width / 2f, endHeight, -1f);
+            vertices[3] = new Vector3(-right + width / 2f, endHeight, 1f);
+            vertices[4] = new Vector3(-left - width / 2f, startHeight, -1f);
+            vertices[5] = new Vector3(-right - width / 2f, startHeight, 1f);
+            vertices[6] = new Vector3(-left - width / 2f, endHeight, -1f);
+            vertices[7] = new Vector3(-right - width / 2f, endHeight, 1f);
 
             MakeFace(ref triangle, triangles, 0, 1, 2, 3);
             MakeFace(ref triangle, triangles, 4, 5, 6, 7);

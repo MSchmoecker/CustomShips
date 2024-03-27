@@ -12,6 +12,7 @@ namespace CustomShips.Pieces {
         public event Action OnChange;
 
         private static List<Rib> ribs = new List<Rib>();
+
         public Vector3 EndPosition => transform.position - transform.right * size;
 
         public override float Weight => weight * size;
@@ -42,10 +43,14 @@ namespace CustomShips.Pieces {
             }
         }
 
-        public static Rib FindRib(Vector3 position) {
+        public static Rib FindRib(Vector3 position, bool ignoreY = true) {
             foreach (Rib rib in ribs) {
                 Vector3 forward = -rib.transform.right;
                 Vector3 diff = (rib.transform.position + forward * 0.5f) - position;
+
+                if (ignoreY) {
+                    diff.y = 0;
+                }
 
                 if (diff.magnitude <= 0.5f) {
                     return rib;
