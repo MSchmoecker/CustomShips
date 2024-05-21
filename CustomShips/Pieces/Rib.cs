@@ -59,5 +59,14 @@ namespace CustomShips.Pieces {
 
             return null;
         }
+
+        private void OnDrawGizmos() {
+            Vector3 forward = -transform.right;
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position + forward * 0.5f, 0.1f);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawSphere(transform.position - forward * 0.5f + forward * size, 0.1f);
+        }
     }
 }

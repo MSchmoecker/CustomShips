@@ -201,8 +201,9 @@ namespace CustomShips.Pieces {
                         top = new Vector3(x * t + sinHalf, y + cosHalf, z) + meshOffset;
                         bottom = new Vector3(x * t - sinHalf, y - cosHalf, z) + meshOffset;
                     } else {
-                        top = new Vector3(x + sinHalf, y + cosHalf, z) + meshOffset;
-                        bottom = new Vector3(x - sinHalf, y - cosHalf, z) + meshOffset;
+                        float overflowT = (1f + t / 10f);
+                        top = new Vector3(x * overflowT + sinHalf, y + cosHalf, z) + meshOffset;
+                        bottom = new Vector3(x * overflowT - sinHalf, y - cosHalf, z) + meshOffset;
                     }
 
                     vertices[GetTopVertice(segment, split)] = top;
@@ -235,7 +236,7 @@ namespace CustomShips.Pieces {
                     if (segment == 0) {
                         // front
                         vertices[vertY + split * 2 + 0] = top;
-                        vertices[vertY + split * 2 + 1] = new Vector3(x * t + sinHalf, y - cosHalf, z) + meshOffset;
+                        vertices[vertY + split * 2 + 1] = bottom;
 
                         uv[vertY + split * 2 + 0] = new Vector2(uvX, uvY + uvRect.height / 10f);
                         uv[vertY + split * 2 + 1] = new Vector2(uvX, uvY);

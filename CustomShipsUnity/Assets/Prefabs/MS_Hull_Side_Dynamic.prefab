@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1178829408059753810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.9999998, y: 0, z: 0.00000014901161}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -67,7 +67,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5066479714021621461}
   - {fileID: 3291748745940020271}
   - {fileID: 2791925289471140124}
   - {fileID: 4620691524218856683}
@@ -105,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 15
   buoyancy: 4
-  mainCollider: {fileID: 7964449737686717019}
+  mainCollider: {fileID: 3811663508607738344}
   sideCollider: {fileID: 3811663508607738344}
   watermask: {fileID: 1230908522022776977}
   leftRib: {fileID: 0}
@@ -163,6 +162,8 @@ MonoBehaviour:
   m_mustConnectTo: {fileID: 0}
   m_connectRadius: 0
   m_mustBeAboveConnected: 0
+  m_noVines: 0
+  m_extraPlacementDistance: 0
   m_onlyInBiome: 0
   m_placeEffect:
     m_effectPrefabs:
@@ -212,9 +213,13 @@ MonoBehaviour:
   m_wet: {fileID: 0}
   m_noRoofWear: 0
   m_noSupportWear: 0
+  m_ashDamageImmune: 0
+  m_ashDamageResist: 0
+  m_burnable: 1
   m_materialType: 0
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
+  m_forceCorrectCOMCalculation: 0
   m_health: 100
   m_damages:
     m_blunt: 0
@@ -227,6 +232,7 @@ MonoBehaviour:
     m_lightning: 0
     m_poison: 0
     m_spirit: 0
+  m_minToolTier: 0
   m_hitNoise: 0
   m_destroyNoise: 0
   m_triggerPrivateArea: 1
@@ -334,14 +340,14 @@ MonoBehaviour:
   height: 1
   rotateMesh: 0
   useCurve: 0
-  meshOffset: {x: 0, y: 0, z: 0}
+  meshOffset: {x: 0, y: 0.025, z: 0}
   colliderOffset: {x: 0, y: 0, z: 0}
   uvRect:
     serializedVersion: 2
     x: 0.5
     y: 0.04
     width: 0.0625
-    height: 0.1
+    height: 0.05
 --- !u!33 &1310408734512530355
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -375,66 +381,12 @@ Transform:
   m_GameObject: {fileID: 4734497220596624110}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: -2, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7001005529937547261}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4813891140224818496
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5066479714021621461}
-  - component: {fileID: 7964449737686717019}
-  m_Layer: 10
-  m_Name: Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5066479714021621461
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4813891140224818496}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7001005529937547261}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &7964449737686717019
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4813891140224818496}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3529747844242338512, guid: 279734f00d0e62f46a405812f0f19ce4, type: 3}
 --- !u!1 &5552122213298790889
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,7 +412,7 @@ Transform:
   m_GameObject: {fileID: 5552122213298790889}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: -1.9999998, y: 0, z: -0.9999999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

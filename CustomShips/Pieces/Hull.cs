@@ -69,6 +69,15 @@ namespace CustomShips.Pieces {
             }
         }
 
+        private void OnDrawGizmos() {
+            Vector3 position = transform.position;
+            Vector3 right = transform.forward;
+            Vector3 forward = -transform.right;
+
+            Gizmos.DrawSphere(position + right * -1f + forward * 0.5f, 0.1f);
+            Gizmos.DrawSphere(position + right * 1f + forward * 0.5f, 0.1f);
+        }
+
         private void UpdateCollider() {
             Vector3 center;
             float size;
