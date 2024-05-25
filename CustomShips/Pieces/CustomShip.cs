@@ -7,7 +7,7 @@ using UnityEngine;
 using Logger = Jotunn.Logger;
 
 namespace CustomShips.Pieces {
-    public class CustomShip : MonoBehaviour {
+    public class CustomShip : MonoBehaviour, IDestructible {
         public ShipControlls shipControls;
         public Transform partParent;
         public BoxCollider onboardTrigger;
@@ -204,6 +204,16 @@ namespace CustomShips.Pieces {
         public static CustomShip FindCustomShip(int uniqueID) {
             CustomShip customShip = ships.FirstOrDefault(ship => ship && ship.uniqueID.Get() == uniqueID);
             return customShip;
+        }
+
+        public void Damage(HitData hit) {
+            int randomPart = UnityEngine.Random.Range(0, shipParts.Count);
+            ShipPart part = shipParts[randomPart];
+            part.GetComponent<WearNTear>().Damage(hit);
+        }
+
+        public DestructibleType GetDestructibleType() {
+            return DestructibleType.Default;
         }
     }
 }
