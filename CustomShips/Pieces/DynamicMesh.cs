@@ -24,12 +24,38 @@ namespace CustomShips.Pieces {
             hull.OnChange += () => {
                 UpdateCurve();
 
+                bool generate = false;
+                float left = 2f;
+                float right = 2f;
+                float startLeft = 0f;
+                float startRight = 0f;
+                float relY = 0f;
+
                 if (hull.leftRib && hull.rightRib) {
-                    RegenerateMesh(hull.leftRib.size + 0.1f, hull.rightRib.size + 0.1f, 0, 0);
+                    generate = true;
+                    left = hull.leftRib.size + 0.1f;
+                    right = hull.rightRib.size + 0.1f;
+                    startLeft = 0;
+                    startRight = 0;
+                    relY = Mathf.Min(hull.leftRib.transform.position.y - transform.position.y, hull.rightRib.transform.position.y - transform.position.y);
                 } else if (hull.leftRib) {
-                    RegenerateMesh(hull.leftRib.size + 0.1f, -0.1f, 0, 0.4f);
+                    generate = true;
+                    left = hull.leftRib.size + 0.1f;
+                    right = -0.1f;
+                    startLeft = 0;
+                    startRight = 0.4f;
+                    relY = hull.leftRib.transform.position.y - transform.position.y;
                 } else if (hull.rightRib) {
-                    RegenerateMesh(-0.1f, hull.rightRib.size + 0.1f, 0.4f, 0);
+                    generate = true;
+                    left = -0.1f;
+                    right = hull.rightRib.size + 0.1f;
+                    startLeft = 0.4f;
+                    startRight = 0;
+                    relY = hull.rightRib.transform.position.y - transform.position.y;
+                }
+
+                if (generate) {
+                    RegenerateMesh(left, right, Mathf.Abs(relY) < 0.1f ? startLeft : 0f, Mathf.Abs(relY) < 0.1f ? startRight : 0f);
                 }
             };
         }
