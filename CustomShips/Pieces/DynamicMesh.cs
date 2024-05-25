@@ -19,7 +19,7 @@ namespace CustomShips.Pieces {
         private Hull hull;
 
         private void Awake() {
-            hull = GetComponent<Hull>();
+            hull = GetComponentInParent<Hull>();
 
             hull.OnChange += () => {
                 UpdateCurve();
@@ -201,7 +201,7 @@ namespace CustomShips.Pieces {
                         top = new Vector3(x * t + sinHalf, y + cosHalf, z) + meshOffset;
                         bottom = new Vector3(x * t - sinHalf, y - cosHalf, z) + meshOffset;
                     } else {
-                        float overflowT = (1f + t / 10f);
+                        float overflowT = (1f + t / 15f);
                         top = new Vector3(x * overflowT + sinHalf, y + cosHalf, z) + meshOffset;
                         bottom = new Vector3(x * overflowT - sinHalf, y - cosHalf, z) + meshOffset;
                     }

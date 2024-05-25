@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 866555692819044756}
   m_Layer: 10
-  m_Name: snappoint (1)
+  m_Name: snappoint
   m_TagString: snappoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,65 +25,12 @@ Transform:
   m_GameObject: {fileID: 2025143144737563280}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6890762708777304836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2082509211668307331
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3590277133039198397}
-  - component: {fileID: 6932351453511776938}
-  m_Layer: 10
-  m_Name: Collider (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3590277133039198397
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082509211668307331}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6890762708777304836}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6932351453511776938
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082509211668307331}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.1, y: 1, z: 2}
-  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!1 &2557186784713793435
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +68,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4880522264431357665}
-  - {fileID: 3590277133039198397}
   - {fileID: 9143499603639496004}
   - {fileID: 866555692819044756}
   - {fileID: 1739988239257770620}
@@ -158,6 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 15
   buoyancy: 4
+  shiftOnPlace: 1
+  shiftOther: 0
   mainCollider: {fileID: 2600799130331632884}
   sideCollider: {fileID: 0}
   watermask: {fileID: 5855898969333961730}
@@ -354,7 +302,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 346e463e8a499064ba9268e029344491, type: 2}
+  - {fileID: 2100000, guid: f4e73e80ef909b745bc009696ebb4b93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -409,7 +357,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2557186784713793435}
-  m_Mesh: {fileID: -3529747844242338512, guid: 279734f00d0e62f46a405812f0f19ce4, type: 3}
+  m_Mesh: {fileID: -6210192180678683208, guid: 66d18dff718c98b4583632a82a8903ae, type: 3}
 --- !u!1 &2900644996657422237
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +383,7 @@ Transform:
   m_GameObject: {fileID: 2900644996657422237}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: -0.000000029802322}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -577,7 +525,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -3529747844242338512, guid: 279734f00d0e62f46a405812f0f19ce4, type: 3}
+  m_Mesh: {fileID: -6210192180678683208, guid: 66d18dff718c98b4583632a82a8903ae, type: 3}
 --- !u!1 &8234052483566380321
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +536,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1739988239257770620}
   m_Layer: 10
-  m_Name: snappoint (2)
+  m_Name: snappoint
   m_TagString: snappoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -603,7 +551,7 @@ Transform:
   m_GameObject: {fileID: 8234052483566380321}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -19,16 +19,18 @@ namespace CustomShips.Pieces {
             InvokeRepeating(nameof(UpdateHull), 0f, 3f);
         }
 
-        public override float Weight {
+        public override float Weight => weight * Size;
+
+        public float Size {
             get {
                 if (leftRib && rightRib) {
-                    return weight * (leftRib.size + rightRib.size) / 2f;
+                    return (leftRib.size + rightRib.size) / 2f;
                 } else if (leftRib) {
-                    return weight * leftRib.size;
+                    return leftRib.size / 2f;
                 } else if (rightRib) {
-                    return weight * rightRib.size;
+                    return rightRib.size / 2f;
                 } else {
-                    return weight * 2f;
+                    return 2f;
                 }
             }
         }
