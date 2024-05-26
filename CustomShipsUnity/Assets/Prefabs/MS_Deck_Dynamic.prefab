@@ -340,6 +340,7 @@ MonoBehaviour:
   splits: 2
   width: 0.1
   height: 0
+  sideWidthInceaseOffset: -0.25
   rotateMesh: 1
   useCurve: 1
   meshOffset: {x: 0, y: -0.025, z: 0}

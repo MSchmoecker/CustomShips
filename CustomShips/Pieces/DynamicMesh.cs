@@ -7,6 +7,7 @@ namespace CustomShips.Pieces {
         public int splits = 1;
         public float width = 0.2f;
         public float height = 1f;
+        public float sideWidthInceaseOffset = 0f;
 
         public bool rotateMesh = true;
         public bool useCurve = true;
@@ -17,6 +18,8 @@ namespace CustomShips.Pieces {
 
         private AnimationCurve curve = new AnimationCurve();
         private Hull hull;
+
+        private float sideWidthIncease = 10f;
 
         private void Awake() {
             hull = GetComponentInParent<Hull>();
@@ -37,25 +40,25 @@ namespace CustomShips.Pieces {
                     right = hull.rightRib.size + 0.1f;
                     startLeft = 0;
                     startRight = 0;
-                    relY = Mathf.Min(hull.leftRib.transform.position.y - transform.position.y, hull.rightRib.transform.position.y - transform.position.y);
+                    relY = Mathf.Min(transform.position.y - hull.leftRib.transform.position.y, transform.position.y - hull.rightRib.transform.position.y);
                 } else if (hull.leftRib) {
                     generate = true;
                     left = hull.leftRib.size + 0.1f;
                     right = -0.1f;
                     startLeft = 0;
                     startRight = 0.4f;
-                    relY = hull.leftRib.transform.position.y - transform.position.y;
+                    relY = transform.position.y - hull.leftRib.transform.position.y;
                 } else if (hull.rightRib) {
                     generate = true;
                     left = -0.1f;
                     right = hull.rightRib.size + 0.1f;
                     startLeft = 0.4f;
                     startRight = 0;
-                    relY = hull.rightRib.transform.position.y - transform.position.y;
+                    relY = transform.position.y - hull.rightRib.transform.position.y;
                 }
 
                 if (generate) {
-                    RegenerateMesh(left, right, Mathf.Abs(relY) < 0.1f ? startLeft : 0f, Mathf.Abs(relY) < 0.1f ? startRight : 0f);
+                    RegenerateMesh(left, right, Mathf.Abs(relY) < 0.1f ? startLeft : 0f, Mathf.Abs(relY) < 0.1f ? startRight : 0f, relY);
                 }
             };
         }
@@ -132,7 +135,7 @@ namespace CustomShips.Pieces {
             return segment * (splits + 2) * 2 + split * 2 + 1;
         }
 
-        public void RegenerateMesh(float left, float right, float startLeft, float startRight) {
+        public void RegenerateMesh(float left, float right, float startLeft, float startRight, float relY) {
             int topVertices = (segments + 1) * (splits + 2);
             int bottomVertices = (segments + 1) * (splits + 2);
             int frontVertices = (splits + 2) * 4;
@@ -183,8 +186,8 @@ namespace CustomShips.Pieces {
                 float t = (float)segment / segments;
                 float halfWidth = width / 2f;
 
-                float heightCurve = 0.2f * t + 0.6f * Mathf.Pow(t, 3) + 0.4f * Mathf.Pow(t, 10);
-                float segmentHeight = (height - halfWidth) * heightCurve;
+                float heightCurve = 0.2f * t + 0.6f * Mathf.Pow(t, 3) + 0.2f * Mathf.Pow(t, 10);
+                float segmentHeight = (height - meshOffset.y) * heightCurve;
                 float angle = Mathf.Lerp(0, Mathf.PI / 2f, segmentHeight);
 
                 if (!rotateMesh) {
@@ -223,13 +226,16 @@ namespace CustomShips.Pieces {
                     Vector3 top;
                     Vector3 bottom;
 
+                    float sideT;
+
                     if (useCurve) {
-                        top = new Vector3(x * t + sinHalf, y + cosHalf, z) + meshOffset;
-                        bottom = new Vector3(x * t - sinHalf, y - cosHalf, z) + meshOffset;
+                        sideT = ((relY + sideWidthInceaseOffset) * t) / sideWidthIncease;
+                        top = new Vector3(x * (t + sideT) + sinHalf, y + cosHalf, z) + meshOffset;
+                        bottom = new Vector3(x * (t + sideT) - sinHalf, y - cosHalf, z) + meshOffset;
                     } else {
-                        float overflowT = (1f + t / 15f);
-                        top = new Vector3(x * overflowT + sinHalf, y + cosHalf, z) + meshOffset;
-                        bottom = new Vector3(x * overflowT - sinHalf, y - cosHalf, z) + meshOffset;
+                        sideT = (relY - 1f + height * t) / sideWidthIncease;
+                        top = new Vector3(x * (1f + sideT) + sinHalf, y + cosHalf, z) + meshOffset;
+                        bottom = new Vector3(x * (1f + sideT) - sinHalf, y - cosHalf, z) + meshOffset;
                     }
 
                     vertices[GetTopVertice(segment, split)] = top;
