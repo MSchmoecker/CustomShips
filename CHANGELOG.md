@@ -1,5 +1,8 @@
 ## Changelog
 
+0.3.1
+- Fixed for Valheim 0.218.15 (Ashlands)
+
 0.3.0
 - Reworked visual hull generation to create smoother curves
 - Changed steer and rudder speed to change depending on ship size
