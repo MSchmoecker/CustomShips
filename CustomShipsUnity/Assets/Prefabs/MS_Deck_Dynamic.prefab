@@ -340,17 +340,18 @@ MonoBehaviour:
   splits: 2
   width: 0.1
   height: 0
-  sideWidthInceaseOffset: -0.25
+  sideWidthInceaseOffset: -0.5
   rotateMesh: 1
   useCurve: 1
-  meshOffset: {x: 0, y: -0.025, z: 0}
+  meshOffset: {x: 0, y: 0, z: 0}
   colliderOffset: {x: 0, y: 0, z: 0}
   uvRect:
     serializedVersion: 2
     x: 0.5
-    y: 0.55
+    y: 0.62
     width: 0.0625
-    height: 0.08
+    height: 0.03
+  fixedUV: 1
 --- !u!33 &4812288743219091140
 MeshFilter:
   m_ObjectHideFlags: 0

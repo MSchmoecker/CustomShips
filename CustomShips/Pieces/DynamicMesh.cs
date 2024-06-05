@@ -15,11 +15,12 @@ namespace CustomShips.Pieces {
         public Vector3 meshOffset;
         public Vector3 colliderOffset;
         public Rect uvRect = new Rect(0.54f, 0.04f, 0.08f, 0.1f);
+        public bool fixedUV;
 
         private AnimationCurve curve = new AnimationCurve();
         private Hull hull;
 
-        private float sideWidthIncease = 10f;
+        private float sideWidthIncease = 7f;
 
         private void Awake() {
             hull = GetComponentInParent<Hull>();
@@ -259,8 +260,16 @@ namespace CustomShips.Pieces {
                         );
                     }
 
-                    float uvX = Mathf.LerpUnclamped(uvRect.xMin, uvRect.xMax, (float)split / (splits + 1));
-                    float uvY = Mathf.LerpUnclamped(uvRect.yMin, uvRect.yMax, t);
+                    float uvX;
+                    float uvY;
+
+                    if (fixedUV) {
+                        uvX = Mathf.LerpUnclamped(uvRect.xMin, uvRect.xMax, splitT);
+                        uvY = Mathf.LerpUnclamped(uvRect.yMin, uvRect.yMax, t * top.x);
+                    } else {
+                        uvX = Mathf.LerpUnclamped(uvRect.xMin, uvRect.xMax, splitT);
+                        uvY = Mathf.LerpUnclamped(uvRect.yMin, uvRect.yMax, t);
+                    }
 
                     uv[GetTopVertice(segment, split)] = new Vector2(uvX, uvY + uvRect.height / 10f);
                     uv[GetBottomVertice(segment, split)] = new Vector2(uvX, uvY);
