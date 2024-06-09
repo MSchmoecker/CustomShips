@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: -1197701274, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weight: 15
+  weight: 5
   buoyancy: 4
   shiftOnPlace: 1
   shiftOther: 1
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_randomTarget: 1
   m_targetNonPlayerBuilt: 1
   m_icon: {fileID: 21300000, guid: 6478dfcd07900604e86959e660e25533, type: 3}
-  m_name: $MS_CustomShips_Hull_Dynamic
+  m_name: $MS_CustomShips_Side_Hull
   m_description: 
   m_enabled: 1
   m_category: 0
@@ -392,6 +392,7 @@ MonoBehaviour:
   splits: 2
   width: 0.2
   height: 0.5
+  sideWidthInceaseOffset: 0
   rotateMesh: 0
   useCurve: 0
   meshOffset: {x: 0, y: 0, z: 0}
@@ -402,6 +403,7 @@ MonoBehaviour:
     y: 0.135
     width: 0.0625
     height: 0.015
+  fixedUV: 0
 --- !u!23 &6200122105744542165
 MeshRenderer:
   m_ObjectHideFlags: 0

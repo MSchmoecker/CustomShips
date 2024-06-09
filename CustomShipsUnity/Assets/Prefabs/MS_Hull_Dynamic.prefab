@@ -383,7 +383,7 @@ MonoBehaviour:
   m_randomTarget: 1
   m_targetNonPlayerBuilt: 1
   m_icon: {fileID: 21300000, guid: 6478dfcd07900604e86959e660e25533, type: 3}
-  m_name: $MS_CustomShips_Hull_Dynamic
+  m_name: $MS_CustomShips_Hull
   m_description: 
   m_enabled: 1
   m_category: 0
@@ -594,6 +594,7 @@ MonoBehaviour:
   splits: 2
   width: 0.2
   height: 1
+  sideWidthInceaseOffset: 0
   rotateMesh: 1
   useCurve: 1
   meshOffset: {x: 0, y: -0.05, z: 0}
@@ -604,6 +605,7 @@ MonoBehaviour:
     y: 0.04
     width: 0.0625
     height: 0.1
+  fixedUV: 0
 --- !u!33 &9205356821914280758
 MeshFilter:
   m_ObjectHideFlags: 0
