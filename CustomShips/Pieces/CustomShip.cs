@@ -216,7 +216,7 @@ namespace CustomShips.Pieces {
                 ShipPart part = shipParts[randomPart];
                 TryDamage(part, hit);
             } else {
-                ShipPart closestPart = ShipPart.FindNearest(hit.m_point);
+                ShipPart closestPart = ShipPart.FindNearest(this, hit.m_point);
                 TryDamage(closestPart, hit);
             }
         }

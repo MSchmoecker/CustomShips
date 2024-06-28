@@ -98,7 +98,7 @@ namespace CustomShips.Pieces {
             CustomShip = parent.GetComponent<CustomShip>();
         }
 
-        public static ShipPart FindNearest(Vector3 position) {
+        public static ShipPart FindNearest(CustomShip ship, Vector3 position) {
             int piecesOverlap = Physics.OverlapSphereNonAlloc(position, 4f, tmpColliders, LayerMask.GetMask("piece"));
 
             float minDistance = float.MaxValue;
@@ -107,13 +107,19 @@ namespace CustomShips.Pieces {
             for (int i = 0; i < piecesOverlap; i++) {
                 ShipPart shipPart = tmpColliders[i].GetComponentInParent<ShipPart>();
 
-                if (shipPart && shipPart.CustomShip) {
-                    float distance = Vector3.Distance(shipPart.transform.position, position);
+                if (!shipPart || !shipPart.CustomShip) {
+                    continue;
+                }
 
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        nearest = shipPart;
-                    }
+                if (ship && shipPart.CustomShip != ship) {
+                    continue;
+                }
+
+                float distance = Vector3.Distance(shipPart.transform.position, position);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearest = shipPart;
                 }
             }
 

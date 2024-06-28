@@ -147,7 +147,7 @@ namespace CustomShips.Patches {
 
             if (ghost && Main.IsShipPiece(ghost)) {
                 player.PieceRayTest(out Vector3 point, out Vector3 normal, out Piece piece, out Heightmap heightmap, out Collider waterSurface, false);
-                ShipPart nearest = ShipPart.FindNearest(point);
+                ShipPart nearest = ShipPart.FindNearest(null, point);
 
                 if (nearest) {
                     return nearest.CustomShip.transform.rotation * rotation;
