@@ -207,9 +207,23 @@ namespace CustomShips.Pieces {
         }
 
         public void Damage(HitData hit) {
-            int randomPart = UnityEngine.Random.Range(0, shipParts.Count);
-            ShipPart part = shipParts[randomPart];
-            part.GetComponent<WearNTear>().Damage(hit);
+            if (hit.m_hitType == HitData.HitType.AshlandsOcean) {
+                int randomPart = UnityEngine.Random.Range(0, shipParts.Count);
+                ShipPart part = shipParts[randomPart];
+                TryDamage(part, hit);
+            } else {
+                ShipPart closestPart = ShipPart.FindNearest(hit.m_point);
+                TryDamage(closestPart, hit);
+            }
+        }
+
+        private bool TryDamage(ShipPart shipPart, HitData hit) {
+            if (shipPart && shipPart.TryGetComponent(out WearNTear wearNTear)) {
+                wearNTear.Damage(hit);
+                return true;
+            }
+
+            return false;
         }
 
         public DestructibleType GetDestructibleType() {
