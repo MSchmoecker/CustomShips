@@ -207,6 +207,10 @@ namespace CustomShips.Pieces {
         }
 
         public void Damage(HitData hit) {
+            if (shipParts.Count == 0) {
+                return;
+            }
+
             if (hit.m_hitType == HitData.HitType.AshlandsOcean) {
                 int randomPart = UnityEngine.Random.Range(0, shipParts.Count);
                 ShipPart part = shipParts[randomPart];
@@ -218,12 +222,17 @@ namespace CustomShips.Pieces {
         }
 
         private bool TryDamage(ShipPart shipPart, HitData hit) {
-            if (shipPart && shipPart.TryGetComponent(out WearNTear wearNTear)) {
-                wearNTear.Damage(hit);
-                return true;
+            if (!shipPart) {
+                return false;
             }
 
-            return false;
+            if (!shipPart.TryGetComponent(out WearNTear wearNTear)) {
+                Logger.LogWarning($"Ship part {shipPart.name} has no WearNTear component");
+                return false;
+            }
+
+            wearNTear.Damage(hit);
+            return true;
         }
 
         public DestructibleType GetDestructibleType() {
