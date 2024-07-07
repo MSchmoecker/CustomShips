@@ -21,6 +21,7 @@ namespace CustomShips.Pieces {
         private Hull hull;
 
         private float sideWidthIncease = 7f;
+        private float relY = 0f;
 
         private void Awake() {
             hull = GetComponentInParent<Hull>();
@@ -33,7 +34,6 @@ namespace CustomShips.Pieces {
                 float right = 2f;
                 float startLeft = 0f;
                 float startRight = 0f;
-                float relY = 0f;
 
                 if (hull.leftRib && hull.rightRib) {
                     generate = true;
@@ -59,7 +59,7 @@ namespace CustomShips.Pieces {
                 }
 
                 if (generate) {
-                    RegenerateMesh(left, right, Mathf.Abs(relY) < 0.1f ? startLeft : 0f, Mathf.Abs(relY) < 0.1f ? startRight : 0f, relY);
+                    RegenerateMesh(left, right, Mathf.Abs(relY) < 0.1f ? startLeft : 0f, Mathf.Abs(relY) < 0.1f ? startRight : 0f);
                 }
             };
         }
@@ -136,7 +136,7 @@ namespace CustomShips.Pieces {
             return segment * (splits + 2) * 2 + split * 2 + 1;
         }
 
-        public void RegenerateMesh(float left, float right, float startLeft, float startRight, float relY) {
+        public void RegenerateMesh(float left, float right, float startLeft, float startRight) {
             int topVertices = (segments + 1) * (splits + 2);
             int bottomVertices = (segments + 1) * (splits + 2);
             int frontVertices = (splits + 2) * 4;
@@ -367,14 +367,25 @@ namespace CustomShips.Pieces {
             int[] triangles = new int[12];
             int triangle = 0;
 
+            float widthIncreaseTop;
+            float widthIncreaseBot;
+
+            if (useCurve) {
+                widthIncreaseTop = (relY - 0.25f + height) / sideWidthIncease * 2f;
+                widthIncreaseBot = (relY - 0.25f + height) / sideWidthIncease * 2f;
+            } else {
+                widthIncreaseTop = (relY - 0.25f + height) / sideWidthIncease * 2f;
+                widthIncreaseBot = (relY - 0.25f) / sideWidthIncease * 2f;
+            }
+
             vertices[0] = new Vector3(0, +width / 2f, -1f) + offset;
             vertices[1] = new Vector3(0, width / 2f, 1f) + offset;
-            vertices[2] = new Vector3(-left, width / 2f, -1f) + offset;
-            vertices[3] = new Vector3(-right, width / 2f, 1f) + offset;
+            vertices[2] = new Vector3(-left - widthIncreaseTop, width / 2f, -1f) + offset;
+            vertices[3] = new Vector3(-right - widthIncreaseTop, width / 2f, 1f) + offset;
             vertices[4] = new Vector3(0, -width / 2f, -1f) + offset;
             vertices[5] = new Vector3(0, -width / 2f, 1f) + offset;
-            vertices[6] = new Vector3(-left, -width / 2f, -1f) + offset;
-            vertices[7] = new Vector3(-right, -width / 2f, 1f) + offset;
+            vertices[6] = new Vector3(-left - widthIncreaseBot, -width / 2f, -1f) + offset;
+            vertices[7] = new Vector3(-right - widthIncreaseBot, -width / 2f, 1f) + offset;
 
             MakeFace(ref triangle, triangles, 0, 1, 2, 3);
             MakeFace(ref triangle, triangles, 4, 5, 6, 7);
@@ -391,14 +402,26 @@ namespace CustomShips.Pieces {
             int[] triangles = new int[12];
             int triangle = 0;
 
-            vertices[0] = new Vector3(-left + width / 2f, startHeight, -1f);
-            vertices[1] = new Vector3(-right + width / 2f, startHeight, 1f);
-            vertices[2] = new Vector3(-left + width / 2f, endHeight, -1f);
-            vertices[3] = new Vector3(-right + width / 2f, endHeight, 1f);
-            vertices[4] = new Vector3(-left - width / 2f, startHeight, -1f);
-            vertices[5] = new Vector3(-right - width / 2f, startHeight, 1f);
-            vertices[6] = new Vector3(-left - width / 2f, endHeight, -1f);
-            vertices[7] = new Vector3(-right - width / 2f, endHeight, 1f);
+            float halfWidth = width / 2f;
+            float widthIncreaseTop;
+            float widthIncreaseBot;
+
+            if (useCurve) {
+                widthIncreaseTop = (relY - 0.25f + height) / sideWidthIncease * 2f;
+                widthIncreaseBot = (relY - 0.25f + height) / sideWidthIncease * 2f;
+            } else {
+                widthIncreaseTop = (relY - 0.25f + height) / sideWidthIncease * 2f;
+                widthIncreaseBot = (relY - 0.25f) / sideWidthIncease * 2f;
+            }
+
+            vertices[0] = new Vector3(-widthIncreaseBot + halfWidth - left, startHeight, -1f);
+            vertices[1] = new Vector3(-widthIncreaseBot + halfWidth - right, startHeight, 1f);
+            vertices[2] = new Vector3(-widthIncreaseTop + halfWidth - left, endHeight, -1f);
+            vertices[3] = new Vector3(-widthIncreaseTop + halfWidth - right, endHeight, 1f);
+            vertices[4] = new Vector3(-widthIncreaseBot - halfWidth - left, startHeight, -1f);
+            vertices[5] = new Vector3(-widthIncreaseBot - halfWidth - right, startHeight, 1f);
+            vertices[6] = new Vector3(-widthIncreaseTop - halfWidth - left, endHeight, -1f);
+            vertices[7] = new Vector3(-widthIncreaseTop - halfWidth - right, endHeight, 1f);
 
             MakeFace(ref triangle, triangles, 0, 1, 2, 3);
             MakeFace(ref triangle, triangles, 4, 5, 6, 7);
