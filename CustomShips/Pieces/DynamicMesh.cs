@@ -342,14 +342,25 @@ namespace CustomShips.Pieces {
             int[] triangles = new int[18];
             int triangle = 0;
 
+            float widthIncreaseTop;
+            float widthIncreaseBot;
+
+            if (useCurve) {
+                widthIncreaseTop = (relY - 0.25f + height) / sideWidthIncease * 2f;
+                widthIncreaseBot = (relY - 0.25f + height) / sideWidthIncease * 2f;
+            } else {
+                widthIncreaseTop = (relY - 0.25f + height) / sideWidthIncease * 2f;
+                widthIncreaseBot = (relY - 0.25f) / sideWidthIncease * 2f;
+            }
+
             vertices[0] = new Vector3(0f, height, -1f);
             vertices[1] = new Vector3(0f, height, -0.333f);
             vertices[2] = new Vector3(0f, height, 0.333f);
             vertices[3] = new Vector3(0f, height, 1f);
-            vertices[4] = new Vector3(-left - width / 2f, height, -1f);
-            vertices[5] = new Vector3(-curve.Evaluate(-0.333f) - width, height, -0.333f);
-            vertices[6] = new Vector3(-curve.Evaluate(0.333f) - width, height, 0.333f);
-            vertices[7] = new Vector3(-right - width / 2f, height, 1f);
+            vertices[4] = new Vector3(-left - width / 2f - widthIncreaseBot, height, -1f);
+            vertices[5] = new Vector3(-curve.Evaluate(-0.333f) - width - widthIncreaseBot, height, -0.333f);
+            vertices[6] = new Vector3(-curve.Evaluate(0.333f) - width - widthIncreaseBot, height, 0.333f);
+            vertices[7] = new Vector3(-right - width / 2f - widthIncreaseBot, height, 1f);
 
             MakeFace(ref triangle, triangles, 0, 1, 4, 5);
             MakeFace(ref triangle, triangles, 1, 2, 5, 6);
