@@ -380,18 +380,18 @@ MonoBehaviour:
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
   m_forceCorrectCOMCalculation: 0
-  m_health: 100
+  m_health: 200
   m_damages:
-    m_blunt: 0
-    m_slash: 0
-    m_pierce: 0
+    m_blunt: 1
+    m_slash: 1
+    m_pierce: 1
     m_chop: 0
-    m_pickaxe: 0
+    m_pickaxe: 1
     m_fire: 0
-    m_frost: 0
-    m_lightning: 0
-    m_poison: 0
-    m_spirit: 0
+    m_frost: 1
+    m_lightning: 1
+    m_poison: 1
+    m_spirit: 1
   m_minToolTier: 0
   m_hitNoise: 0
   m_destroyNoise: 0
