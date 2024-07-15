@@ -104,8 +104,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weight: 10
   buoyancy: 4
-  shiftOnPlace: 1
-  shiftOther: 0
   mainCollider: {fileID: 2600799130331632884}
   sideCollider: {fileID: 0}
   watermask: {fileID: 5855898969333961730}
@@ -340,7 +338,7 @@ MonoBehaviour:
   splits: 2
   width: 0.1
   height: 0
-  sideWidthInceaseOffset: -0.5
+  sideWidthInceaseOffset: -0.7
   rotateMesh: 1
   useCurve: 1
   meshOffset: {x: 0, y: 0, z: 0}

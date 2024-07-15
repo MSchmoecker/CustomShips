@@ -47,26 +47,20 @@ namespace CustomShips.Pieces {
                 if (leftRib) leftRib.OnChange -= OnChange;
                 if (rightRib) rightRib.OnChange -= OnChange;
 
-                leftRib = newLeftRib;
-                rightRib = newRightRib;
+                if ((newLeftRib || newRightRib) && (!newLeftRib || !newLeftRib.SameDirection(this)) && (!newRightRib || !newRightRib.SameDirection(this))) {
+                    leftRib = newRightRib;
+                    rightRib = newLeftRib;
+                    transform.rotation *= Quaternion.Euler(0, 180, 0);
+                    transform.position = position + forward * Size;
+                } else {
+                    leftRib = newLeftRib;
+                    rightRib = newRightRib;
+                }
 
                 if (leftRib) leftRib.OnChange += OnChange;
                 if (rightRib) rightRib.OnChange += OnChange;
 
-                float size;
-
-                if (leftRib && rightRib) {
-                    size = (leftRib.size + rightRib.size) / 2f;
-                } else if (leftRib) {
-                    size = leftRib.size / 2f;
-                } else if (rightRib) {
-                    size = rightRib.size / 2f;
-                } else {
-                    size = 2f;
-                }
-
-                outerSnappoint.localPosition = new Vector3(-size, height, 0);
-
+                outerSnappoint.localPosition = new Vector3(-Size, height, 0);
                 OnChange?.Invoke();
             }
         }

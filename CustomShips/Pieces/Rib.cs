@@ -43,21 +43,30 @@ namespace CustomShips.Pieces {
             }
         }
 
-        public static Rib FindRib(Vector3 position, bool ignoreY = true) {
+        public static Rib FindRib(Vector3 position) {
+            List<Rib> closest = new List<Rib>();
+
             foreach (Rib rib in ribs) {
-                Vector3 forward = -rib.transform.right;
-                Vector3 diff = (rib.transform.position + forward * 0.5f) - position;
+                Vector3 local = rib.transform.InverseTransformPoint(position);
 
-                if (ignoreY) {
-                    diff.y = 0;
-                }
-
-                if (diff.magnitude <= 0.5f) {
-                    return rib;
+                if (local.x <= 0f && Mathf.Abs(local.z) <= 0.2f) {
+                    closest.Add(rib);
                 }
             }
 
-            return null;
+            if (closest.Count == 0) {
+                return null;
+            }
+
+            closest.Sort((a, b) => {
+                Vector3 aPos = a.transform.position - a.Forward;
+                Vector3 bPos = b.transform.position - b.Forward;
+                float aMag = (aPos - position).magnitude;
+                float bMag = (bPos - position).magnitude;
+                return aMag.CompareTo(bMag);
+            });
+
+            return closest[0];
         }
 
         private void OnDrawGizmos() {
@@ -67,6 +76,10 @@ namespace CustomShips.Pieces {
             Gizmos.DrawSphere(transform.position + forward * 0.5f, 0.1f);
             Gizmos.color = Color.cyan;
             Gizmos.DrawSphere(transform.position - forward * 0.5f + forward * size, 0.1f);
+        }
+
+        public bool SameDirection(Hull hull) {
+            return Vector3.Dot(hull.Forward, Forward) >= 0.9f;
         }
     }
 }

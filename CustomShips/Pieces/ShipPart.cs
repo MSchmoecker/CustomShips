@@ -12,9 +12,6 @@ namespace CustomShips.Pieces {
         private ZNetView nview;
         private ZInt connectedShip;
 
-        public bool shiftOnPlace;
-        public bool shiftOther = true;
-
         public CustomShip CustomShip {
             get => customShip;
             set {

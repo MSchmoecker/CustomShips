@@ -68,15 +68,6 @@ namespace CustomShips.Patches {
 
         private static GameObject AfterPlacePiece(GameObject piece) {
             if (piece && Main.IsShipPiece(piece) && piece.TryGetComponent(out ShipPart shipPart)) {
-                if (snapShipPart && snapShipPart.shiftOther && shipPart.shiftOnPlace) {
-                    if (snapShipPart is Hull hull) {
-                        float size = hull.Size;
-
-                        shipPart.transform.rotation *= Quaternion.Euler(0, 180, 0);
-                        shipPart.transform.position += shipPart.Forward * size;
-                    }
-                }
-
                 if (snapShip) {
                     shipPart.CustomShip = snapShip;
                 } else {
