@@ -1,5 +1,12 @@
 ## Changelog
 
+0.4.0
+- Added new deck pieces, allowing for bigger ships
+- Improved overall mesh generation to allow for the more complex shapes
+- Increased health and damage resistance of ship pieces
+- Fixed positional damage
+- Fixed onboard trigger size not increasing
+
 0.3.1
 - Fixed for Valheim 0.218.15 (Ashlands)
 

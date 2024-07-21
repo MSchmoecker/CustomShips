@@ -28,11 +28,6 @@ Build and customize ships out of a variety of different ship pieces.
 - placing a rudder can sometimes turn the ship into a different direction
 
 
-## Planned Features
-
-The most important pieces have been added to build a ship, the next big update will likely bring more decoration and a second deck to build on.
-
-
 ## Compatibility
 
 The ships behave mostly like regular vanilla ship and only update their stats at runtime.
