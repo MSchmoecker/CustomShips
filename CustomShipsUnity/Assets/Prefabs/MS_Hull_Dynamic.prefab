@@ -198,7 +198,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: -3529747844242338512, guid: 279734f00d0e62f46a405812f0f19ce4, type: 3}
 --- !u!1 &5863150795114274535
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +252,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: -6280989018835556884, guid: 279734f00d0e62f46a405812f0f19ce4, type: 3}
 --- !u!1 &6103027305024296555
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +364,7 @@ MonoBehaviour:
   leftRib: {fileID: 0}
   rightRib: {fileID: 0}
   outerSnappoint: {fileID: 8744031370390790127}
-  height: 0.9
+  height: 1
 --- !u!114 &4696919667065226445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_randomTarget: 1
   m_targetNonPlayerBuilt: 1
   m_icon: {fileID: 21300000, guid: 6478dfcd07900604e86959e660e25533, type: 3}
-  m_name: $MS_CustomShips_Hull_Dynamic
+  m_name: $MS_CustomShips_Hull
   m_description: 
   m_enabled: 1
   m_category: 0
@@ -416,6 +416,8 @@ MonoBehaviour:
   m_mustConnectTo: {fileID: 0}
   m_connectRadius: 0
   m_mustBeAboveConnected: 0
+  m_noVines: 0
+  m_extraPlacementDistance: 0
   m_onlyInBiome: 0
   m_placeEffect:
     m_effectPrefabs:
@@ -465,21 +467,26 @@ MonoBehaviour:
   m_wet: {fileID: 0}
   m_noRoofWear: 0
   m_noSupportWear: 0
+  m_ashDamageImmune: 0
+  m_ashDamageResist: 0
+  m_burnable: 1
   m_materialType: 0
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
-  m_health: 100
+  m_forceCorrectCOMCalculation: 0
+  m_health: 200
   m_damages:
-    m_blunt: 0
-    m_slash: 0
-    m_pierce: 0
+    m_blunt: 1
+    m_slash: 1
+    m_pierce: 1
     m_chop: 0
-    m_pickaxe: 0
+    m_pickaxe: 1
     m_fire: 0
-    m_frost: 0
-    m_lightning: 0
-    m_poison: 0
-    m_spirit: 0
+    m_frost: 1
+    m_lightning: 1
+    m_poison: 1
+    m_spirit: 1
+  m_minToolTier: 0
   m_hitNoise: 0
   m_destroyNoise: 0
   m_triggerPrivateArea: 1
@@ -547,7 +554,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 346e463e8a499064ba9268e029344491, type: 2}
+  - {fileID: 2100000, guid: f4e73e80ef909b745bc009696ebb4b93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -578,19 +585,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 8954065086045177781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -104915620, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
+  m_Script: {fileID: 1688071249, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   segments: 10
   splits: 2
   width: 0.2
-  offsetY: -0.05
+  height: 1
+  sideWidthInceaseOffset: 0
+  rotateMesh: 1
+  useCurve: 1
+  meshOffset: {x: 0, y: -0.05, z: 0}
+  colliderOffset: {x: 0, y: 0.1, z: 0}
   uvRect:
     serializedVersion: 2
     x: 0.5
     y: 0.04
     width: 0.0625
     height: 0.1
+  fixedUV: 0
 --- !u!33 &9205356821914280758
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -598,4 +611,4 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8954065086045177781}
-  m_Mesh: {fileID: 5101410637510286001, guid: da43c5533f4b1d74cb4cc15d1b622e2e, type: 3}
+  m_Mesh: {fileID: -5535563502359666934, guid: 279734f00d0e62f46a405812f0f19ce4, type: 3}

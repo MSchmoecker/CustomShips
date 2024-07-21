@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 7618980045630295837}
   - component: {fileID: 7189901226759748824}
   - component: {fileID: 7418219327586273608}
-  - component: {fileID: 1928445930831403136}
   m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
@@ -60,7 +59,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.15, z: 0}
-  m_LocalScale: {x: 0.9, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8343475574967461191}
@@ -115,13 +114,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1928445930831403136
+--- !u!1 &3479443827121331423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2299863591202927268}
+  - component: {fileID: 5840957685098148498}
+  m_Layer: 10
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2299863591202927268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3479443827121331423}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.15, z: 0}
+  m_LocalScale: {x: 0.9, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8343475574967461191}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5840957685098148498
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134589162214652424}
+  m_GameObject: {fileID: 3479443827121331423}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -135,7 +166,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.9999996, y: 0.32, z: 0.32}
-  m_Center: {x: -0.9999998, y: 0.21, z: 0}
+  m_Center: {x: -1, y: 0.21, z: 0}
 --- !u!1 &7206627253505259582
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,6 +201,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7618980045630295837}
+  - {fileID: 2299863591202927268}
   - {fileID: 2906519386924730507}
   - {fileID: 8117499378677619915}
   m_Father: {fileID: 0}
@@ -202,8 +234,12 @@ MonoBehaviour:
   m_Script: {fileID: 1750486864, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCollider: {fileID: 1928445930831403136}
+  weight: 5
+  buoyancy: 1
+  mainCollider: {fileID: 5840957685098148498}
   size: 1.8
+  leftRib: {fileID: 0}
+  rightRib: {fileID: 0}
 --- !u!114 &-6003147475042178531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +291,8 @@ MonoBehaviour:
   m_mustConnectTo: {fileID: 0}
   m_connectRadius: 0
   m_mustBeAboveConnected: 0
+  m_noVines: 0
+  m_extraPlacementDistance: 0
   m_onlyInBiome: 0
   m_placeEffect:
     m_effectPrefabs:
@@ -304,21 +342,26 @@ MonoBehaviour:
   m_wet: {fileID: 0}
   m_noRoofWear: 0
   m_noSupportWear: 0
+  m_ashDamageImmune: 0
+  m_ashDamageResist: 0
+  m_burnable: 1
   m_materialType: 0
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
-  m_health: 100
+  m_forceCorrectCOMCalculation: 0
+  m_health: 200
   m_damages:
-    m_blunt: 0
-    m_slash: 0
-    m_pierce: 0
+    m_blunt: 1
+    m_slash: 1
+    m_pierce: 1
     m_chop: 0
-    m_pickaxe: 0
+    m_pickaxe: 1
     m_fire: 0
-    m_frost: 0
-    m_lightning: 0
-    m_poison: 0
-    m_spirit: 0
+    m_frost: 1
+    m_lightning: 1
+    m_poison: 1
+    m_spirit: 1
+  m_minToolTier: 0
   m_hitNoise: 0
   m_destroyNoise: 0
   m_triggerPrivateArea: 1

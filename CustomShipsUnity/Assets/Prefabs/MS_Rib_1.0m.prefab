@@ -112,7 +112,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8343475574967461191}
@@ -200,8 +200,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5654708565072541468}
   - {fileID: 7618980045630295837}
+  - {fileID: 5654708565072541468}
   - {fileID: 2906519386924730507}
   - {fileID: 8117499378677619915}
   m_Father: {fileID: 0}
@@ -234,8 +234,12 @@ MonoBehaviour:
   m_Script: {fileID: 1750486864, guid: bf7cebf9c4ac2064794856d0a98f72f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weight: 5
+  buoyancy: 1
   mainCollider: {fileID: 5568992591696231113}
   size: 1
+  leftRib: {fileID: 0}
+  rightRib: {fileID: 0}
 --- !u!114 &-6003147475042178531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,6 +291,8 @@ MonoBehaviour:
   m_mustConnectTo: {fileID: 0}
   m_connectRadius: 0
   m_mustBeAboveConnected: 0
+  m_noVines: 0
+  m_extraPlacementDistance: 0
   m_onlyInBiome: 0
   m_placeEffect:
     m_effectPrefabs:
@@ -336,21 +342,26 @@ MonoBehaviour:
   m_wet: {fileID: 0}
   m_noRoofWear: 0
   m_noSupportWear: 0
+  m_ashDamageImmune: 0
+  m_ashDamageResist: 0
+  m_burnable: 1
   m_materialType: 0
   m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
-  m_health: 100
+  m_forceCorrectCOMCalculation: 0
+  m_health: 200
   m_damages:
-    m_blunt: 0
-    m_slash: 0
-    m_pierce: 0
+    m_blunt: 1
+    m_slash: 1
+    m_pierce: 1
     m_chop: 0
-    m_pickaxe: 0
+    m_pickaxe: 1
     m_fire: 0
-    m_frost: 0
-    m_lightning: 0
-    m_poison: 0
-    m_spirit: 0
+    m_frost: 1
+    m_lightning: 1
+    m_poison: 1
+    m_spirit: 1
+  m_minToolTier: 0
   m_hitNoise: 0
   m_destroyNoise: 0
   m_triggerPrivateArea: 1

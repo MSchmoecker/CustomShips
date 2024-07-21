@@ -131,10 +131,8 @@ namespace CustomShips.Pieces {
         }
 
         private void UpdateCollider() {
-            float minZ = 1000f;
-            float maxZ = -1000f;
-            float minX = 1000f;
-            float maxX = -1000f;
+            Vector3 min = new Vector3(1000f, 1000f, 1000f);
+            Vector3 max = new Vector3(-1000f, -1000f, -1000f);
 
             Vector3 center = Vector3.zero;
             int partCount = 0;
@@ -158,11 +156,8 @@ namespace CustomShips.Pieces {
                     local = ToLocalPosition(shipPart);
                 }
 
-                minZ = Mathf.Min(minZ, local.z);
-                maxZ = Mathf.Max(maxZ, local.z);
-
-                minX = Mathf.Min(minX, local.x);
-                maxX = Mathf.Max(maxX, local.x);
+                min = new Vector3(Mathf.Min(min.x, local.x), Mathf.Min(min.y, local.y), Mathf.Min(min.z, local.z));
+                max = new Vector3(Mathf.Max(max.x, local.x), Mathf.Max(max.y, local.y), Mathf.Max(max.z, local.z));
 
                 center += local;
                 partCount++;
@@ -172,17 +167,16 @@ namespace CustomShips.Pieces {
             }
 
             if (hasValidPart) {
-                float sizeZ = Mathf.Abs(minZ - maxZ) + 1f;
-                float sizeX = Mathf.Abs(minX - maxX) + 1f;
+                Vector3 size = new Vector3(Mathf.Abs(min.x - max.x), Mathf.Abs(min.y - max.y), Mathf.Abs(min.z - max.z)) + Vector3.one;
 
-                ship.m_floatCollider.size = new Vector3(sizeX, 0.2f, sizeZ);
+                ship.m_floatCollider.size = new Vector3(size.x, 0.2f, size.z);
                 ship.m_floatCollider.transform.localPosition = buoyancyCenter / buoyancySum;
                 rigidbody.centerOfMass = center / partCount;
 
-                onboardTrigger.size = new Vector3(6f, 5f, sizeZ + 1f);
-                onboardTrigger.transform.position = rigidbody.worldCenterOfMass;
+                onboardTrigger.size = new Vector3(size.x + 1f, size.y + 3f, size.z + 1f);
+                onboardTrigger.transform.position = rigidbody.worldCenterOfMass + new Vector3(0f, 1f, 0f);
 
-                UpdateSteerForce(sizeZ);
+                UpdateSteerForce(size.z);
             }
         }
 
@@ -207,9 +201,32 @@ namespace CustomShips.Pieces {
         }
 
         public void Damage(HitData hit) {
-            int randomPart = UnityEngine.Random.Range(0, shipParts.Count);
-            ShipPart part = shipParts[randomPart];
-            part.GetComponent<WearNTear>().Damage(hit);
+            if (shipParts.Count == 0) {
+                return;
+            }
+
+            if (hit.m_hitType == HitData.HitType.AshlandsOcean) {
+                int randomPart = UnityEngine.Random.Range(0, shipParts.Count);
+                ShipPart part = shipParts[randomPart];
+                TryDamage(part, hit);
+            } else {
+                ShipPart closestPart = ShipPart.FindNearest(this, hit.m_point);
+                TryDamage(closestPart, hit);
+            }
+        }
+
+        private bool TryDamage(ShipPart shipPart, HitData hit) {
+            if (!shipPart) {
+                return false;
+            }
+
+            if (!shipPart.TryGetComponent(out WearNTear wearNTear)) {
+                Logger.LogWarning($"Ship part {shipPart.name} has no WearNTear component");
+                return false;
+            }
+
+            wearNTear.Damage(hit);
+            return true;
         }
 
         public DestructibleType GetDestructibleType() {

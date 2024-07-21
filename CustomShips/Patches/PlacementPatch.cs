@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -6,11 +7,13 @@ using CustomShips.Helper;
 using CustomShips.Pieces;
 using HarmonyLib;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CustomShips.Patches {
     [HarmonyPatch]
     public class PlacementPatch {
         private static CustomShip snapShip;
+        private static ShipPart snapShipPart;
 
         [HarmonyPatch(typeof(Player), nameof(Player.SetupPlacementGhost)), HarmonyPostfix]
         public static void SetupPlacementGhostPatch(Player __instance) {
@@ -18,8 +21,8 @@ namespace CustomShips.Patches {
                 return;
             }
 
-            foreach (DynamicHull dynamicHull in __instance.m_placementGhost.GetComponentsInChildren<DynamicHull>()) {
-                Object.Destroy(dynamicHull);
+            foreach (DynamicMesh dynamicMesh in __instance.m_placementGhost.GetComponentsInChildren<DynamicMesh>()) {
+                Object.Destroy(dynamicMesh);
             }
 
             foreach (ShipPart shipPart in __instance.m_placementGhost.GetComponentsInChildren<ShipPart>()) {
@@ -57,6 +60,7 @@ namespace CustomShips.Patches {
                 player.FindClosestSnapPoints(player.m_placementGhost.transform, 0.5f, out Transform selfSnapPoint, out Transform otherSnapPoint, player.m_tempPieces);
 
                 if (otherSnapPoint && otherSnapPoint.parent && otherSnapPoint.parent.TryGetComponent(out ShipPart shipPart)) {
+                    snapShipPart = shipPart;
                     snapShip = shipPart.CustomShip;
                 }
             }
@@ -134,7 +138,7 @@ namespace CustomShips.Patches {
 
             if (ghost && Main.IsShipPiece(ghost)) {
                 player.PieceRayTest(out Vector3 point, out Vector3 normal, out Piece piece, out Heightmap heightmap, out Collider waterSurface, false);
-                ShipPart nearest = ShipPart.FindNearest(point);
+                ShipPart nearest = ShipPart.FindNearest(null, point);
 
                 if (nearest) {
                     return nearest.CustomShip.transform.rotation * rotation;

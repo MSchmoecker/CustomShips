@@ -1,6 +1,8 @@
 ﻿{
   "MS_CustomShip_Ship": "Custom Ship",
-  "MS_CustomShips_Hull_Dynamic": "Hull",
+  "MS_CustomShips_Hull": "Hull",
+  "MS_CustomShips_Side_Hull": "Side Hull",
+  "MS_CustomShips_Deck": "Deck",
   "MS_CustomShips_Keel_2m": "Keel 2m",
   "MS_CustomShips_Keel_4m": "Keel 4m",
   "MS_CustomShips_Bow_1": "Bow 1",
