@@ -1,5 +1,9 @@
 ## Changelog
 
+0.4.1
+- Fixed deck and hull pieces could warp to a wrong location when loading the ship
+- Changed snap position of hulls when only one rib is placed
+
 0.4.0
 - Added new deck pieces, allowing for bigger ships
 - Improved overall mesh generation to allow for the more complex shapes
