@@ -26,9 +26,9 @@ namespace CustomShips.Pieces {
                 if (leftRib && rightRib) {
                     return (leftRib.size + rightRib.size) / 2f;
                 } else if (leftRib) {
-                    return leftRib.size / 2f;
+                    return (leftRib.size + 1f) / 2f;
                 } else if (rightRib) {
-                    return rightRib.size / 2f;
+                    return (1f + rightRib.size) / 2f;
                 } else {
                     return 2f;
                 }
