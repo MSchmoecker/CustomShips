@@ -9,7 +9,7 @@ namespace CustomShips.Pieces {
         public float weight = 5;
         public float buoyancy = 1;
         private CustomShip customShip;
-        private ZNetView nview;
+        protected ZNetView nview;
         private ZInt connectedShip;
 
         public CustomShip CustomShip {

@@ -38,20 +38,31 @@ namespace CustomShips.Pieces {
         private void UpdateHull() {
             Vector3 position = transform.position;
             Vector3 right = transform.forward;
-            Vector3 forward = -transform.right;
 
-            Rib newLeftRib = Rib.FindRib(position + right * -1f + forward * 0.5f);
-            Rib newRightRib = Rib.FindRib(position + right * 1f + forward * 0.5f);
+            Rib newLeftRib = Rib.FindRib(position + right * -1f - Forward * 0.5f);
+            Rib newRightRib = Rib.FindRib(position + right * 1f - Forward * 0.5f);
 
             if (newLeftRib != leftRib || newRightRib != rightRib) {
                 if (leftRib) leftRib.OnChange -= OnChange;
                 if (rightRib) rightRib.OnChange -= OnChange;
 
-                if ((newLeftRib || newRightRib) && (!newLeftRib || !newLeftRib.SameDirection(this)) && (!newRightRib || !newRightRib.SameDirection(this))) {
-                    leftRib = newRightRib;
-                    rightRib = newLeftRib;
-                    transform.rotation *= Quaternion.Euler(0, 180, 0);
-                    transform.position = position + forward * Size;
+                if (nview && !nview.GetZDO().GetBool("MS_HasCheckedRotation")) {
+                    nview.GetZDO().Set("MS_HasCheckedRotation", true);
+
+                    if (WrongDirection(newLeftRib, newRightRib)) {
+                        leftRib = newRightRib;
+                        rightRib = newLeftRib;
+                        transform.rotation *= Quaternion.Euler(0, 180, 0);
+                        transform.position += Forward * Size;
+
+                        if (CustomShip) {
+                            nview.GetZDO().Set(ZDOVars.s_relPosHash, transform.localPosition);
+                            nview.GetZDO().Set(ZDOVars.s_relRotHash, transform.localRotation);
+                        }
+                    } else {
+                        leftRib = newLeftRib;
+                        rightRib = newRightRib;
+                    }
                 } else {
                     leftRib = newLeftRib;
                     rightRib = newRightRib;
@@ -63,6 +74,14 @@ namespace CustomShips.Pieces {
                 outerSnappoint.localPosition = new Vector3(-Size, height, 0);
                 OnChange?.Invoke();
             }
+        }
+
+        private bool WrongDirection(Rib newLeftRib, Rib newRightRib) {
+            if (!newLeftRib && !newRightRib) {
+                return false;
+            }
+
+            return newLeftRib && !newLeftRib.SameDirection(this) || newRightRib && !newRightRib.SameDirection(this);
         }
 
         private void OnDrawGizmos() {
